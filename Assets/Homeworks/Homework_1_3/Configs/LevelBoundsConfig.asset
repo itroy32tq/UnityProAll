@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2f58891edf407448b486559ee20d578, type: 3}
+  m_Name: LevelBoundsConfig
+  m_EditorClassIdentifier: 
+  <LeftBorder>k__BackingField: {fileID: 3699543278000981699, guid: e37feac41be6fb045a6a0da846823467,
+    type: 3}
+  <RightBorder>k__BackingField: {fileID: 19343468072614920, guid: a8a6711b7b596204d8b57d7da1578aeb,
+    type: 3}
+  <DownBorder>k__BackingField: {fileID: 3652584929880743139, guid: dd237abeeebec8b4c9ccd1cef7186bfa,
+    type: 3}
+  <TopBorder>k__BackingField: {fileID: 7215209579955415746, guid: 34f576a4fc9595d498c7d823abab1ce4,
+    type: 3}
