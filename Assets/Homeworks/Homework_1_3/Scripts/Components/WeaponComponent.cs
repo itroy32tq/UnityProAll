@@ -9,6 +9,7 @@ namespace ShootEmUp
         private BulletSystem _bulletSystem;
 
         [Inject]
+
         public void Construct(BulletSystem bulletSystem)
         { 
             _bulletSystem = bulletSystem;
