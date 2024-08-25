@@ -1,6 +1,6 @@
-﻿using Atomic.Elements;
+﻿using Assets.Homeworks.Homework_6_Atomic.Scripts;
+using Atomic.Elements;
 using Atomic.Objects;
-using Atomic.Extensions;
 using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
@@ -19,6 +19,7 @@ namespace Assets.Homeworks.Homework_6_Atomic
         [SerializeField] private float _reloadTime = 2f;
         [SerializeField] private bool _isReloading;
         [SerializeField] private bool _canFire;
+
         [SerializeField] private AtomicEntity _bulletPrefab;
         [SerializeField] private Transform _firePoint;
 
@@ -26,6 +27,9 @@ namespace Assets.Homeworks.Homework_6_Atomic
         private float _reloadTimer;
 
         private readonly CompositeCondition _condition = new();
+
+        private BulletSystem _bulletSystem;
+        [SerializeField] private int _damage = 1;
 
         public void Construct()
         {
@@ -53,12 +57,14 @@ namespace Assets.Homeworks.Homework_6_Atomic
                 return;
             }
 
-            AtomicEntity bullet = GameObject.Instantiate(_bulletPrefab, _firePoint.position, _firePoint.rotation);
+            BulletsArgs bulletsArgs = new(_firePoint.transform.position,
+                                          _firePoint.transform.rotation,
+                                          _firePoint.forward,
+                                          _damage);
 
-            if (bullet.TryGetVariable<Vector3>(MoveAPI.MOVE_DIRECTION, out var moveDirection))
-            {
-                moveDirection.Value = _firePoint.forward;
-            }
+            _bulletSystem.Create(bulletsArgs);
+
+            
 
             _reloadTimer = _reloadTime;
             _isReloading = true;

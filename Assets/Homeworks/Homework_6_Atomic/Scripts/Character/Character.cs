@@ -1,6 +1,7 @@
 using Atomic.Elements;
 using Atomic.Objects;
 using UnityEngine;
+using Zenject;
 
 
 namespace Assets.Homeworks.Homework_6_Atomic
@@ -31,11 +32,41 @@ namespace Assets.Homeworks.Homework_6_Atomic
         [Get(LifeAPI.TAKE_DAMAGE_ACTION)]
         public IAtomicAction<int> TakeDamageAction => _characterCore.LifeComponent.TakeDamageAction;
 
-        [SerializeField] private CharacterCore _characterCore;
 
+        [SerializeField] private CharacterCore _characterCore;
         [SerializeField] private CharacterAnimation _characterAnimation;
         [SerializeField] private CharacterVfx _vfx;
         [SerializeField] private CharacterAudio _audio;
+
+        private void Awake()
+        {
+            _characterCore.Compose();
+            _characterAnimation.Compose(_characterCore);
+            _vfx.Compose(_characterCore);
+            _audio.Compose(_characterCore);
+        }
+
+        private void Update()
+        {
+            _characterCore.Update(Time.deltaTime);
+        }
+
+        private void OnEnable()
+        {
+            _characterAnimation.OnEnable();
+            _vfx.OnEnable();
+            _audio.OnEnable();
+        }
+
+        private void OnDisable()
+        {
+            _characterCore.OnDisable();
+            _characterAnimation.OnDisable();
+            _vfx.OnDisable();
+            _audio.OnDisable();
+
+        }
+
     }
 }
 

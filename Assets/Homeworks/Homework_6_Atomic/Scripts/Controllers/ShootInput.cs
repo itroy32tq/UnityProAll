@@ -1,14 +1,14 @@
 ﻿using System;
 using UnityEngine;
-using Zenject;
 
 namespace Assets.Homeworks.Homework_6_Atomic
 {
-    internal sealed class ShootController : ITickable
+    [Serializable]
+    internal sealed class ShootInput 
     {
         public event Action OnInputShootingHandler = delegate { };
 
-        public void Tick()
+        public void Update()
         {
             if (Input.GetMouseButtonDown(0))
             {

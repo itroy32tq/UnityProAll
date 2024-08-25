@@ -12,6 +12,9 @@ namespace Assets.Homeworks.Homework_6_Atomic
         public RotationComponent RotationComponent;
         public ShootComponent ShootComponent;
 
+        [SerializeField, HideInInspector] private MoveInput _moveInput;
+        [SerializeField, HideInInspector] private ShootInput _shootInput;
+
         [SerializeField] private Collider _collider;
         [SerializeField] private Transform _targetPoint;
 
@@ -19,6 +22,9 @@ namespace Assets.Homeworks.Homework_6_Atomic
 
         public void Compose()
         {
+            _moveInput.OnInputMovingHandler += Move;
+            _shootInput.OnInputShootingHandler += Shoot;
+
             MoveComponent.Compose();
             MoveComponent.AppendCondition(LifeComponent.IsAlive);
             // MoveComponent.AppendCondition(ShootComponent.CanFire.Invoke);
@@ -50,12 +56,32 @@ namespace Assets.Homeworks.Homework_6_Atomic
             LifeComponent.IsDead.Subscribe(isDead => _collider.enabled = !isDead);
         }
 
+        private void Shoot()
+        {
+            ShootComponent.ShootRequest.Invoke();
+        }
+
+        private void Move(Vector3 direction)
+        {
+            MoveComponent.MoveDirection.Value = direction;
+        }
+
         public void Update(float deltaTime)
         {
+            _moveInput.Update();
+            _shootInput.Update();
+
+
             MoveComponent.Update(deltaTime);
             ShootComponent.Update(deltaTime);
 
             _lookAtTargetMechanics.Update();
+        }
+
+        internal void OnDisable()
+        {
+            _moveInput.OnInputMovingHandler -= Move;
+            _shootInput.OnInputShootingHandler -= Shoot;
         }
     }
 }

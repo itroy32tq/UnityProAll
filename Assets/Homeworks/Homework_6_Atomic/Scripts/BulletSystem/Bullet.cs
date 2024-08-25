@@ -1,5 +1,6 @@
 ﻿using Atomic.Elements;
 using Atomic.Objects;
+using System;
 using UnityEngine;
 
 namespace Assets.Homeworks.Homework_6_Atomic
@@ -9,7 +10,8 @@ namespace Assets.Homeworks.Homework_6_Atomic
         [Get(MoveAPI.MOVE_DIRECTION)]
         public IAtomicVariable<Vector3> MoveDirection => MoveComponent.MoveDirection;
 
-        [SerializeField] private int _damage = 1;
+        private int _damage;
+
         [SerializeField] private MoveComponent MoveComponent;
 
         private void Awake()
@@ -31,6 +33,11 @@ namespace Assets.Homeworks.Homework_6_Atomic
                     action.Invoke(_damage);
                 }
             }
+        }
+
+        internal void SetDamage(int damage)
+        {
+            _damage = damage;
         }
     }
 }

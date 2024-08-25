@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Homeworks.Homework_6_Atomic
@@ -11,15 +7,46 @@ namespace Assets.Homeworks.Homework_6_Atomic
     internal sealed class CharacterAnimation
     {
         [SerializeField] private Animator _animator;
-        [SerializeField] private AnimatorDispatcher _animatorDispatcher;
+        private AnimatorDispatcher _animatorDispatcher;
 
         private CharacterCore _core;
 
-        private BoolAnimationMechanics _moveAnimationMechanics;
+        private MoveAnimationMechanics _moveAnimationMechanics;
         private BoolAnimationMechanics _boolAnimationMechanics;
         private ShootAnimationMechanics _shootAnimationMechanics;
 
         private static readonly int IsDead = Animator.StringToHash("IsDead");
-        private static readonly int IsMoving = Animator.StringToHash("IsMoving");
+
+        public void Compose(CharacterCore characterCore)
+        {
+            _animatorDispatcher = new AnimatorDispatcher();
+
+            _core = characterCore;
+
+            _moveAnimationMechanics =
+                new MoveAnimationMechanics(_core.MoveComponent.MoveDirection, _animator);
+
+            _boolAnimationMechanics =
+                new BoolAnimationMechanics(_core.LifeComponent.IsDead, _animator, IsDead);
+
+            _shootAnimationMechanics =
+                new ShootAnimationMechanics(_animator, _animatorDispatcher,
+                    _core.ShootComponent.ShootRequest, _core.ShootComponent.ShootAction,
+                    _core.ShootComponent.CanFire);
+        }
+
+        public void OnEnable()
+        {
+            _moveAnimationMechanics.OnEnable();
+            _boolAnimationMechanics.OnEnable();
+            _shootAnimationMechanics.OnEnable();
+        }
+
+        public void OnDisable()
+        {
+            _moveAnimationMechanics.OnDisable();
+            _boolAnimationMechanics.OnDisable();
+            _shootAnimationMechanics.OnDisable();
+        }
     }
 }

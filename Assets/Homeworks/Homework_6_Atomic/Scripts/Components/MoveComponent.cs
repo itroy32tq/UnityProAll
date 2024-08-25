@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Assets.Homeworks.Homework_6_Atomic
 {
+    [Serializable]
     internal sealed class MoveComponent
     {
         public AtomicVariable<Vector3> MoveDirection;
@@ -27,7 +28,7 @@ namespace Assets.Homeworks.Homework_6_Atomic
         {
             if (_condition.IsTrue() && _canMove)
             {
-                _root.position += MoveDirection.Value * _speed * deltaTime;
+                _root.position += _speed * deltaTime * MoveDirection.Value;
             }
         }
 

@@ -1,17 +1,17 @@
 ﻿using System;
 using UnityEngine;
-using Zenject;
 
 namespace Assets.Homeworks.Homework_6_Atomic
 {
-    internal sealed class MoveController : ITickable, IFixedTickable
+    [Serializable]
+    internal sealed class MoveInput
     {
-        public event Action OnInputShootingHandler;
 
-        public event Action<Vector3> OnInputMovingHandler = delegate { };
+        public event Action<Vector3> OnInputMovingHandler;
+
         private Vector3 _direction;
-       
-        public void Tick()
+
+        public void Update()
         {
             _direction = Vector3.zero;
 
@@ -31,16 +31,11 @@ namespace Assets.Homeworks.Homework_6_Atomic
             {
                 _direction = Vector3.right;
             }
-        }
 
-        public void FixedTick()
-        {
-            if (_direction == Vector3.zero)
-            {
-                return;
-            }
 
             OnInputMovingHandler.Invoke(_direction);
+
         }
+
     }
 }
