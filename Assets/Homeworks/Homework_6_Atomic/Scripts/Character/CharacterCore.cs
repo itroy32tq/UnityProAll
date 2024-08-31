@@ -20,7 +20,7 @@ namespace Assets.Homeworks.Homework_6_Atomic
 
         private LookAtTargetMechanics _lookAtTargetMechanics;
 
-        public void Compose()
+        public void Compose(BulletSystem bulletSystem)
         {
             _moveInput.OnInputMovingHandler += Move;
             _shootInput.OnInputShootingHandler += Shoot;
@@ -32,7 +32,7 @@ namespace Assets.Homeworks.Homework_6_Atomic
             RotationComponent.Construct();
             RotationComponent.AppendCondition(LifeComponent.IsAlive);
 
-            ShootComponent.Construct();
+            ShootComponent.Compose(bulletSystem);
 
             var targetPosition = new AtomicFunction<Vector3>(() =>
             {

@@ -40,10 +40,23 @@ namespace Assets.Homeworks.Homework_6_Atomic
 
         private void Awake()
         {
-            _characterCore.Compose();
+            
+        }
+
+        [Inject]
+        private void Construct(BulletSystem bulletSystem) 
+        {
+           
+
+            _characterCore.Compose(bulletSystem);
             _characterAnimation.Compose(_characterCore);
             _vfx.Compose(_characterCore);
             _audio.Compose(_characterCore);
+
+            _characterAnimation.OnEnable();
+            _vfx.OnEnable();
+            _audio.OnEnable();
+
         }
 
         private void Update()
@@ -51,12 +64,6 @@ namespace Assets.Homeworks.Homework_6_Atomic
             _characterCore.Update(Time.deltaTime);
         }
 
-        private void OnEnable()
-        {
-            _characterAnimation.OnEnable();
-            _vfx.OnEnable();
-            _audio.OnEnable();
-        }
 
         private void OnDisable()
         {

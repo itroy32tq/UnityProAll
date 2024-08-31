@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Homeworks.Homework_6_Atomic.Scripts
+namespace Assets.Homeworks.Homework_6_Atomic
 {
     internal struct BulletsArgs
     {

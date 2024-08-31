@@ -7,7 +7,7 @@ namespace Assets.Homeworks.Homework_6_Atomic
     internal sealed class CharacterAnimation
     {
         [SerializeField] private Animator _animator;
-        private AnimatorDispatcher _animatorDispatcher;
+        private AnimatorDispatcher _animatorDispatcher = new();
 
         private CharacterCore _core;
 
@@ -19,7 +19,6 @@ namespace Assets.Homeworks.Homework_6_Atomic
 
         public void Compose(CharacterCore characterCore)
         {
-            _animatorDispatcher = new AnimatorDispatcher();
 
             _core = characterCore;
 
@@ -31,8 +30,8 @@ namespace Assets.Homeworks.Homework_6_Atomic
 
             _shootAnimationMechanics =
                 new ShootAnimationMechanics(_animator, _animatorDispatcher,
-                    _core.ShootComponent.ShootRequest, _core.ShootComponent.ShootAction,
-                    _core.ShootComponent.CanFire);
+                    _core.ShootComponent.ShootRequest, _core.ShootComponent.ShootAction
+                    );
         }
 
         public void OnEnable()

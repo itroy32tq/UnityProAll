@@ -2,17 +2,26 @@
 using System.Linq;
 using UnityEngine;
 using Atomic.Extensions;
+using Zenject;
 
-namespace Assets.Homeworks.Homework_6_Atomic.Scripts
+namespace Assets.Homeworks.Homework_6_Atomic
 {
     internal sealed class BulletSystem : MonoBehaviour
     {
+        private readonly List<Bullet> _allBulletsList = new();
 
 
         private Pool<Bullet> _bulletPool;
-        private readonly List<Bullet> _allBulletsList = new();
-        private readonly LevelBounds _levelBounds;
-        
+        private LevelBounds _levelBounds;
+
+
+        [Inject]
+        public void Construct(Pool<Bullet> bulletPool, LevelBounds levelBounds)
+        {
+            _levelBounds = levelBounds;
+            _bulletPool = bulletPool;
+        }
+
 
         public void Create(BulletsArgs bulletsArgs)
         {
@@ -25,10 +34,14 @@ namespace Assets.Homeworks.Homework_6_Atomic.Scripts
                 {
                     moveDirection.Value = bulletsArgs.Direction;
                 }
+
+                _allBulletsList.Add(bullet);
+
+                bullet.OnBulletDestroyHandler += OnBulletCollision;
             }
         }
 
-        private void OnBulletCollision(Bullet bullet, Collision2D collision)
+        private void OnBulletCollision(Bullet bullet)
         {
             RemoveBullet(bullet);
         }
@@ -41,7 +54,7 @@ namespace Assets.Homeworks.Homework_6_Atomic.Scripts
             }
         }
 
-        public void OnFixedUpdate(float deltaTime)
+        public void FixedUpdate()
         {
             List<Bullet> notBoundsBullet = new();
 
@@ -63,7 +76,5 @@ namespace Assets.Homeworks.Homework_6_Atomic.Scripts
                 RemoveBullet(notBoundsBullet[i]);
             }
         }
-
-       
     }
 }

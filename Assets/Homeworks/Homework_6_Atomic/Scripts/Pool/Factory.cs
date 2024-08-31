@@ -1,7 +1,7 @@
 ﻿
 using UnityEngine;
 
-namespace Assets.Homeworks.Homework_6_Atomic.Scripts
+namespace Assets.Homeworks.Homework_6_Atomic
 {
     internal sealed class Factory<T> : IFactory<T> where T : MonoBehaviour
     {

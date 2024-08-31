@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-namespace Assets.Homeworks.Homework_6_Atomic.Scripts
+namespace Assets.Homeworks.Homework_6_Atomic
 {
     internal sealed class Pool<T> where T : MonoBehaviour
     {

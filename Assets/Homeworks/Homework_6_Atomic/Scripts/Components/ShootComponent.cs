@@ -1,9 +1,9 @@
-﻿using Assets.Homeworks.Homework_6_Atomic.Scripts;
-using Atomic.Elements;
+﻿using Atomic.Elements;
 using Atomic.Objects;
 using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Homeworks.Homework_6_Atomic
 {
@@ -31,11 +31,14 @@ namespace Assets.Homeworks.Homework_6_Atomic
         private BulletSystem _bulletSystem;
         [SerializeField] private int _damage = 1;
 
-        public void Construct()
+
+        public void Compose(BulletSystem bulletSystem)
         {
-            ShootAction?.Subscribe(Shoot);
+            ShootRequest?.Subscribe(Shoot);
             CanFire.Compose(() => _canFire && !_isReloading);
+            _bulletSystem = bulletSystem;
         }
+
 
         public void Update(float deltaTime)
         {

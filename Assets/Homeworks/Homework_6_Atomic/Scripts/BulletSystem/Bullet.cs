@@ -14,6 +14,8 @@ namespace Assets.Homeworks.Homework_6_Atomic
 
         [SerializeField] private MoveComponent MoveComponent;
 
+        public event Action<Bullet> OnBulletDestroyHandler;
+
         private void Awake()
         {
             MoveComponent.Compose();
@@ -32,6 +34,8 @@ namespace Assets.Homeworks.Homework_6_Atomic
                 {
                     action.Invoke(_damage);
                 }
+
+                OnBulletDestroyHandler.Invoke(this);
             }
         }
 
