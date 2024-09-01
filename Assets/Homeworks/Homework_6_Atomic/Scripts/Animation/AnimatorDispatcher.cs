@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets.Homeworks.Homework_6_Atomic
 {
-    internal sealed class AnimatorDispatcher
+    internal sealed class AnimatorDispatcher : MonoBehaviour
     {
         private readonly Dictionary<string, List<Action>> _actionsDictionary = new();
 

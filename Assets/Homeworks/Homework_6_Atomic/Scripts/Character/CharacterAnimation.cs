@@ -7,7 +7,7 @@ namespace Assets.Homeworks.Homework_6_Atomic
     internal sealed class CharacterAnimation
     {
         [SerializeField] private Animator _animator;
-        private AnimatorDispatcher _animatorDispatcher = new();
+        [SerializeField] private AnimatorDispatcher _animatorDispatcher;
 
         private CharacterCore _core;
 
@@ -15,7 +15,7 @@ namespace Assets.Homeworks.Homework_6_Atomic
         private BoolAnimationMechanics _boolAnimationMechanics;
         private ShootAnimationMechanics _shootAnimationMechanics;
 
-        private static readonly int IsDead = Animator.StringToHash("IsDead");
+        
 
         public void Compose(CharacterCore characterCore)
         {
@@ -26,12 +26,11 @@ namespace Assets.Homeworks.Homework_6_Atomic
                 new MoveAnimationMechanics(_core.MoveComponent.MoveDirection, _animator);
 
             _boolAnimationMechanics =
-                new BoolAnimationMechanics(_core.LifeComponent.IsDead, _animator, IsDead);
+                new BoolAnimationMechanics(_core.LifeComponent.IsDead, _animator);
 
             _shootAnimationMechanics =
                 new ShootAnimationMechanics(_animator, _animatorDispatcher,
-                    _core.ShootComponent.ShootRequest, _core.ShootComponent.ShootAction
-                    );
+                    _core.ShootComponent.ShootRequest, _core.ShootComponent.ShootAction, _core.ShootComponent.CanFire);
         }
 
         public void OnEnable()

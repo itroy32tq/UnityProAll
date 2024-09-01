@@ -7,13 +7,12 @@ namespace Assets.Homeworks.Homework_6_Atomic
     {
         private readonly IAtomicObservable<bool> _value;
         private readonly Animator _animator;
-        private readonly int _animatorKey;
+        private static readonly int IsDead = Animator.StringToHash("IsDead");
 
-        public BoolAnimationMechanics(IAtomicObservable<bool> value, Animator animator, int animatorKey)
+        public BoolAnimationMechanics(IAtomicObservable<bool> value, Animator animator)
         {
             _value = value;
             _animator = animator;
-            _animatorKey = animatorKey;
         }
 
         public void OnEnable()
@@ -28,7 +27,7 @@ namespace Assets.Homeworks.Homework_6_Atomic
 
         private void OnIsDeadChanged(bool isDead)
         {
-            _animator.SetBool(_animatorKey, isDead);
+            _animator.SetBool(IsDead, isDead);
         }
     }
 }

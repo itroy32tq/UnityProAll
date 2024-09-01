@@ -1,9 +1,7 @@
 ﻿using Atomic.Elements;
-using Atomic.Objects;
 using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
-using Zenject;
 
 namespace Assets.Homeworks.Homework_6_Atomic
 {
@@ -11,7 +9,9 @@ namespace Assets.Homeworks.Homework_6_Atomic
     internal sealed class ShootComponent
     {
         public AtomicEvent ShootRequest;
+
         public AtomicEvent ShootAction;
+
         public AtomicEvent ShootEvent;
 
         public AtomicFunction<bool> CanFire;
@@ -20,7 +20,7 @@ namespace Assets.Homeworks.Homework_6_Atomic
         [SerializeField] private bool _isReloading;
         [SerializeField] private bool _canFire;
 
-        [SerializeField] private AtomicEntity _bulletPrefab;
+
         [SerializeField] private Transform _firePoint;
 
         [ShowInInspector, ReadOnly]
@@ -34,7 +34,7 @@ namespace Assets.Homeworks.Homework_6_Atomic
 
         public void Compose(BulletSystem bulletSystem)
         {
-            ShootRequest?.Subscribe(Shoot);
+            ShootAction?.Subscribe(Shoot);
             CanFire.Compose(() => _canFire && !_isReloading);
             _bulletSystem = bulletSystem;
         }
