@@ -7,10 +7,10 @@ namespace Assets.Homeworks.Homework_6_Atomic
     [Serializable]
     internal sealed class CharacterCore
     {
-        public MoveComponent MoveComponent;
-        public LifeComponent LifeComponent;
-        public RotationComponent RotationComponent;
-        public ShootComponent ShootComponent;
+        [field: SerializeField] public MoveComponent MoveComponent { get; private set; }
+        [field: SerializeField] public LifeComponent LifeComponent { get; private set; }
+        [field: SerializeField] public RotationComponent RotationComponent { get; private set; }
+        [field: SerializeField] public ShootComponent ShootComponent { get; private set; }
 
         [SerializeField, HideInInspector] private MoveInput _moveInput;
         [SerializeField, HideInInspector] private ShootInput _shootInput;

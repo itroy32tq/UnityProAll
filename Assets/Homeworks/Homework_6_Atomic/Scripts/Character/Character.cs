@@ -6,20 +6,6 @@ using Zenject;
 
 namespace Assets.Homeworks.Homework_6_Atomic
 {
-    public class MoveAPI
-    {
-        public const string MOVE_DIRECTION = nameof(MOVE_DIRECTION);
-    }
-
-    public class ShootAPI
-    {
-        public const string SHOOT_REQUEST = nameof(SHOOT_REQUEST);
-    }
-
-    public class LifeAPI
-    {
-        public const string TAKE_DAMAGE_ACTION = nameof(TAKE_DAMAGE_ACTION);
-    }
 
     internal sealed class Character : AtomicEntity
     {
