@@ -16,27 +16,36 @@ namespace Assets.Homeworks.Homework_6_Atomic
 
         public AtomicFunction<bool> CanFire;
 
-        [SerializeField] private float _reloadTime = 2f;
+        [SerializeField] private float _reloadTime;
         [SerializeField] private bool _isReloading;
+
+        [SerializeField] private float _bulletsCraftTime;
         [SerializeField] private bool _canFire;
 
 
         [SerializeField] private Transform _firePoint;
 
-        [ShowInInspector, ReadOnly]
-        private float _reloadTimer;
+        [ShowInInspector, ReadOnly] private float _reloadTimer;
+        [ShowInInspector, ReadOnly] private float _bulletsCraftTimer;
 
         private readonly CompositeCondition _condition = new();
 
         private BulletSystem _bulletSystem;
+
         [SerializeField] private int _damage = 1;
+
+        [SerializeField] private int _bulletsCapacity = 5;
+        [ShowInInspector, ReadOnly]  private int _bulletsCount;
 
 
         public void Compose(BulletSystem bulletSystem)
         {
             ShootAction?.Subscribe(Shoot);
-            CanFire.Compose(() => _canFire && !_isReloading);
+            CanFire.Compose(() => _canFire && !_isReloading && (_bulletsCount > 0));
+            _bulletsCount = _bulletsCapacity;
             _bulletSystem = bulletSystem;
+
+            _bulletsCraftTimer = _bulletsCraftTime;
         }
 
 
@@ -51,6 +60,19 @@ namespace Assets.Homeworks.Homework_6_Atomic
                     _isReloading = false;
                 }
             }
+
+            if (_bulletsCount < _bulletsCapacity)
+            {
+                _bulletsCraftTimer -= deltaTime;
+
+
+                if (_bulletsCraftTimer <= 0)
+                {
+                    _bulletsCount++;
+                    _bulletsCraftTimer = _bulletsCraftTime;
+                }
+            }
+
         }
 
         public void Shoot()
@@ -60,6 +82,11 @@ namespace Assets.Homeworks.Homework_6_Atomic
                 return;
             }
 
+            if (_bulletsCount == 0)
+            { 
+            
+            }
+
             BulletsArgs bulletsArgs = new(_firePoint.transform.position,
                                           _firePoint.transform.rotation,
                                           _firePoint.forward,
@@ -67,7 +94,7 @@ namespace Assets.Homeworks.Homework_6_Atomic
 
             _bulletSystem.Create(bulletsArgs);
 
-            
+            _bulletsCount--;
 
             _reloadTimer = _reloadTime;
             _isReloading = true;

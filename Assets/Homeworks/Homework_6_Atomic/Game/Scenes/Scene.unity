@@ -916,13 +916,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1060751495}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.6427876, y: 0, z: 0, w: 0.7660445}
-  m_LocalPosition: {x: 0, y: 10, z: 0.04}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 9.69, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 80, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1125839404
 GameObject:
   m_ObjectHideFlags: 0
@@ -1173,7 +1173,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d99486d48f3a064fb85905f36ed04e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _camera: {fileID: 1060751498}
 --- !u!1001 &1356305587
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1609,6 +1608,7 @@ MonoBehaviour:
   _bulletSystemConfig: {fileID: 11400000, guid: 02ee9560180689b4ab760b22966954d6, type: 2}
   _bulletSystem: {fileID: 1479329820}
   _levelBounds: {fileID: 1192262377}
+  _mouseRotateInput: {fileID: 1345117758}
 --- !u!4 &1824358026
 Transform:
   m_ObjectHideFlags: 0
@@ -2035,7 +2035,7 @@ PrefabInstance:
       objectReference: {fileID: 341968963}
     - target: {fileID: 3719959085251843058, guid: fcf4cffa33c33f54d9f0d980c8c13605, type: 3}
       propertyPath: _characterCore.ShootComponent._reloadTime
-      value: 1
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 3719959085251843058, guid: fcf4cffa33c33f54d9f0d980c8c13605, type: 3}
       propertyPath: _characterCore.RotationComponent._canRotate
@@ -2049,6 +2049,14 @@ PrefabInstance:
       propertyPath: _characterCore.RotationComponent._rotationRoot
       value: 
       objectReference: {fileID: 3006422773054981825}
+    - target: {fileID: 3719959085251843058, guid: fcf4cffa33c33f54d9f0d980c8c13605, type: 3}
+      propertyPath: _characterCore.ShootComponent._bulletsCapacity
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3719959085251843058, guid: fcf4cffa33c33f54d9f0d980c8c13605, type: 3}
+      propertyPath: _characterCore.ShootComponent._bulletsCraftTime
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3719959085251843058, guid: fcf4cffa33c33f54d9f0d980c8c13605, type: 3}
       propertyPath: _characterCore.RotationComponent._rotateDirection.x
       value: 0
