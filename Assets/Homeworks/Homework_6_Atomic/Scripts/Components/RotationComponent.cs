@@ -1,4 +1,5 @@
 ﻿using Atomic.Elements;
+using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ namespace Assets.Homeworks.Homework_6_Atomic
 
         public AtomicAction<Vector3> RotateAction;
 
-        public void Construct()
+        public void Compose()
         {
             RotateAction.Compose(Rotate);
         }

@@ -44,11 +44,11 @@ namespace Assets.Homeworks.Homework_6_Atomic
         }
 
         [Inject]
-        private void Construct(BulletSystem bulletSystem) 
+        private void Construct(BulletSystem bulletSystem, MouseRotateInput mouseRotateInput) 
         {
            
 
-            _characterCore.Compose(bulletSystem);
+            _characterCore.Compose(bulletSystem, mouseRotateInput);
             _characterAnimation.Compose(_characterCore);
             _vfx.Compose(_characterCore);
             _audio.Compose(_characterCore);

@@ -8,6 +8,7 @@ namespace Assets.Homeworks.Homework_6_Atomic
         [SerializeField] private BulletSystemConfig _bulletSystemConfig;
         [SerializeField] private BulletSystem _bulletSystem;
         [SerializeField] private LevelBounds _levelBounds;
+        [SerializeField] private MouseRotateInput _mouseRotateInput;
 
 
         public override void InstallBindings()
@@ -32,7 +33,13 @@ namespace Assets.Homeworks.Homework_6_Atomic
                 AsSingle().
                 NonLazy();
 
-            
+            Container.
+                Bind<MouseRotateInput>().
+                FromInstance(_mouseRotateInput).
+                AsSingle().
+                NonLazy();
+
+
 
         }
 

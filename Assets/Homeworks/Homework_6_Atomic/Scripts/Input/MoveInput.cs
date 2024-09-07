@@ -15,19 +15,19 @@ namespace Assets.Homeworks.Homework_6_Atomic
         {
             _direction = Vector3.zero;
 
-            if (Input.GetKey(KeyCode.UpArrow))
+            if (Input.GetKey(KeyCode.W))
             {
                 _direction = Vector3.forward;
             }
-            else if (Input.GetKey(KeyCode.DownArrow))
+            else if (Input.GetKey(KeyCode.S))
             {
                 _direction = Vector3.back;
             }
-            else if (Input.GetKey(KeyCode.LeftArrow))
+            else if (Input.GetKey(KeyCode.A))
             {
                 _direction = Vector3.left;
             }
-            else if (Input.GetKey(KeyCode.RightArrow))
+            else if (Input.GetKey(KeyCode.D))
             {
                 _direction = Vector3.right;
             }

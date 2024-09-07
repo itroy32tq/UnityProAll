@@ -16,11 +16,11 @@ namespace Assets.Homeworks.Homework_6_Atomic
         [SerializeField, HideInInspector] private ShootInput _shootInput;
 
         [SerializeField] private Collider _collider;
-        [SerializeField] private Transform _targetPoint;
+        private Transform _targetPoint;
 
         private LookAtTargetMechanics _lookAtTargetMechanics;
 
-        public void Compose(BulletSystem bulletSystem)
+        public void Compose(BulletSystem bulletSystem, MouseRotateInput mouseRotateInput)
         {
             _moveInput.OnInputMovingHandler += Move;
             _shootInput.OnInputShootingHandler += Shoot;
@@ -29,10 +29,13 @@ namespace Assets.Homeworks.Homework_6_Atomic
             MoveComponent.AppendCondition(LifeComponent.IsAlive);
             // MoveComponent.AppendCondition(ShootComponent.CanFire.Invoke);
 
-            RotationComponent.Construct();
+            RotationComponent.Compose();
             RotationComponent.AppendCondition(LifeComponent.IsAlive);
 
             ShootComponent.Compose(bulletSystem);
+
+            _targetPoint = mouseRotateInput.transform;
+
 
             var targetPosition = new AtomicFunction<Vector3>(() =>
             {
@@ -56,6 +59,7 @@ namespace Assets.Homeworks.Homework_6_Atomic
             LifeComponent.IsDead.Subscribe(isDead => _collider.enabled = !isDead);
         }
 
+
         private void Shoot()
         {
             ShootComponent.ShootRequest.Invoke();
@@ -70,7 +74,6 @@ namespace Assets.Homeworks.Homework_6_Atomic
         {
             _moveInput.Update();
             _shootInput.Update();
-
 
             MoveComponent.Update(deltaTime);
             ShootComponent.Update(deltaTime);
