@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Sirenix.OdinInspector;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -6,18 +7,22 @@ namespace Assets.Homeworks.Homework_6_Atomic
 {
     internal sealed class ZombieSpawner: MonoBehaviour
     {
-        private ZombieSpawnerPositions _zombieSpawnerPositions;
+        [SerializeField] private ZombieSpawnerPositions _zombieSpawnerPositions;
+        [SerializeField] private Transform[] _spawnPositions;
         private Pool<Zombie> _zombiePool;
 
         private readonly List<Zombie> _activeEnemies = new();
-        private float _spawnDelay;
-        private float _timer;
+
+        [SerializeField] private float _spawnDelay;
+
+        [ShowInInspector,ReadOnly] private float _timer;
+
 
         [Inject]
-        public void Construct(Pool<Zombie> zombiePool, ZombieSpawnerPositions zombieSpawnerPositions)
+        public void Construct(Pool<Zombie> zombiePool)
         {
             _zombiePool = zombiePool;
-            _zombieSpawnerPositions = zombieSpawnerPositions;
+            _zombieSpawnerPositions = new ZombieSpawnerPositions(_spawnPositions);
         }
 
         private void RemoveEnemy(Zombie zombie)
@@ -25,13 +30,13 @@ namespace Assets.Homeworks.Homework_6_Atomic
             if (_activeEnemies.Remove(zombie))
             {
                 _zombiePool.Release(zombie);
-               // _zombie.OnEnemyDieingHandler -= RemoveEnemy;
+                zombie.OnEnemyDieingHandler -= RemoveEnemy;
             }
         }
 
-        public void SetRandomPosition(Zombie enemy)
+        public void SetRandomPosition(Zombie zombie)
         {
-            enemy.SetPosition(_zombieSpawnerPositions.RandomSpawnPosition());
+            zombie.transform.position = _zombieSpawnerPositions.RandomSpawnPosition();
         }
 
         public void OnUpdate(float deltaTime)
@@ -43,14 +48,16 @@ namespace Assets.Homeworks.Homework_6_Atomic
                 return;
             }
 
-            if (!_zombiePool.TryGet(out Zombie enemy))
+            if (!_zombiePool.TryGet(out Zombie zombie))
             {
                 return;
             }
 
-            SetRandomPosition(enemy);
-            _activeEnemies.Add(enemy);
-            //enemy.OnEnemyDieingHandler += RemoveEnemy;
+            SetRandomPosition(zombie);
+
+            _activeEnemies.Add(zombie);
+
+            zombie.OnEnemyDieingHandler += RemoveEnemy;
 
             _timer = 0f;
         }

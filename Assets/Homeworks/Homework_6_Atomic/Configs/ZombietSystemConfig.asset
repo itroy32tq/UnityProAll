@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da2dc5d32931a14da4f73c1b67077b5, type: 3}
+  m_Name: ZombietSystemConfig
+  m_EditorClassIdentifier: 
+  <Container>k__BackingField: {fileID: 2806558095938146031, guid: bf86686f4744628498865706a08dd2d9, type: 3}
+  <Prefab>k__BackingField: {fileID: 6370008647300191027, guid: 166a41cdd6d6c7944beb1a6b6cda63c9, type: 3}
+  <InitialCount>k__BackingField: 10

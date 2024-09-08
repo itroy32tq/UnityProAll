@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 9191607884724818247}
   - component: {fileID: 4115597767367318891}
   - component: {fileID: 3777719415966654952}
+  - component: {fileID: 6370008647300191027}
   m_Layer: 0
   m_Name: Zombie
   m_TagString: Untagged
@@ -117,6 +118,37 @@ CapsuleCollider:
   m_Height: 2.4435
   m_Direction: 1
   m_Center: {x: 0, y: 1.27, z: 0}
+--- !u!114 &6370008647300191027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5813398503241226130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da063fe6c70db204ebcc5dea428c9a26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _zombieCore:
+    <LifeComponent>k__BackingField:
+      IsDead:
+        value: 0
+      _hitPoints: 3
+    <MoveComponent>k__BackingField:
+      MoveDirection:
+        value: {x: 0, y: 0, z: 0}
+      IsMoving:
+        value: 1
+      _root: {fileID: 9191607884724818247}
+      _speed: 3
+      _canMove: 1
+    <RotationComponent>k__BackingField:
+      _rotationRoot: {fileID: 9191607884724818247}
+      _rotateDirection: {x: 0, y: 0, z: 0}
+      _rotateRate: 1
+      _canRotate: 1
+    _collider: {fileID: 3777719415966654952}
 --- !u!1 &8994754908063660442
 GameObject:
   m_ObjectHideFlags: 0
@@ -161,6 +193,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Chr_ZombieBoss_Wretch_01
       objectReference: {fileID: 0}
+    - target: {fileID: 4088770442080992, guid: a3029e28af10f4f458f5d25d6118a906, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.009700458
+      objectReference: {fileID: 0}
+    - target: {fileID: 4088770442080992, guid: a3029e28af10f4f458f5d25d6118a906, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.0035040758
+      objectReference: {fileID: 0}
     - target: {fileID: 4376485179048344, guid: a3029e28af10f4f458f5d25d6118a906, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -204,6 +244,14 @@ PrefabInstance:
     - target: {fileID: 4376485179048344, guid: a3029e28af10f4f458f5d25d6118a906, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4953690599616086, guid: a3029e28af10f4f458f5d25d6118a906, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4953690599616086, guid: a3029e28af10f4f458f5d25d6118a906, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3310429949319040486, guid: a3029e28af10f4f458f5d25d6118a906, type: 3}

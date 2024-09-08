@@ -52,7 +52,7 @@ namespace Assets.Homeworks.Homework_6_Atomic
 
         internal void OnDisable()
         {
-            throw new NotImplementedException();
+            return;
         }
 
         internal void Update(float deltaTime)

@@ -70,6 +70,7 @@ namespace ShootEmUp
             SetRandomPosition(enemy);
             SetRandomAttackPosition(enemy);
             _activeEnemies.Add(enemy);
+
             enemy.OnEnemyDieingHandler += RemoveEnemy;
 
             _timer = 0f;

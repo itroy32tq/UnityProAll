@@ -19,6 +19,8 @@ namespace Assets.Homeworks.Homework_6_Atomic
         [Get(MoveAPI.MOVE_DIRECTION)]
         public IAtomicVariable<Vector3> MoveDirection => _zombieCore.MoveComponent.MoveDirection;
 
+        public Action<Zombie> OnEnemyDieingHandler = delegate { };
+
         [Inject]
         private void Construct(Character character)
         {
@@ -32,6 +34,16 @@ namespace Assets.Homeworks.Homework_6_Atomic
             _vfx.OnEnable();
             _audio.OnEnable();
 
+            _zombieCore.LifeComponent.IsDead.Subscribe(OnDienig);
+
+        }
+
+        private void OnDienig(bool isDead)
+        {
+            if (isDead)
+            {
+                OnEnemyDieingHandler.Invoke(this);
+            }
         }
 
         private void Update()
@@ -48,9 +60,5 @@ namespace Assets.Homeworks.Homework_6_Atomic
 
         }
 
-        internal void SetPosition(object v)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
