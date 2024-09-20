@@ -11,61 +11,48 @@ namespace Assets.Homeworks.Homework_6_Atomic
         [SerializeField] private BulletSystem _bulletSystem;
         [SerializeField] private LevelBounds _levelBounds;
         [SerializeField] private MouseRotateInput _mouseRotateInput;
-
+        [SerializeField] private Character _character;
 
         public override void InstallBindings()
         {
-            var bulletPool = CreateBulletPool();
-            var zombiePool = CreateZombiePool();
+           
+            Container.
+                Bind<Character>().
+                FromInstance(_character).
+                AsSingle();
 
             Container.
-                Bind<Pool<Bullet>>().
-                FromInstance(bulletPool).
-                AsSingle().
-                NonLazy();
+                Bind<BulletSystemConfig>().
+                FromInstance(_bulletSystemConfig);
 
             Container.
-               Bind<Pool<Zombie>>().
-               FromInstance(zombiePool).
-               AsSingle().
-               NonLazy();
+               Bind<ZombieSpawnerConfig>().
+               FromInstance(_zombieSpawnerConfig);
+
+            Container.
+                BindMemoryPool<Bullet, BulletPool>().
+                WithInitialSize(_bulletSystemConfig.InitialCount).
+                FromComponentInNewPrefab(_bulletSystemConfig.Bullet).
+                UnderTransformGroup(nameof(BulletPool));
+
+            Container.
+                BindMemoryPool<Zombie, ZombiePool>().
+                WithInitialSize(_zombieSpawnerConfig.InitialCount).
+                FromComponentInNewPrefab(_zombieSpawnerConfig.Zombie).
+                UnderTransformGroup(nameof(ZombiePool));
 
             Container.
                 Bind<LevelBounds>().
-                FromInstance(_levelBounds).
-                AsSingle().
-                NonLazy();
+                FromInstance(_levelBounds);
 
             Container.
                 Bind<BulletSystem>().
-                FromInstance(_bulletSystem).
-                AsSingle().
-                NonLazy();
+                FromInstance(_bulletSystem);
 
             Container.
                 Bind<MouseRotateInput>().
-                FromInstance(_mouseRotateInput).
-                AsSingle().
-                NonLazy();
-
-
-
+                FromInstance(_mouseRotateInput);
         }
 
-        private Pool<Bullet> CreateBulletPool()
-        {
-            Transform container = Instantiate(_bulletSystemConfig.Container);
-            IFactory<Bullet> factory = new Factory<Bullet>(_bulletSystemConfig.Bullet, container);
-            return new(_bulletSystemConfig.InitialCount, factory);
-
-        }
-
-        private Pool<Zombie> CreateZombiePool()
-        {
-            Transform container = Instantiate(_zombieSpawnerConfig.Container);
-            IFactory<Zombie> factory = new Factory<Zombie>(_zombieSpawnerConfig.Prefab, container);
-            return new(_zombieSpawnerConfig.InitialCount, factory);
-
-        }
     }
 }

@@ -7,9 +7,9 @@ namespace Assets.Homeworks.Homework_6_Atomic
 {
     internal sealed class ZombieSpawner: MonoBehaviour
     {
-        [SerializeField] private ZombieSpawnerPositions _zombieSpawnerPositions;
+        private ZombieSpawnerPositions _zombieSpawnerPositions;
         [SerializeField] private Transform[] _spawnPositions;
-        private Pool<Zombie> _zombiePool;
+        private ZombiePool _zombiePool;
 
         private readonly List<Zombie> _activeEnemies = new();
 
@@ -19,7 +19,7 @@ namespace Assets.Homeworks.Homework_6_Atomic
 
 
         [Inject]
-        public void Construct(Pool<Zombie> zombiePool)
+        public void Construct(ZombiePool zombiePool)
         {
             _zombiePool = zombiePool;
             _zombieSpawnerPositions = new ZombieSpawnerPositions(_spawnPositions);
@@ -29,7 +29,7 @@ namespace Assets.Homeworks.Homework_6_Atomic
         {
             if (_activeEnemies.Remove(zombie))
             {
-                _zombiePool.Release(zombie);
+                _zombiePool.Despawn(zombie);
                 zombie.OnEnemyDieingHandler -= RemoveEnemy;
             }
         }
@@ -39,19 +39,16 @@ namespace Assets.Homeworks.Homework_6_Atomic
             zombie.transform.position = _zombieSpawnerPositions.RandomSpawnPosition();
         }
 
-        public void OnUpdate(float deltaTime)
+        public void Update()
         {
-            _timer += deltaTime;
+            _timer += Time.deltaTime;
 
             if (_timer < _spawnDelay || _zombiePool == null)
             {
                 return;
             }
 
-            if (!_zombiePool.TryGet(out Zombie zombie))
-            {
-                return;
-            }
+            Zombie zombie = _zombiePool.Spawn();
 
             SetRandomPosition(zombie);
 

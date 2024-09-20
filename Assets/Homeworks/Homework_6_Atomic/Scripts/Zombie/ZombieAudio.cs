@@ -1,22 +1,29 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Assets.Homeworks.Homework_6_Atomic
 {
+    [Serializable]
     internal class ZombieAudio
     {
+        [SerializeField] private AudioSource _audioSource;
+        [SerializeField] private AudioClip _shootSfx;
+
+        private ZombieCore _core;
+
         internal void Compose(ZombieCore zombieCore)
         {
-            throw new NotImplementedException();
+            _core = zombieCore;
         }
 
         internal void OnDisable()
         {
-            throw new NotImplementedException();
+            
         }
 
         internal void OnEnable()
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

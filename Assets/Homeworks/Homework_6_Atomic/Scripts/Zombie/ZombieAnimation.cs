@@ -1,22 +1,43 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Assets.Homeworks.Homework_6_Atomic
 {
+    [Serializable]
     internal class ZombieAnimation
     {
-        internal void Compose(object characterCore)
+        [SerializeField] private Animator _animator;
+        [SerializeField] private AnimatorDispatcher _animatorDispatcher;
+
+        private ZombieCore _core;
+
+        private MoveAnimationMechanics _moveAnimationMechanics;
+        private BoolAnimationMechanics _boolAnimationMechanics;
+        private ShootAnimationMechanics _shootAnimationMechanics;
+
+        internal void Compose(ZombieCore core)
         {
-            throw new NotImplementedException();
+            _core = core;
+
+            _moveAnimationMechanics =
+                new MoveAnimationMechanics(_core.MoveComponent.MoveDirection, _animator);
+
+            _boolAnimationMechanics =
+                new BoolAnimationMechanics(_core.LifeComponent.IsDead, _animator);
+
         }
 
         internal void OnDisable()
         {
-            throw new NotImplementedException();
+            _moveAnimationMechanics?.OnDisable();
+            _boolAnimationMechanics?.OnDisable();
         }
 
         internal void OnEnable()
         {
-            throw new NotImplementedException();
+            
+            _moveAnimationMechanics.OnEnable();
+            _boolAnimationMechanics.OnEnable();
         }
     }
 }

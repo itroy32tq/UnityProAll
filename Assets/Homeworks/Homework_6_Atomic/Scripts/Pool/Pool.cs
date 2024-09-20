@@ -1,18 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Homeworks.Homework_6_Atomic
 {
     internal sealed class Pool<T> where T : MonoBehaviour
     {
         private readonly Queue<T> _items;
-        private readonly IFactory<T> _factory;
+        private readonly PlaceholderFactory<T> _factory;
 
-        public Pool(int size, IFactory<T> factory)
+        public Pool(int size, DiContainer diContainer)
         {
             _items = new Queue<T>(size);
-            _factory = factory;
+            _factory = diContainer.Resolve<PlaceholderFactory<T>>();
 
             for (int i = 0; i < size; i++)
             {

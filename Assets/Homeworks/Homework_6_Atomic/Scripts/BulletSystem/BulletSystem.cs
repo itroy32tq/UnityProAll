@@ -11,12 +11,12 @@ namespace Assets.Homeworks.Homework_6_Atomic
         private readonly List<Bullet> _allBulletsList = new();
 
 
-        private Pool<Bullet> _bulletPool;
+        private BulletPool _bulletPool;
         private LevelBounds _levelBounds;
 
 
         [Inject]
-        public void Construct(Pool<Bullet> bulletPool, LevelBounds levelBounds)
+        public void Construct(BulletPool bulletPool, LevelBounds levelBounds)
         {
             _levelBounds = levelBounds;
             _bulletPool = bulletPool;
@@ -25,20 +25,19 @@ namespace Assets.Homeworks.Homework_6_Atomic
 
         public void Create(BulletsArgs bulletsArgs)
         {
-            if (_bulletPool.TryGet(out Bullet bullet))
+            var bullet = _bulletPool.Spawn();
+
+            bullet.transform.SetPositionAndRotation(bulletsArgs.Position, bulletsArgs.Rotation);
+            bullet.SetDamage(bulletsArgs.Damage);
+
+            if (bullet.TryGetVariable<Vector3>(MoveAPI.MOVE_DIRECTION, out var moveDirection))
             {
-                bullet.transform.SetPositionAndRotation(bulletsArgs.Position, bulletsArgs.Rotation);
-                bullet.SetDamage(bulletsArgs.Damage);
-
-                if (bullet.TryGetVariable<Vector3>(MoveAPI.MOVE_DIRECTION, out var moveDirection))
-                {
-                    moveDirection.Value = bulletsArgs.Direction;
-                }
-
-                _allBulletsList.Add(bullet);
-
-                bullet.OnBulletDestroyHandler += OnBulletCollision;
+                moveDirection.Value = bulletsArgs.Direction;
             }
+
+            _allBulletsList.Add(bullet);
+
+            bullet.OnBulletDestroyHandler += OnBulletCollision;
         }
 
         private void OnBulletCollision(Bullet bullet)
@@ -50,7 +49,7 @@ namespace Assets.Homeworks.Homework_6_Atomic
         {
             if (_allBulletsList.Remove(bullet))
             {
-                _bulletPool.Release(bullet);
+                _bulletPool.Despawn(bullet);
             }
         }
 

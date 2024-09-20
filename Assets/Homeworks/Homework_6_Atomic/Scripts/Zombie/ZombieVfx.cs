@@ -1,22 +1,35 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Assets.Homeworks.Homework_6_Atomic
 {
+    [Serializable]
     internal class ZombieVfx
     {
+        [SerializeField] private ParticleSystem _takeDamageVfx;
+
+        private ZombieCore _zombieCore;
+
         internal void Compose(ZombieCore zombieCore)
         {
-            throw new NotImplementedException();
+            _zombieCore = zombieCore;
         }
 
         internal void OnDisable()
         {
-            throw new NotImplementedException();
+            
+            _zombieCore?.LifeComponent.TakeDamageEvent?.Unsubscribe(OnTakeDamage);
         }
 
         internal void OnEnable()
         {
-            throw new NotImplementedException();
+            _zombieCore.LifeComponent.TakeDamageEvent.Subscribe(OnTakeDamage);
+        }
+
+        private void OnTakeDamage(int damage)
+        {
+            //Обработка с учетом урона
+            _takeDamageVfx.Play();
         }
     }
 }

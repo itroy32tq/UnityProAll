@@ -21,8 +21,8 @@ namespace Assets.Homeworks.Homework_6_Atomic
 
         public Action<Zombie> OnEnemyDieingHandler = delegate { };
 
-        [Inject]
-        private void Construct(Character character)
+        
+        public void Construct(Character character)
         {
 
             _zombieCore.Compose(character);
