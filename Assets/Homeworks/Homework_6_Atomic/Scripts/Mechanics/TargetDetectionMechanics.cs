@@ -1,4 +1,5 @@
 ﻿using Atomic.Elements;
+using System;
 using UnityEngine;
 
 namespace Assets.Homeworks.Homework_6_Atomic
@@ -9,6 +10,7 @@ namespace Assets.Homeworks.Homework_6_Atomic
         private readonly IAtomicValue<float> _radius;
         private readonly IAtomicValue<Vector3> _myPosition;
         private readonly IAtomicValue<LayerMask> _layerMask;
+        private readonly Collider[] _colliders = Array.Empty<Collider>();
 
         public TargetDetectionMechanics(
             IAtomicValue<float> radius,
@@ -24,11 +26,18 @@ namespace Assets.Homeworks.Homework_6_Atomic
 
         public void FixedUpdate()
         {
-            var colliders = Physics.OverlapSphere(_myPosition.Value, _radius.Value, _layerMask.Value);
+            
+            int numColliders = Physics.OverlapSphereNonAlloc(_myPosition.Value, _radius.Value, _colliders, _layerMask.Value);
+
+            if (numColliders == 0)
+            {
+                return;
+            }
+
             var minDistance = float.MaxValue;
             GameObject target = null;
 
-            foreach (var collider in colliders)
+            foreach (var collider in _colliders)
             {
                 var obj = collider.gameObject;
                 var distance = (obj.transform.position - _myPosition.Value).sqrMagnitude;

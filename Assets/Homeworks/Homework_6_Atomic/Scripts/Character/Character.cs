@@ -18,6 +18,9 @@ namespace Assets.Homeworks.Homework_6_Atomic
         [Get(LifeAPI.TAKE_DAMAGE_ACTION)]
         public IAtomicAction<int> TakeDamageAction => _characterCore.LifeComponent.TakeDamageAction;
 
+        [Get(LifeAPI.IS_DEAD)]
+        public IAtomicVariable<bool> IsDead => _characterCore.LifeComponent.IsDead;
+
 
         [SerializeField] private CharacterCore _characterCore;
         [SerializeField] private CharacterAnimation _characterAnimation;

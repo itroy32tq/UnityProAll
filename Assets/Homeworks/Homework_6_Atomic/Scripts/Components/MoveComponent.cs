@@ -9,6 +9,7 @@ namespace Assets.Homeworks.Homework_6_Atomic
     {
         public AtomicVariable<Vector3> MoveDirection;
         public AtomicVariable<bool> IsMoving;
+        public Transform MoveRoot => _root;
 
         [SerializeField] private Transform _root;
         [SerializeField] private float _speed = 3f;

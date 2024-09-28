@@ -13,7 +13,7 @@ namespace Assets.Homeworks.Homework_6_Atomic
 
         [SerializeField] private Collider _collider;
         private Transform _targetPoint;
-        private LookAtTargetMechanics _lookAtTargetMechanics;
+        private FollowAtTargetMechanics _lookAtTargetMechanics;
 
         internal void Compose(Character character)
         {
@@ -35,18 +35,11 @@ namespace Assets.Homeworks.Homework_6_Atomic
                 return RotationComponent.RotationRoot.position;
             });
 
-            var hasTarget = new AtomicFunction<bool>(() =>
-            {
-                return _targetPoint != null;
-            });
 
-            _lookAtTargetMechanics =
-               new LookAtTargetMechanics(RotationComponent.RotateAction, targetPosition,
-                   rootPosition, hasTarget);
+            _lookAtTargetMechanics = new FollowAtTargetMechanics(RotationComponent.RotateAction, targetPosition, rootPosition);
+            _lookAtTargetMechanics.AppendCondition(() => _targetPoint != null);
 
             LifeComponent.IsDead.Subscribe(isDead => _collider.enabled = !isDead);
-
-
 
         }
 
