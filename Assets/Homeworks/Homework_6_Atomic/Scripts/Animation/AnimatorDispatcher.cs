@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets.Homeworks.Homework_6_Atomic
@@ -32,7 +33,7 @@ namespace Assets.Homeworks.Homework_6_Atomic
 
             if (_actionsDictionary.TryGetValue(actionKey, out var actionsList))
             {
-                foreach (var action in actionsList)
+                foreach (var action in actionsList.ToList())
                 {
                     action?.Invoke();
                 }

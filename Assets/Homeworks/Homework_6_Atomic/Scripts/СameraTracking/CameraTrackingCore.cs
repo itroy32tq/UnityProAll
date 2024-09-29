@@ -12,6 +12,7 @@ namespace Assets.Homeworks.Homework_6_Atomic
         private FollowAtTargetMechanics _followToTargetMechanics;
 
         [SerializeField] private float _followDistance;
+        [SerializeField] private float _followLuft;
 
         [field: SerializeField] public MoveComponent MoveComponent { get; private set; }
         [field: SerializeField] public RotationComponent RotationComponent { get; private set; }
@@ -43,7 +44,7 @@ namespace Assets.Homeworks.Homework_6_Atomic
 
             var moveAction = new AtomicAction<Vector3>((Vector3 direction) =>
             {
-                MoveComponent.MoveDirection.Value = direction;
+                MoveComponent.MoveDirection.Value = new Vector3(direction.x, 0, direction.z);
             });
 
             _followToTargetMechanics = new FollowAtTargetMechanics(moveAction, targetPosition, rootPosition);
@@ -53,7 +54,7 @@ namespace Assets.Homeworks.Homework_6_Atomic
             {
                 float distance = Vector3.Distance(_targetPoint.position, MoveComponent.MoveRoot.position);
 
-                return distance > _followDistance;
+                return distance - _followDistance > 1;
             });
         }
 

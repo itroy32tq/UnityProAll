@@ -1,5 +1,6 @@
 ﻿using Atomic.Elements;
 using Atomic.Objects;
+using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
 using Zenject;
@@ -26,6 +27,9 @@ namespace Assets.Homeworks.Homework_6_Atomic
         {
 
             _zombieCore.Compose(character);
+
+            _zombieCore.LifeComponent.DethAction.Subscribe(OnDienig);
+
             _zombieAnimation.Compose(_zombieCore);
             _vfx.Compose(_zombieCore);
             _audio.Compose(_zombieCore);
@@ -34,16 +38,20 @@ namespace Assets.Homeworks.Homework_6_Atomic
             _vfx.OnEnable();
             _audio.OnEnable();
 
-            _zombieCore.LifeComponent.IsDead.Subscribe(OnDienig);
+            
 
         }
 
-        private void OnDienig(bool isDead)
+        [Button]
+        private void Die()
         {
-            if (isDead)
-            {
-                OnEnemyDieingHandler.Invoke(this);
-            }
+            _zombieCore.LifeComponent.IsDead.Value = true;
+            _zombieCore.LifeComponent.DethRequest.Invoke();
+        }
+
+        private void OnDienig()
+        {
+            OnEnemyDieingHandler.Invoke(this);
         }
 
         private void Update()

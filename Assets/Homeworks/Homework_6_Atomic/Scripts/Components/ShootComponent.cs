@@ -41,7 +41,9 @@ namespace Assets.Homeworks.Homework_6_Atomic
         public void Compose(BulletSystem bulletSystem)
         {
             ShootAction?.Subscribe(Shoot);
+
             CanFire.Compose(() => _canFire && !_isReloading && (_bulletsCount > 0));
+
             _bulletsCount = _bulletsCapacity;
             _bulletSystem = bulletSystem;
 
@@ -82,10 +84,6 @@ namespace Assets.Homeworks.Homework_6_Atomic
                 return;
             }
 
-            if (_bulletsCount == 0)
-            { 
-            
-            }
 
             BulletsArgs bulletsArgs = new(_firePoint.transform.position,
                                           _firePoint.transform.rotation,

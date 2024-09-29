@@ -134,14 +134,14 @@ MonoBehaviour:
     <LifeComponent>k__BackingField:
       IsDead:
         value: 0
-      _hitPoints: 3
+      _hitPoints: 1
     <MoveComponent>k__BackingField:
       MoveDirection:
         value: {x: 0, y: 0, z: 0}
       IsMoving:
         value: 1
       _root: {fileID: 9191607884724818247}
-      _speed: 3
+      _speed: 1
       _canMove: 1
     <RotationComponent>k__BackingField:
       _rotationRoot: {fileID: 9191607884724818247}
@@ -149,11 +149,11 @@ MonoBehaviour:
       _rotateRate: 1
       _canRotate: 1
     _collider: {fileID: 3777719415966654952}
+    _followDistance: 1
   _zombieAnimation:
     _animator: {fileID: 1058778559581622112}
     _animatorDispatcher: {fileID: 5776576555362311897}
   _vfx:
-    _muzzleVfx: {fileID: 4550199300310987808}
     _takeDamageVfx: {fileID: 4550199300311008662}
   _audio:
     _audioSource: {fileID: 0}
@@ -395,11 +395,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9bf0b90e6d2294a4c8186ac5febf7653, type: 3}
---- !u!198 &4550199300310987808 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 19816760, guid: 9bf0b90e6d2294a4c8186ac5febf7653, type: 3}
-  m_PrefabInstance: {fileID: 4550199300330231064}
-  m_PrefabAsset: {fileID: 0}
 --- !u!198 &4550199300311008662 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 19845262, guid: 9bf0b90e6d2294a4c8186ac5febf7653, type: 3}

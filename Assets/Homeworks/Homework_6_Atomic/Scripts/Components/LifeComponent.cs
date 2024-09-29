@@ -14,6 +14,9 @@ namespace Assets.Homeworks.Homework_6_Atomic
 
         public AtomicVariable<bool> IsDead;
 
+        public AtomicEvent DethRequest;
+        public AtomicEvent DethAction;
+
         [SerializeField] private int _hitPoints;
 
         public void Compose()
@@ -41,6 +44,8 @@ namespace Assets.Homeworks.Homework_6_Atomic
             if (_hitPoints <= 0)
             {
                 IsDead.Value = true;
+                DethRequest.Invoke();
+                
             }
         }
     }

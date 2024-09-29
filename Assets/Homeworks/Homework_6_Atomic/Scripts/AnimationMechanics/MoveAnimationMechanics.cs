@@ -31,7 +31,16 @@ namespace Assets.Homeworks.Homework_6_Atomic
         private void OnMoveDirectionChanged(Vector3 moveDirection)
         {
             Debug.Log("move direction changed");
-            _animator.SetBool(IsMoving, moveDirection != Vector3.zero);
+
+            if (moveDirection == Vector3.zero)
+            {
+                _animator.SetBool(IsMoving, false);
+            }
+            else
+            {
+                _animator.SetBool(IsMoving, true);
+            }
+            
         }
     }
 }

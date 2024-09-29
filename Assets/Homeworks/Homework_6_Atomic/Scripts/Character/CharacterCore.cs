@@ -25,6 +25,8 @@ namespace Assets.Homeworks.Homework_6_Atomic
             _moveInput.OnInputMovingHandler += Move;
             _shootInput.OnInputShootingHandler += Shoot;
 
+            LifeComponent.Compose();
+
             MoveComponent.Compose();
             MoveComponent.AppendCondition(LifeComponent.IsAlive);
 

@@ -29,8 +29,9 @@ namespace Assets.Homeworks.Homework_6_Atomic
         {
             if (_activeEnemies.Remove(zombie))
             {
-                _zombiePool.Despawn(zombie);
+                
                 zombie.OnEnemyDieingHandler -= RemoveEnemy;
+                _zombiePool.Despawn(zombie);
             }
         }
 

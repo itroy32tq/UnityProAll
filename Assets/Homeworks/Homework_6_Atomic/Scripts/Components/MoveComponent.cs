@@ -31,6 +31,10 @@ namespace Assets.Homeworks.Homework_6_Atomic
             {
                 _root.position += _speed * deltaTime * MoveDirection.Value;
             }
+            else
+            {
+                MoveDirection.Value = Vector3.zero;
+            }
         }
 
         public void AppendCondition(Func<bool> condition)

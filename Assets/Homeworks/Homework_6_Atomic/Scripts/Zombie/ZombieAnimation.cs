@@ -12,8 +12,7 @@ namespace Assets.Homeworks.Homework_6_Atomic
         private ZombieCore _core;
 
         private MoveAnimationMechanics _moveAnimationMechanics;
-        private BoolAnimationMechanics _boolAnimationMechanics;
-        private ShootAnimationMechanics _shootAnimationMechanics;
+        private DethAnimationMechanics _dethAnimationMechanics;
 
         internal void Compose(ZombieCore core)
         {
@@ -22,22 +21,23 @@ namespace Assets.Homeworks.Homework_6_Atomic
             _moveAnimationMechanics =
                 new MoveAnimationMechanics(_core.MoveComponent.MoveDirection, _animator);
 
-            _boolAnimationMechanics =
-                new BoolAnimationMechanics(_core.LifeComponent.IsDead, _animator);
+            _dethAnimationMechanics =
+                new DethAnimationMechanics(_animator, _animatorDispatcher,
+                    _core.LifeComponent.DethRequest, _core.LifeComponent.DethAction, _core.LifeComponent.IsDead);
 
         }
 
         internal void OnDisable()
         {
             _moveAnimationMechanics?.OnDisable();
-            _boolAnimationMechanics?.OnDisable();
+            _dethAnimationMechanics?.OnDisable();
         }
 
         internal void OnEnable()
         {
             
             _moveAnimationMechanics.OnEnable();
-            _boolAnimationMechanics.OnEnable();
+            _dethAnimationMechanics.OnEnable();
         }
     }
 }

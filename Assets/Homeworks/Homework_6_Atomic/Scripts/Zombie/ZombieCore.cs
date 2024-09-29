@@ -12,11 +12,16 @@ namespace Assets.Homeworks.Homework_6_Atomic
         [field: SerializeField] public RotationComponent RotationComponent { get; private set; }
 
         [SerializeField] private Collider _collider;
+        [SerializeField] private float _followDistance;
+
         private Transform _targetPoint;
         private FollowAtTargetMechanics _lookAtTargetMechanics;
+        private FollowAtTargetMechanics _followToTargetMechanics;
 
         internal void Compose(Character character)
         {
+            LifeComponent.Compose();
+
             MoveComponent.Compose();
             MoveComponent.AppendCondition(LifeComponent.IsAlive);
 
@@ -25,6 +30,15 @@ namespace Assets.Homeworks.Homework_6_Atomic
 
             _targetPoint = character.transform;
 
+            ConfigLookAtMechanics();
+            ConfigFollowAtMechanics();
+
+            LifeComponent.IsDead.Subscribe(isDead => _collider.enabled = !isDead);
+
+        }
+
+        private void ConfigLookAtMechanics()
+        {
             var targetPosition = new AtomicFunction<Vector3>(() =>
             {
                 return _targetPoint.position;
@@ -37,10 +51,39 @@ namespace Assets.Homeworks.Homework_6_Atomic
 
 
             _lookAtTargetMechanics = new FollowAtTargetMechanics(RotationComponent.RotateAction, targetPosition, rootPosition);
+
             _lookAtTargetMechanics.AppendCondition(() => _targetPoint != null);
+        }
 
-            LifeComponent.IsDead.Subscribe(isDead => _collider.enabled = !isDead);
+        private void ConfigFollowAtMechanics()
+        {
+            var targetPosition = new AtomicFunction<Vector3>(() =>
+            {
+                return _targetPoint.position;
+            });
 
+            var rootPosition = new AtomicFunction<Vector3>(() =>
+            {
+                return MoveComponent.MoveRoot.position;
+            });
+
+            var moveAction = new AtomicAction<Vector3>((Vector3 direction) =>
+            {
+                MoveComponent.MoveDirection.Value = direction;
+            });
+
+            _followToTargetMechanics = new FollowAtTargetMechanics(moveAction, targetPosition, rootPosition);
+
+            _followToTargetMechanics.AppendCondition(() => _targetPoint != null);
+
+            _followToTargetMechanics.AppendCondition(LifeComponent.IsAlive);
+
+            _followToTargetMechanics.AppendCondition(() =>
+            {
+                float distance = Vector3.Distance(_targetPoint.position, MoveComponent.MoveRoot.position);
+
+                return distance > _followDistance;
+            });
         }
 
         internal void OnDisable()
@@ -51,7 +94,9 @@ namespace Assets.Homeworks.Homework_6_Atomic
         internal void Update(float deltaTime)
         {
             MoveComponent.Update(deltaTime);
+
             _lookAtTargetMechanics.Update();
+            _followToTargetMechanics.Update();
         }
     }
 }
