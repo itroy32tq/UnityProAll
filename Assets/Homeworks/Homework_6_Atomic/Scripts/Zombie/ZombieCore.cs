@@ -10,9 +10,11 @@ namespace Assets.Homeworks.Homework_6_Atomic
         [field: SerializeField] public LifeComponent LifeComponent { get; internal set; }
         [field: SerializeField] public MoveComponent MoveComponent { get; internal set; }
         [field: SerializeField] public RotationComponent RotationComponent { get; private set; }
+        [field: SerializeField] public ZombyAttackComponent ZombyAttackComponent { get; private set; }
 
         [SerializeField] private Collider _collider;
         [SerializeField] private float _followDistance;
+        
 
         private Transform _targetPoint;
         private FollowAtTargetMechanics _lookAtTargetMechanics;
@@ -20,6 +22,8 @@ namespace Assets.Homeworks.Homework_6_Atomic
 
         internal void Compose(Character character)
         {
+            _targetPoint = character.transform;
+
             LifeComponent.Compose();
 
             MoveComponent.Compose();
@@ -28,7 +32,11 @@ namespace Assets.Homeworks.Homework_6_Atomic
             RotationComponent.Compose();
             RotationComponent.AppendCondition(LifeComponent.IsAlive);
 
-            _targetPoint = character.transform;
+            ZombyAttackComponent.Compose(_targetPoint.gameObject);
+            ZombyAttackComponent.AppendCondition(LifeComponent.IsAlive);
+            
+
+            
 
             ConfigLookAtMechanics();
             ConfigFollowAtMechanics();
@@ -94,6 +102,7 @@ namespace Assets.Homeworks.Homework_6_Atomic
         internal void Update(float deltaTime)
         {
             MoveComponent.Update(deltaTime);
+            ZombyAttackComponent.Update(deltaTime);
 
             _lookAtTargetMechanics.Update();
             _followToTargetMechanics.Update();
