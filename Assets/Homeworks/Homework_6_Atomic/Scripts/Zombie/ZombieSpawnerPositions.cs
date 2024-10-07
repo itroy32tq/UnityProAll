@@ -7,7 +7,6 @@ namespace Assets.Homeworks.Homework_6_Atomic
     internal sealed class ZombieSpawnerPositions
     {
         private readonly Transform[] _spawnPositions;
-
         public ZombieSpawnerPositions(Transform[] spawnPositions)
         {
             _spawnPositions = spawnPositions;

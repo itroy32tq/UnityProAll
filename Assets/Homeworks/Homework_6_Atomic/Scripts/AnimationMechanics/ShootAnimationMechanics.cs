@@ -7,10 +7,10 @@ namespace Assets.Homeworks.Homework_6_Atomic
     {
         private readonly Animator _animator;
         private readonly AnimatorDispatcher _animatorDispatcher;
-
         private readonly IAtomicObservable _shootRequest;
         private readonly IAtomicAction _shootAction;
         private readonly IAtomicValue<bool> _canFire;
+        private static readonly int Shoot = Animator.StringToHash("Shoot");
 
         public ShootAnimationMechanics(
             Animator animator,
@@ -29,20 +29,20 @@ namespace Assets.Homeworks.Homework_6_Atomic
         public void OnEnable()
         {
             _shootRequest.Subscribe(OnShootEvent);
-            _animatorDispatcher.SubscribeOnEvent("shoot", _shootAction.Invoke);
+            _animatorDispatcher.SubscribeOnEvent(Shoot, _shootAction.Invoke);
         }
 
         public void OnDisable()
         {
             _shootRequest.Unsubscribe(OnShootEvent);
-            _animatorDispatcher.UnsubscribeOnEvent("shoot", _shootAction.Invoke);
+            _animatorDispatcher.UnsubscribeOnEvent(Shoot, _shootAction.Invoke);
         }
 
         private void OnShootEvent()
         {
             if (_canFire.Value)
             {
-                _animator.SetTrigger("Shoot");
+                _animator.SetTrigger(Shoot);
             }
 
         }

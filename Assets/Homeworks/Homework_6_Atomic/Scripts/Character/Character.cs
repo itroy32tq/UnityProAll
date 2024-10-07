@@ -1,12 +1,12 @@
 using Atomic.Elements;
 using Atomic.Objects;
+using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 using Zenject;
 
 
 namespace Assets.Homeworks.Homework_6_Atomic
 {
-
     internal sealed class Character : AtomicEntity
     {
         [Get(MoveAPI.MOVE_DIRECTION)]
@@ -21,22 +21,15 @@ namespace Assets.Homeworks.Homework_6_Atomic
         [Get(LifeAPI.IS_DEAD)]
         public IAtomicVariable<bool> IsDead => _characterCore.LifeComponent.IsDead;
 
-
         [SerializeField] private CharacterCore _characterCore;
         [SerializeField] private CharacterAnimation _characterAnimation;
         [SerializeField] private CharacterVfx _vfx;
         [SerializeField] private CharacterAudio _audio;
 
-        private void Awake()
-        {
-            
-        }
-
         [Inject]
+        [SuppressMessage("CodeQuality", "IDE0051")]
         private void Construct(BulletSystem bulletSystem, MouseRotateInput mouseRotateInput) 
         {
-           
-
             _characterCore.Compose(bulletSystem, mouseRotateInput);
             _characterAnimation.Compose(_characterCore);
             _vfx.Compose(_characterCore);
@@ -45,7 +38,6 @@ namespace Assets.Homeworks.Homework_6_Atomic
             _characterAnimation.OnEnable();
             _vfx.OnEnable();
             _audio.OnEnable();
-
         }
 
         private void Update()
@@ -53,14 +45,11 @@ namespace Assets.Homeworks.Homework_6_Atomic
             _characterCore.Update(Time.deltaTime);
         }
 
-
         private void OnDisable()
         {
-            _characterCore.OnDisable();
             _characterAnimation.OnDisable();
             _vfx.OnDisable();
             _audio.OnDisable();
-
         }
 
     }

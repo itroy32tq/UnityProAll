@@ -24,7 +24,6 @@ namespace Assets.Homeworks.Homework_6_Atomic
             _dethAnimationMechanics =
                 new DethAnimationMechanics(_animator, _animatorDispatcher,
                     _core.LifeComponent.DethRequest, _core.LifeComponent.DethAction, _core.LifeComponent.IsDead);
-
         }
 
         internal void OnDisable()
@@ -35,7 +34,6 @@ namespace Assets.Homeworks.Homework_6_Atomic
 
         internal void OnEnable()
         {
-            
             _moveAnimationMechanics.OnEnable();
             _dethAnimationMechanics.OnEnable();
         }

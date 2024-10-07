@@ -8,16 +8,14 @@ namespace Assets.Homeworks.Homework_6_Atomic
     [Serializable]
     internal sealed class RotationComponent
     {
+        public AtomicAction<Vector3> RotateAction;
         public Transform RotationRoot => _rotationRoot;
 
         [SerializeField] private Transform _rotationRoot;
         [SerializeField] private Vector3 _rotateDirection;
         [SerializeField] private float _rotateRate;
-        [SerializeField] private bool _canRotate;
+        private readonly AtomicAnd _canRotate = new();
 
-        private readonly CompositeCondition _condition = new();
-
-        public AtomicAction<Vector3> RotateAction;
 
         public void Compose()
         {
@@ -28,7 +26,7 @@ namespace Assets.Homeworks.Homework_6_Atomic
         {
             _rotateDirection = forwardDirection;
 
-            if (!_canRotate || !_condition.IsTrue())
+            if (!_canRotate.Invoke())
             {
                 return;
             }
@@ -42,9 +40,9 @@ namespace Assets.Homeworks.Homework_6_Atomic
             _rotationRoot.rotation = Quaternion.Lerp(_rotationRoot.rotation, targetRotation, _rotateRate);
         }
 
-        public void AppendCondition(Func<bool> condition)
+        public void AppendCondition(IAtomicValue<bool> condition)
         {
-            _condition.AddCondition(condition);
+            _canRotate.Append(condition);
         }
     }
 }

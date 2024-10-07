@@ -8,11 +8,9 @@ namespace Assets.Homeworks.Homework_6_Atomic
 {
     internal sealed class BulletSystem : MonoBehaviour
     {
-        private readonly List<Bullet> _allBulletsList = new();
-
-
         private BulletPool _bulletPool;
         private LevelBounds _levelBounds;
+        private readonly List<Bullet> _allBulletsList = new();
 
 
         [Inject]
@@ -21,7 +19,6 @@ namespace Assets.Homeworks.Homework_6_Atomic
             _levelBounds = levelBounds;
             _bulletPool = bulletPool;
         }
-
 
         public void Create(BulletsArgs bulletsArgs)
         {

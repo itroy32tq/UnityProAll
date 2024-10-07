@@ -2,7 +2,7 @@
 
 namespace Assets.Homeworks.Homework_6_Atomic
 {
-    internal class ZombieFactory : Factory<Zombie>
+    internal class ZombieFactory : PlaceholderFactory<Zombie>
     {
         private readonly Character _character;
 

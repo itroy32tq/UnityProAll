@@ -10,7 +10,6 @@ namespace Assets.Homeworks.Homework_6_Atomic
             Rotation = rotation;
             Direction = direction;
             Damage = damage;
-
         }
 
         public Vector3 Position { get; private set; }

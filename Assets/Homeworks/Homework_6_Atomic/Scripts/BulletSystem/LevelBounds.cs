@@ -15,8 +15,6 @@ namespace Assets.Homeworks.Homework_6_Atomic
             float positionX = position.x;
             float positionZ = position.z;
 
-
-
             return positionX > _xMinBorder.position.x && positionX < _xMaxBorder.position.x && positionZ > _zMinBorder.position.z && positionZ < _zMaxBorder.position.z;
         }
     }

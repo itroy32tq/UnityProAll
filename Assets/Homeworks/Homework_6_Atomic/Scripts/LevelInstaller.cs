@@ -22,6 +22,11 @@ namespace Assets.Homeworks.Homework_6_Atomic
                 AsSingle();
 
             Container.
+                Bind<ITickable>().
+                To<CharacterInputController>().
+                AsSingle();
+
+            Container.
                 Bind<BulletSystemConfig>().
                 FromInstance(_bulletSystemConfig);
 
@@ -53,6 +58,5 @@ namespace Assets.Homeworks.Homework_6_Atomic
                 Bind<MouseRotateInput>().
                 FromInstance(_mouseRotateInput);
         }
-
     }
 }

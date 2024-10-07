@@ -10,16 +10,12 @@ namespace Assets.Homeworks.Homework_6_Atomic
         [SerializeField] private AnimatorDispatcher _animatorDispatcher;
 
         private CharacterCore _core;
-
         private MoveAnimationMechanics _moveAnimationMechanics;
         private BoolAnimationMechanics _boolAnimationMechanics;
         private ShootAnimationMechanics _shootAnimationMechanics;
 
-        
-
         public void Compose(CharacterCore characterCore)
         {
-
             _core = characterCore;
 
             _moveAnimationMechanics =

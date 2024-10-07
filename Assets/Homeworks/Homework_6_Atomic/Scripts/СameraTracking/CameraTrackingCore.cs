@@ -8,11 +8,11 @@ namespace Assets.Homeworks.Homework_6_Atomic
     internal sealed class CameraTrackingCore
     {
         private Transform _targetPoint;
+        private Transform _root;
         private FollowAtTargetMechanics _lookAtTargetMechanics;
         private FollowAtTargetMechanics _followToTargetMechanics;
 
         [SerializeField] private float _followDistance;
-        [SerializeField] private float _followLuft;
 
         [field: SerializeField] public MoveComponent MoveComponent { get; private set; }
         [field: SerializeField] public RotationComponent RotationComponent { get; private set; }
@@ -20,9 +20,11 @@ namespace Assets.Homeworks.Homework_6_Atomic
         internal void Compose(Character character)
         {
             MoveComponent.Compose();
-            MoveComponent.AppendCondition(() => !character.IsDead.Value);
+            MoveComponent.AppendCondition(new AtomicValue<bool>(!character.IsDead.Value));
+            _root = MoveComponent.MoveRoot.Value;
+
             RotationComponent.Compose();
-            RotationComponent.AppendCondition(() => !character.IsDead.Value);
+            RotationComponent.AppendCondition(new AtomicValue<bool>(!character.IsDead.Value));
 
             _targetPoint = character.transform;
 
@@ -39,7 +41,7 @@ namespace Assets.Homeworks.Homework_6_Atomic
 
             var rootPosition = new AtomicFunction<Vector3>(() =>
             {
-                return MoveComponent.MoveRoot.position;
+                return _root.position;
             });
 
             var moveAction = new AtomicAction<Vector3>((Vector3 direction) =>
@@ -48,14 +50,20 @@ namespace Assets.Homeworks.Homework_6_Atomic
             });
 
             _followToTargetMechanics = new FollowAtTargetMechanics(moveAction, targetPosition, rootPosition);
-            _followToTargetMechanics.AppendCondition(() => _targetPoint != null);
 
-            _followToTargetMechanics.AppendCondition(() => 
+            _followToTargetMechanics.AppendCondition(new AtomicValue<bool>(_targetPoint != null));
+
+            _followToTargetMechanics.AppendCondition(new AtomicFunction<bool>(CheckDistance()));
+        }
+
+        private Func<bool> CheckDistance()
+        {
+            return () =>
             {
-                float distance = Vector3.Distance(_targetPoint.position, MoveComponent.MoveRoot.position);
+                float distance = Vector3.Distance(_targetPoint.position, _root.position);
 
                 return distance - _followDistance > 1;
-            });
+            };
         }
 
         private void ConfigLookAtMechanics()
@@ -70,22 +78,15 @@ namespace Assets.Homeworks.Homework_6_Atomic
                 return RotationComponent.RotationRoot.position;
             });
 
-
             _lookAtTargetMechanics = new FollowAtTargetMechanics(RotationComponent.RotateAction, targetPosition, rootPosition);
 
-            _lookAtTargetMechanics.AppendCondition(() => _targetPoint != null);
-        }
-
-        internal void OnDisable()
-        {
-            
+            _lookAtTargetMechanics.AppendCondition(new AtomicValue<bool>(_targetPoint != null));
         }
 
         internal void Update(float deltaTime)
         {
             _lookAtTargetMechanics.Update();
             _followToTargetMechanics.Update();
-            MoveComponent.Update(deltaTime);
         }
     }
 }

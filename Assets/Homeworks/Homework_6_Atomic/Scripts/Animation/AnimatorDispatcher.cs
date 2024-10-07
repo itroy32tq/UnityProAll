@@ -7,9 +7,9 @@ namespace Assets.Homeworks.Homework_6_Atomic
 {
     internal sealed class AnimatorDispatcher : MonoBehaviour
     {
-        private readonly Dictionary<string, List<Action>> _actionsDictionary = new();
+        private readonly Dictionary<int, List<Action>> _actionsDictionary = new();
 
-        public void SubscribeOnEvent(string key, Action action)
+        public void SubscribeOnEvent(int key, Action action)
         {
             if (!_actionsDictionary.ContainsKey(key))
             {
@@ -19,7 +19,7 @@ namespace Assets.Homeworks.Homework_6_Atomic
             _actionsDictionary[key].Add(action);
         }
 
-        public void UnsubscribeOnEvent(string key, Action action)
+        public void UnsubscribeOnEvent(int key, Action action)
         {
             if (_actionsDictionary.TryGetValue(key, out var actionsList))
             {
@@ -30,8 +30,9 @@ namespace Assets.Homeworks.Homework_6_Atomic
         //Получаем из анимации
         public void ReceiveEvent(string actionKey)
         {
+            int key = Animator.StringToHash(actionKey);
 
-            if (_actionsDictionary.TryGetValue(actionKey, out var actionsList))
+            if (_actionsDictionary.TryGetValue(key, out var actionsList))
             {
                 foreach (var action in actionsList.ToList())
                 {

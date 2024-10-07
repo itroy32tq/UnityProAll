@@ -16,13 +16,5 @@ namespace Assets.Homeworks.Homework_6_Atomic
         {
             zombie.Construct(_character);
         }
-
-        
     }
-
-    internal class BulletPool : MonoMemoryPool<Bullet>
-    {
-        
-    }
-
 }

@@ -3,11 +3,9 @@ using UnityEngine;
 
 namespace Assets.Homeworks.Homework_6_Atomic
 {
-    [Serializable]
     internal sealed class MoveInput
     {
-
-        public event Action<Vector3> OnInputMovingHandler;
+        public event Action<Vector3> OnInputMovingHandler = delegate { };
 
         private Vector3 _direction;
 
@@ -15,26 +13,13 @@ namespace Assets.Homeworks.Homework_6_Atomic
         {
             _direction = Vector3.zero;
 
-            if (Input.GetKey(KeyCode.W))
-            {
-                _direction = Vector3.forward;
-            }
-            else if (Input.GetKey(KeyCode.S))
-            {
-                _direction = Vector3.back;
-            }
-            else if (Input.GetKey(KeyCode.A))
-            {
-                _direction = Vector3.left;
-            }
-            else if (Input.GetKey(KeyCode.D))
-            {
-                _direction = Vector3.right;
-            }
+            float horizontalInput = Input.GetAxis("Horizontal");
+            float verticalInput = Input.GetAxis("Vertical");
 
+            // Возвращаем направление движения на основе ввода
+            _direction =  new Vector3(horizontalInput, 0, verticalInput);
 
             OnInputMovingHandler.Invoke(_direction);
-
         }
 
     }

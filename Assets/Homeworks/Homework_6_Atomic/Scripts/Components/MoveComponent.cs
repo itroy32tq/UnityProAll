@@ -9,13 +9,15 @@ namespace Assets.Homeworks.Homework_6_Atomic
     {
         public AtomicVariable<Vector3> MoveDirection;
         public AtomicVariable<bool> IsMoving;
-        public Transform MoveRoot => _root;
+        public AtomicValue<Transform> MoveRoot;
+        public AtomicValue<float> MoveSpeed;
 
         [SerializeField] private Transform _root;
         [SerializeField] private float _speed = 3f;
-        [SerializeField] private bool _canMove;
 
-        private readonly CompositeCondition _condition = new();
+        private readonly AtomicAnd _canMove = new();
+
+        public AtomicAnd CanMove => _canMove;
 
         public void Compose()
         {
@@ -23,23 +25,15 @@ namespace Assets.Homeworks.Homework_6_Atomic
             {
                 IsMoving.Value = moveDirection != Vector3.zero;
             });
+
+            MoveRoot = new AtomicValue<Transform>(_root);
+            MoveSpeed = new AtomicValue<float>(_speed);
+
         }
 
-        public void Update(float deltaTime)
+        public void AppendCondition(IAtomicValue<bool> condition)
         {
-            if (_condition.IsTrue() && _canMove)
-            {
-                _root.position += _speed * deltaTime * MoveDirection.Value;
-            }
-            else
-            {
-                MoveDirection.Value = Vector3.zero;
-            }
-        }
-
-        public void AppendCondition(Func<bool> condition)
-        {
-            _condition.AddCondition(condition);
+            _canMove.Append(condition);
         }
     }
 }

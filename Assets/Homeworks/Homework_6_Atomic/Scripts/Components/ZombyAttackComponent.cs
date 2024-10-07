@@ -14,32 +14,30 @@ namespace Assets.Homeworks.Homework_6_Atomic
         [SerializeField] private int _damage = 1;
         [SerializeField] Transform _root;
         [SerializeField] private float _attackDistance;
-        private readonly Collider[] _colliders = Array.Empty<Collider>();
 
-        private readonly CompositeCondition _conditions = new();
+        private readonly AtomicAnd _canAttack = new();
         private GameObject _target;
 
         public AtomicEvent ZombyAttackRequest;
-
         public AtomicEvent<int> ZombyAttackEvent;
 
         public void Compose(GameObject target)
         {
             _target = target;
             _reloadTimer = _reloadTime;
-            _conditions.AddCondition(() =>
+
+            _canAttack.Append(new AtomicFunction<bool>(() =>
             {
                 float distance = Vector3.Distance(target.transform.position, _root.position);
-                Debug.Log(distance);
-                Debug.Log(distance < _attackDistance);
+
                 return distance < _attackDistance;
-            });
+            }));
         }
 
         public void Update(float deltaTime)
         {
             
-            if (!_conditions.IsTrue())
+            if (!_canAttack.Invoke())
             {
                 return;
             }
@@ -55,7 +53,7 @@ namespace Assets.Homeworks.Homework_6_Atomic
 
         private void TryTakeDamage()
         {
-            if (_conditions.IsTrue())
+            if (_canAttack.Invoke())
             {
                 if (_target.TryGetComponent(out IAtomicEntity atomicEntity))
                 {
@@ -67,12 +65,11 @@ namespace Assets.Homeworks.Homework_6_Atomic
             }
 
             ZombyAttackEvent.Invoke(_damage);
-            
         }
 
-        public void AppendCondition(Func<bool> condition)
+        public void AppendCondition(IAtomicValue<bool> condition)
         {
-            _conditions.AddCondition(condition);
+            _canAttack.Append(condition);
         }
     }
 }

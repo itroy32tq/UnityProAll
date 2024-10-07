@@ -4,11 +4,8 @@ namespace Assets.Homeworks.Homework_6_Atomic
 {
     internal sealed class MouseRotateInput : MonoBehaviour
     {
-    
-
         private void Update()
         {
-
             //плоскость игры
             Plane plane = new(Vector3.up, Vector3.zero);
 
@@ -23,7 +20,6 @@ namespace Assets.Homeworks.Homework_6_Atomic
                 transform.position = intersection.Value;
             }
         }
-
 
         public Vector3? GetIntersection(Plane plane, Ray ray)
         {

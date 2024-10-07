@@ -6,11 +6,11 @@ namespace Assets.Homeworks.Homework_6_Atomic
     internal sealed class DethAnimationMechanics
     {
         private readonly Animator _animator;
-        private readonly AnimatorDispatcher _animatorDispatcher;
-
-        private readonly IAtomicObservable _dethtRequest;
         private readonly IAtomicAction _dethAction;
         private readonly IAtomicValue<bool> _canDie;
+        private readonly IAtomicObservable _dethtRequest;
+        private readonly AnimatorDispatcher _animatorDispatcher;
+        private static readonly int Deth = Animator.StringToHash("Deth");
 
         public DethAnimationMechanics(
             Animator animator,
@@ -29,24 +29,21 @@ namespace Assets.Homeworks.Homework_6_Atomic
         public void OnEnable()
         {
             _dethtRequest.Subscribe(OnDethEvent);
-            _animatorDispatcher.SubscribeOnEvent("deth", _dethAction.Invoke);
+            _animatorDispatcher.SubscribeOnEvent(Deth, _dethAction.Invoke);
         }
 
         public void OnDisable()
         {
             _dethtRequest.Unsubscribe(OnDethEvent);
-            _animatorDispatcher.UnsubscribeOnEvent("deth", _dethAction.Invoke);
+            _animatorDispatcher.UnsubscribeOnEvent(Deth, _dethAction.Invoke);
         }
 
         private void OnDethEvent()
         {
-            Debug.Log("!!");
-            _animator.SetTrigger("Deth");
             if (_canDie.Value)
             {
-                
+                _animator.SetTrigger(Deth);
             }
-
         }
     }
 }

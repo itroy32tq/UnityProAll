@@ -13,6 +13,7 @@ namespace Assets.Homeworks.Homework_6_Atomic
         public AtomicEvent<int> TakeDamageEvent;
 
         public AtomicVariable<bool> IsDead;
+        public AtomicVariable<bool> IsAlive;
 
         public AtomicEvent DethRequest;
         public AtomicEvent DethAction;
@@ -22,11 +23,7 @@ namespace Assets.Homeworks.Homework_6_Atomic
         public void Compose()
         {
             TakeDamageAction.Subscribe(TakeDamage);
-        }
-
-        public bool IsAlive()
-        {
-            return !IsDead.Value;
+            IsAlive.Value = true;
         }
 
         [Button]
@@ -39,13 +36,14 @@ namespace Assets.Homeworks.Homework_6_Atomic
 
             _hitPoints -= damage;
             TakeDamageEvent.Invoke(damage);
+
             Debug.Log($"Take damage = {damage}");
 
             if (_hitPoints <= 0)
             {
                 IsDead.Value = true;
+                IsAlive.Value = false;
                 DethRequest.Invoke();
-                
             }
         }
     }

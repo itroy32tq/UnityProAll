@@ -12,23 +12,25 @@ namespace Assets.Homeworks.Homework_6_Atomic
         [field: SerializeField] public RotationComponent RotationComponent { get; private set; }
         [field: SerializeField] public ShootComponent ShootComponent { get; private set; }
 
-        [SerializeField, HideInInspector] private MoveInput _moveInput;
-        [SerializeField, HideInInspector] private ShootInput _shootInput;
-
         [SerializeField] private Collider _collider;
-        private Transform _targetPoint;
+        [SerializeField] private Transform _root;
 
+        private Transform _targetPoint;
         private FollowAtTargetMechanics _lookAtTargetMechanics;
+        private CharacterMoveMechanics _characterMoveMechanics;
+
 
         public void Compose(BulletSystem bulletSystem, MouseRotateInput mouseRotateInput)
         {
-            _moveInput.OnInputMovingHandler += Move;
-            _shootInput.OnInputShootingHandler += Shoot;
-
             LifeComponent.Compose();
 
             MoveComponent.Compose();
             MoveComponent.AppendCondition(LifeComponent.IsAlive);
+
+            _characterMoveMechanics = new CharacterMoveMechanics(MoveComponent.MoveRoot,
+                                                                 MoveComponent.MoveDirection,
+                                                                 MoveComponent.MoveSpeed,
+                                                                 MoveComponent.CanMove);
 
             RotationComponent.Compose();
             RotationComponent.AppendCondition(LifeComponent.IsAlive);
@@ -36,7 +38,6 @@ namespace Assets.Homeworks.Homework_6_Atomic
             ShootComponent.Compose(bulletSystem);
 
             _targetPoint = mouseRotateInput.transform;
-
 
             var targetPosition = new AtomicFunction<Vector3>(() =>
             {
@@ -48,39 +49,19 @@ namespace Assets.Homeworks.Homework_6_Atomic
                 return RotationComponent.RotationRoot.position;
             });
 
-
             _lookAtTargetMechanics = new FollowAtTargetMechanics(RotationComponent.RotateAction, targetPosition, rootPosition);
-            _lookAtTargetMechanics.AppendCondition(() => _targetPoint != null);
+            _lookAtTargetMechanics.AppendCondition(new AtomicValue<bool>(_targetPoint != null));
 
             LifeComponent.IsDead.Subscribe(isDead => _collider.enabled = !isDead);
         }
 
-
-        private void Shoot()
-        {
-            ShootComponent.ShootRequest.Invoke();
-        }
-
-        private void Move(Vector3 direction)
-        {
-            MoveComponent.MoveDirection.Value = direction;
-        }
-
         public void Update(float deltaTime)
         {
-            _moveInput.Update();
-            _shootInput.Update();
-
-            MoveComponent.Update(deltaTime);
             ShootComponent.Update(deltaTime);
 
             _lookAtTargetMechanics.Update();
-        }
 
-        internal void OnDisable()
-        {
-            _moveInput.OnInputMovingHandler -= Move;
-            _shootInput.OnInputShootingHandler -= Shoot;
+            _characterMoveMechanics.Update(deltaTime);
         }
     }
 }

@@ -5,8 +5,8 @@ namespace Assets.Homeworks.Homework_6_Atomic
 {
     internal sealed class BoolAnimationMechanics
     {
-        private readonly IAtomicObservable<bool> _value;
         private readonly Animator _animator;
+        private readonly IAtomicObservable<bool> _value;
         private static readonly int IsDead = Animator.StringToHash("IsDead");
 
         public BoolAnimationMechanics(IAtomicObservable<bool> value, Animator animator)

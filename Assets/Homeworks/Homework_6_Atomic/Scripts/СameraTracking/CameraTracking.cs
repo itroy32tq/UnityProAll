@@ -18,10 +18,5 @@ namespace Assets.Homeworks.Homework_6_Atomic
         {
             _cameraTrackingCore.Update(Time.deltaTime);
         }
-
-        private void OnDisable()
-        {
-            _cameraTrackingCore.OnDisable();
-        }
     }
 }

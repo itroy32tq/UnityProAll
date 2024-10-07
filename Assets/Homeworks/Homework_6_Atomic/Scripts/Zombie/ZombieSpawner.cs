@@ -5,18 +5,15 @@ using Zenject;
 
 namespace Assets.Homeworks.Homework_6_Atomic
 {
-    internal sealed class ZombieSpawner: MonoBehaviour
+    internal sealed class ZombieSpawner : MonoBehaviour
     {
-        private ZombieSpawnerPositions _zombieSpawnerPositions;
-        [SerializeField] private Transform[] _spawnPositions;
         private ZombiePool _zombiePool;
-
+        private ZombieSpawnerPositions _zombieSpawnerPositions;
+        [SerializeField] private Transform[] _spawnPositions;  
         private readonly List<Zombie> _activeEnemies = new();
 
         [SerializeField] private float _spawnDelay;
-
-        [ShowInInspector,ReadOnly] private float _timer;
-
+        [ShowInInspector, ReadOnly] private float _timer;
 
         [Inject]
         public void Construct(ZombiePool zombiePool)
@@ -29,7 +26,6 @@ namespace Assets.Homeworks.Homework_6_Atomic
         {
             if (_activeEnemies.Remove(zombie))
             {
-                
                 zombie.OnEnemyDieingHandler -= RemoveEnemy;
                 _zombiePool.Despawn(zombie);
             }

@@ -2,8 +2,8 @@
 using Atomic.Objects;
 using Sirenix.OdinInspector;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
-using Zenject;
 
 namespace Assets.Homeworks.Homework_6_Atomic
 {
@@ -22,10 +22,8 @@ namespace Assets.Homeworks.Homework_6_Atomic
 
         public Action<Zombie> OnEnemyDieingHandler = delegate { };
 
-        
         public void Construct(Character character)
         {
-
             _zombieCore.Compose(character);
 
             _zombieCore.LifeComponent.DethAction.Subscribe(OnDienig);
@@ -37,12 +35,9 @@ namespace Assets.Homeworks.Homework_6_Atomic
             _zombieAnimation.OnEnable();
             _vfx.OnEnable();
             _audio.OnEnable();
-
-            
-
         }
 
-        [Button]
+        [Button][SuppressMessage("CodeQuality", "IDE0051")]
         private void Die()
         {
             _zombieCore.LifeComponent.IsDead.Value = true;
@@ -65,8 +60,6 @@ namespace Assets.Homeworks.Homework_6_Atomic
             _zombieAnimation.OnDisable();
             _vfx.OnDisable();
             _audio.OnDisable();
-
         }
-
     }
 }

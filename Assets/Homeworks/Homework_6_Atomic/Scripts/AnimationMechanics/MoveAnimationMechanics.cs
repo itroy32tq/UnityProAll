@@ -5,10 +5,9 @@ namespace Assets.Homeworks.Homework_6_Atomic
 {
     internal sealed class MoveAnimationMechanics
     {
-        private static readonly int IsMoving = Animator.StringToHash("IsMoving");
-
-        private readonly IAtomicObservable<Vector3> _moveDirection;
         private readonly Animator _animator;
+        private readonly IAtomicObservable<Vector3> _moveDirection;
+        private static readonly int IsMoving = Animator.StringToHash("IsMoving");
 
         public MoveAnimationMechanics(
             IAtomicObservable<Vector3> moveDirection,
@@ -30,8 +29,6 @@ namespace Assets.Homeworks.Homework_6_Atomic
 
         private void OnMoveDirectionChanged(Vector3 moveDirection)
         {
-            Debug.Log("move direction changed");
-
             if (moveDirection == Vector3.zero)
             {
                 _animator.SetBool(IsMoving, false);
@@ -40,7 +37,6 @@ namespace Assets.Homeworks.Homework_6_Atomic
             {
                 _animator.SetBool(IsMoving, true);
             }
-            
         }
     }
 }

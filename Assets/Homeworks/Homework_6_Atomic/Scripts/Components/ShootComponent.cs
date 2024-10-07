@@ -22,7 +22,6 @@ namespace Assets.Homeworks.Homework_6_Atomic
         [SerializeField] private float _bulletsCraftTime;
         [SerializeField] private bool _canFire;
 
-
         [SerializeField] private Transform _firePoint;
 
         [ShowInInspector, ReadOnly] private float _reloadTimer;
@@ -49,7 +48,6 @@ namespace Assets.Homeworks.Homework_6_Atomic
 
             _bulletsCraftTimer = _bulletsCraftTime;
         }
-
 
         public void Update(float deltaTime)
         {
@@ -83,7 +81,6 @@ namespace Assets.Homeworks.Homework_6_Atomic
             {
                 return;
             }
-
 
             BulletsArgs bulletsArgs = new(_firePoint.transform.position,
                                           _firePoint.transform.rotation,

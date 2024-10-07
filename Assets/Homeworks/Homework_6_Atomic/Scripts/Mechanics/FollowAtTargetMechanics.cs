@@ -10,7 +10,7 @@ namespace Assets.Homeworks.Homework_6_Atomic
         private readonly IAtomicValue<Vector3> _targetPoint;
         private readonly IAtomicValue<Vector3> _transform;
 
-        private readonly CompositeCondition _condition = new();
+        private readonly AtomicAnd _canFollow = new();
 
         public FollowAtTargetMechanics(
 
@@ -25,7 +25,7 @@ namespace Assets.Homeworks.Homework_6_Atomic
 
         public void Update()
         {
-            if (!_condition.IsTrue())
+            if (!_canFollow.Invoke())
             {
                 _rotateAction.Invoke(Vector3.zero);
                 return;
@@ -35,9 +35,9 @@ namespace Assets.Homeworks.Homework_6_Atomic
             _rotateAction.Invoke(direction.normalized);
         }
 
-        public void AppendCondition(Func<bool> condition)
+        public void AppendCondition(IAtomicValue<bool> condition)
         {
-            _condition.AddCondition(condition);
+            _canFollow.Append(condition);
         }
     }
 }
