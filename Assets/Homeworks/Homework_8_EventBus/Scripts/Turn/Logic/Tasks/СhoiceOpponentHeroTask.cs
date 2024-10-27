@@ -1,36 +1,35 @@
-﻿using UI;
-
-namespace Assets.Homeworks.Homework_8_EventBus
+﻿namespace Assets.Homeworks.Homework_8_EventBus
 {
     internal sealed class СhoiceOpponentHeroTask : Task
     {
-        private readonly ViewModel _viewModel;
-        private HeroListView _opponent;
+        private readonly EventBus _eventBus;
+        private readonly GameEngine _gameEngine;
+        private readonly GameState _gameState = GameState.choiceOpponentState;
 
-        public СhoiceOpponentHeroTask(ViewModel viewModel)
+
+        public СhoiceOpponentHeroTask(GameEngine gameEngine, EventBus eventBus)
         {
-            
-            _viewModel = viewModel;
-
+            _gameEngine = gameEngine;
+            _eventBus = eventBus;
         }
 
         protected override void OnRun()
         {
-            _opponent = _viewModel.GetOpponentView();
-            _opponent.OnHeroClicked += OnChoisePreformed;
+            _eventBus.RaiseEvent(new SwithStateEvent(_gameState));
+
+            _gameEngine.OpponentPresenter.OnHeroClicked += OnHeroPerformed;
+
         }
 
-        private void OnChoisePreformed(HeroView target)
+        private void OnHeroPerformed()
         {
-
-            _viewModel.SetCurrentTarget(target);
-
             Finish();
         }
 
+     
         protected override void OnFinish()
         {
-            _opponent.OnHeroClicked -= OnChoisePreformed;
+            _gameEngine.OpponentPresenter.OnHeroClicked -= OnHeroPerformed;
         }
 
     }

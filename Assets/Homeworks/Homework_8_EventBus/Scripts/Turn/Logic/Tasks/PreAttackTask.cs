@@ -2,17 +2,18 @@
 {
     internal sealed class PreAttackTask : Task
     {
-        private readonly ViewModel _viewModel;
+        private readonly GameEngine _gameEngine;
         private readonly VisualPipeline _visualPipeline;
         private readonly TurnPipeline _turnPipeline;
         private readonly EventBus _eventBus;
         private readonly GameState _gameState = GameState.preAttackState;
 
-        public PreAttackTask(ViewModel viewModel, VisualPipeline visualPipeline, TurnPipeline turnPipeline, EventBus eventBus)
+        public PreAttackTask(GameEngine gameEngine, VisualPipeline visualPipeline, TurnPipeline turnPipeline, EventBus eventBus)
         {
-            _viewModel = viewModel;
+            _gameEngine = gameEngine;
             _visualPipeline = visualPipeline;
             _turnPipeline = turnPipeline;
+            _eventBus = eventBus;
         }
 
         protected override void OnRun()
@@ -24,11 +25,9 @@
 
         private void OnAnimationFinished()
         {
-            if (_viewModel.HasValidTarget(out _))
+            if (_gameEngine.HasValidTarget())
             {
-
                 _turnPipeline.AddTaskOfType<AttackTask>();
-
             }
             else 
             {
@@ -36,6 +35,11 @@
             }
 
             Finish();
+        }
+
+        protected override void OnFinish()
+        {
+            _visualPipeline.OnFinished -= OnAnimationFinished;
         }
     }
 }

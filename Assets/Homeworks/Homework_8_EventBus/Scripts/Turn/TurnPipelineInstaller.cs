@@ -19,7 +19,6 @@ namespace Assets.Homeworks.Homework_8_EventBus
         {
             _turnPipeline.AddTask(_serviceFactory.Create<StartTurnTask>());
             _turnPipeline.AddTask(_serviceFactory.Create<StartVisualPipelineTask>());
-            _turnPipeline.AddTask(_serviceFactory.Create<SetStatusTask>());
             _turnPipeline.AddTask(_serviceFactory.Create<СhoiceOpponentHeroTask>());
             _turnPipeline.AddTask(_serviceFactory.Create<PreAttackTask>());
             //_turnPipeline.AddTask(_serviceFactory.Create<AttackTask>());
@@ -32,16 +31,5 @@ namespace Assets.Homeworks.Homework_8_EventBus
         {
             _turnPipeline.ClearTasks();
         }
-    }
-
-    public enum GameState 
-    {
-        none = 0,
-        startTurnState = 1,
-        choiceOpponentState = 2,
-        preAttackState = 3,
-        attackState = 4,
-        postAttackState = 5,
-        endTurnState = 6
     }
 }

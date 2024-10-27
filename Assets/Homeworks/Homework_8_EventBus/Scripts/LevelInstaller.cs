@@ -17,8 +17,8 @@ namespace Assets.Homeworks.Homework_8_EventBus
                 AsSingle();
 
             Container.
-                Bind<ViewModel>().
-                To<ViewModel>().
+                Bind<GameEngine>().
+                To<GameEngine>().
                 AsSingle();
 
             Container.

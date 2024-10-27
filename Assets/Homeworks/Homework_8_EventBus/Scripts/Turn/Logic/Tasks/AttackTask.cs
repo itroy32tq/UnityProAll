@@ -3,12 +3,13 @@
     internal sealed class AttackTask : Task
     {
         private readonly EventBus _eventBus;
-        private readonly ViewModel _viewModel;
+        private readonly GameEngine _gameEngine;
         private readonly TurnPipeline _turnPipeline;
         private readonly VisualPipeline _visualPipeline;
+
         private readonly GameState _gameState = GameState.attackState;
 
-        public AttackTask(ViewModel viewModel,
+        public AttackTask(GameEngine gameEngine,
                           VisualPipeline visualPipeline,
                           EventBus eventBus,
                           TurnPipeline turnPipeline)
@@ -17,7 +18,7 @@
             _visualPipeline = visualPipeline;
             _eventBus = eventBus;
             _turnPipeline = turnPipeline;
-            _viewModel = viewModel;
+            _gameEngine = gameEngine;
 
         }
 
@@ -27,13 +28,15 @@
 
             _visualPipeline.OnFinished += OnAnimationFinished;
 
-            if (_viewModel.HasValidTarget(out var target))
+            if (_gameEngine.HasValidTarget())
             {
-                var current = _viewModel.GetHeroView();
+                var current = _gameEngine.GetHeroView();
 
-                //_visualPipeline.AddTask(new AttackVisualTask(current, target));
+                _visualPipeline.AddTask(new AttackVisualTask(_gameEngine));
 
-                _eventBus.RaiseEvent(new AttackEvent(_viewModel.GetPlayerHero(), _viewModel.GetOpponentHero()));
+                _eventBus.RaiseEvent(new AttackEvent(_gameEngine.GetPlayerHero(), _gameEngine.GetOpponentHero()));
+
+                _turnPipeline.AddTaskOfType<PostAttackTask>();
             }
             else 
             {
@@ -45,7 +48,12 @@
         private void OnAnimationFinished()
         {
             
-            _turnPipeline.AddTaskOfType<PostAttackTask>();
+            Finish();
+        }
+
+        protected override void OnFinish()
+        {
+            _visualPipeline.OnFinished -= OnAnimationFinished;
         }
     }
 }

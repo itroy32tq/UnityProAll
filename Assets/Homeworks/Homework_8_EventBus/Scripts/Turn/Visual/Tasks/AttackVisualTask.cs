@@ -5,18 +5,16 @@ namespace Assets.Homeworks.Homework_8_EventBus
 {
     internal sealed class AttackVisualTask : Task
     {
-        private readonly HeroView _current;
-        private readonly HeroView _target;
+        private readonly GameEngine _engine;
 
-        public AttackVisualTask(HeroView current, HeroView target)
+        public AttackVisualTask(GameEngine gameEngine)
         {
-            _current = current;
-            _target = target;
+            _engine = gameEngine;
         }
 
         protected override void OnRun()
         {
-            _current.AnimateAttack(_target)
+            _engine.RunAnimationAttack()
                 .ContinueWith(Finish)
                 .Forget();
         }
