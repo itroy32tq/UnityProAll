@@ -1,12 +1,12 @@
-﻿using Assets.Homeworks.Homework_8_EventBus;
+﻿using UI;
 using UnityEngine;
 using Zenject;
 
-namespace Assets.Homeworks.Homework_6_Atomic
+namespace Assets.Homeworks.Homework_8_EventBus
 {
     internal sealed class LevelInstaller : MonoInstaller
     {
-        
+        [SerializeField] private UIService _uiService;
 
         public override void InstallBindings()
         {
@@ -15,6 +15,15 @@ namespace Assets.Homeworks.Homework_6_Atomic
                 Bind<IServiceFactory>().
                 To<ServiceFactory>().
                 AsSingle();
+
+            Container.
+                Bind<ViewModel>().
+                To<ViewModel>().
+                AsSingle();
+
+            Container.
+                Bind<UIService>().
+                FromInstance(_uiService);
 
             //Container.
             //    Bind<ITickable>().

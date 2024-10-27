@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace UI
@@ -18,6 +19,16 @@ namespace UI
         public HeroListView GetRedPlayer()
         {
             return this.redPlayer;
+        }
+
+
+    }
+
+    public static class HeroListViewExtansion
+    {
+        public static IReadOnlyList<HeroView> GetHeroes(this HeroListView views)
+        {
+            return views.GetViews();
         }
     }
 }

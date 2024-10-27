@@ -1,7 +1,4 @@
-﻿using Lessons.Game.Turn.Visual.Tasks;
-using UnityEngine;
-
-namespace Assets.Homeworks.Homework_8_EventBus
+﻿namespace Assets.Homeworks.Homework_8_EventBus
 {
     internal sealed class AttackVisualHandler : BaseHandler<AttackEvent>
     {
@@ -16,7 +13,7 @@ namespace Assets.Homeworks.Homework_8_EventBus
         {
            
             
-            _visualPipeline.AddTask(new AttackVisualTask(evt.Entity, new Vector3()));
+            //_visualPipeline.AddTask(new AttackVisualTask(evt.Entity, new Vector3()));
         }
     }
 }

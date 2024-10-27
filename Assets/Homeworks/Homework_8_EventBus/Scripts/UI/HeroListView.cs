@@ -33,6 +33,7 @@ namespace UI
         private void OnDisable()
         {
             Action<HeroView> @event = OnHeroClicked;
+
             if (@event == null)
             {
                 return;

@@ -1,6 +1,4 @@
-﻿using Lessons.Game.Turn.Visual;
-
-namespace Assets.Homeworks.Homework_8_EventBus
+﻿namespace Assets.Homeworks.Homework_8_EventBus
 {
     internal sealed class DealDamageVisualHandler : BaseHandler<DealDamageEvent>
     {
@@ -13,7 +11,7 @@ namespace Assets.Homeworks.Homework_8_EventBus
 
         protected override void HandleEvent(DealDamageEvent evt)
         {
-            _visualPipeline.AddTask(new DealDamageVisualTask(evt.Entity));
+            _visualPipeline.AddTask(new DealDamageVisualTask(evt.HeroView, evt.Damage));
         }
     }
 }

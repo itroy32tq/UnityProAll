@@ -1,13 +1,15 @@
-﻿namespace Assets.Homeworks.Homework_8_EventBus
+﻿using UI;
+
+namespace Assets.Homeworks.Homework_8_EventBus
 {
     internal readonly struct DealDamageEvent : IEvent
     {
-        public readonly IEntity Entity;
+        public readonly HeroView HeroView;
         public readonly int Damage;
 
-        public DealDamageEvent(IEntity entity, int damage)
+        public DealDamageEvent(HeroView view, int damage)
         {
-            Entity = entity;
+            HeroView = view;
             Damage = damage;
         }
     }
