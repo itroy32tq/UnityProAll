@@ -24,19 +24,13 @@
 
         protected override void OnRun()
         {
-            _eventBus.RaiseEvent(new SwithStateEvent(_gameState));
-
             _visualPipeline.OnFinished += OnAnimationFinished;
+
+            _eventBus.RaiseEvent(new SwithStateEvent(_gameState));
 
             if (_gameEngine.HasValidTarget())
             {
-                var current = _gameEngine.GetHeroView();
-
                 _visualPipeline.AddTask(new AttackVisualTask(_gameEngine));
-
-                _eventBus.RaiseEvent(new AttackEvent(_gameEngine.GetPlayerHero(), _gameEngine.GetOpponentHero()));
-
-                _turnPipeline.AddTaskOfType<PostAttackTask>();
             }
             else 
             {
@@ -47,7 +41,10 @@
 
         private void OnAnimationFinished()
         {
-            
+            _eventBus.RaiseEvent(new AttackEvent(_gameEngine.GetPlayerHero(), _gameEngine.GetOpponentHero()));
+
+            _turnPipeline.AddTaskOfType<PostAttackTask>();
+
             Finish();
         }
 

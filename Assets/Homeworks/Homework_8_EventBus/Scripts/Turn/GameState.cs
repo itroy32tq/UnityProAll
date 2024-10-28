@@ -2,6 +2,7 @@
 {
     public enum GameState 
     {
+        
         none = 0,
         startTurnState = 1,
         choiceOpponentState = 2,

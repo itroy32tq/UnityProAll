@@ -15,6 +15,7 @@ namespace Assets.Homeworks.Homework_8_EventBus
         protected override void HandleEvent(SwithStateEvent evt)
         {
             Debug.Log($" switch game state from {_gameState} to {evt.GameState} ");
+
             _gameState = evt.GameState;
 
             _effectsSystem.ApplayEffects(evt.GameState);
