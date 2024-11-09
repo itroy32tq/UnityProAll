@@ -16,7 +16,7 @@ namespace Assets.Homeworks.Homework_8_EventBus
 
         protected override void OnRun()
         {
-            Debug.Log("Pipeline Started!");
+            Debug.Log(" Pipeline Started! ");
 
             _eventBus.RaiseEvent(new SwithStateEvent(_gameState));
 

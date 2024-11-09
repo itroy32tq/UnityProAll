@@ -70,5 +70,34 @@ namespace Assets.Homeworks.Homework_8_EventBus
 
             return tcs.Task;
         }
+
+        internal bool IsDead()
+        {
+            return _hero.Health <= 0;
+        }
+
+        internal UniTask DestroyVisualTask(Action finish)
+        {
+            if (_heroView == null)
+            {
+                return UniTask.CompletedTask;
+            }
+
+            float _duration = 0.25f;
+
+            UniTaskCompletionSource tcs = new();
+
+            var anim = DOTween.Sequence()
+                .Append(_heroView.transform
+                .DOScale(Vector3.zero, _duration))
+                .OnComplete(() =>
+                {
+                    tcs.TrySetResult();
+                    finish.Invoke();
+
+                });
+
+            return tcs.Task;
+        }
     }
 }

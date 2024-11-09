@@ -4,17 +4,16 @@ namespace Lessons.Game.Turn.Visual.Tasks
 {
     internal sealed class DestroyVisualTask : Task
     {
-        private readonly float _duration;
-        private readonly Hero _hero;
-
-        public DestroyVisualTask(Hero hero)
+        public DestroyVisualTask(HeroPresenter hero)
         {
-            _hero = hero;
+            Hero = hero;
         }
-        
+
+        public HeroPresenter Hero { get; }
+
         protected override void OnRun()
         {
-            //_transform.Value.DOScale(Vector3.zero, _duration).OnComplete(Finish);
+            Hero.DestroyVisualTask(Finish);
         }
     }
 }

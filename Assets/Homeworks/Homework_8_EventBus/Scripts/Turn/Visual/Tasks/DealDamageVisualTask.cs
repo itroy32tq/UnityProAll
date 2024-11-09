@@ -26,15 +26,10 @@ namespace Assets.Homeworks.Homework_8_EventBus
         {
             await HeroPresenter.DealDamageAnimationTask();
 
+            HeroPresenter.TakeDamage(Value);
+
             Finish();
         }
 
-        protected override void OnFinish()
-        {
-            
-            HeroPresenter.TakeDamage(Value);
-
-            base.OnFinish();
-        }
     }
 }

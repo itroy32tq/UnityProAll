@@ -8,6 +8,7 @@ namespace Assets.Homeworks.Homework_8_EventBus
         public event Action OnFinished;
         
         private readonly List<Task> _tasks = new();
+        protected List<Task> Tasks => _tasks;
 
         private int _currentTaskIndex;
 
@@ -38,7 +39,7 @@ namespace Assets.Homeworks.Homework_8_EventBus
             _tasks[_currentTaskIndex].Run(OnTaskFinished);
         }
 
-        private void OnTaskFinished()
+        protected virtual void OnTaskFinished()
         {
             _currentTaskIndex++;
 

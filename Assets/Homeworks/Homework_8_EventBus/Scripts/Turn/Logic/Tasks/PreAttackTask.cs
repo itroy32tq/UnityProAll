@@ -1,8 +1,4 @@
-﻿
-
-using UnityEngine;
-
-namespace Assets.Homeworks.Homework_8_EventBus
+﻿namespace Assets.Homeworks.Homework_8_EventBus
 {
     internal sealed class PreAttackTask : Task
     {
@@ -22,32 +18,21 @@ namespace Assets.Homeworks.Homework_8_EventBus
 
         protected override void OnRun()
         {
-            _visualPipeline.OnFinished += OnAnimationFinished;
 
             _eventBus.RaiseEvent(new SwithStateEvent(_gameState));
-        }
-
-        private void OnAnimationFinished()
-        {
-            Debug.Log("развилка на анимацию атаки");
 
             if (_gameEngine.HasValidTarget())
             {
-                Debug.Log("идем за атакой ");
-
                 _turnPipeline.AddTaskOfType<AttackTask>();
             }
-            else 
+            else
             {
                 _turnPipeline.AddTaskOfType<СhoiceOpponentHeroTask>();
             }
 
             Finish();
+
         }
 
-        protected override void OnFinish()
-        {
-            _visualPipeline.OnFinished -= OnAnimationFinished;
-        }
     }
 }

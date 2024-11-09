@@ -44,6 +44,8 @@ namespace Assets.Homeworks.Homework_8_EventBus
 
         public PlayerPresenter OpponentPresenter => _opponentPresenter;
 
+        public List<HeroPresenter> HeroesPresenters = new();
+
         private void InitialGameData()
         {
             var redHeroes = _heroesPool.RedHeroes;
@@ -54,11 +56,15 @@ namespace Assets.Homeworks.Homework_8_EventBus
 
             _playerPresenter = new PlayerPresenter(_currentPlayer, redView);
 
+            HeroesPresenters.AddRange(_playerPresenter.HeroPresenters);
+
             var blueHeroes = _heroesPool.BluHeroes;
             var blueView = _uiService.GetBluePlayer();
 
             _currentOpponent = new PlayerData(PlayerName.bluePlayer, blueHeroes);
             _opponentPresenter = new PlayerPresenter(_currentOpponent, blueView);
+
+            HeroesPresenters.AddRange(_opponentPresenter.HeroPresenters);
 
         }
 

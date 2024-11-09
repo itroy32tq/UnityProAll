@@ -26,7 +26,6 @@ namespace Assets.Homeworks.Homework_8_EventBus
         public void Run()
         {
             _turnPipeline.Run();
-            _visualPipeline.Run();
         }
         
         private void OnTurnPipelineFinished()
@@ -42,7 +41,7 @@ namespace Assets.Homeworks.Homework_8_EventBus
             _turnPipeline.AddTask(_serviceFactory.Create<СhoiceOpponentHeroTask>());
             _turnPipeline.AddTask(_serviceFactory.Create<PreAttackTask>());
 
-            _visualPipeline.OnFinished += OnVisualPipelineFinished;
+            //_visualPipeline.OnFinished += OnVisualPipelineFinished;
 
         }
 

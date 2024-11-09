@@ -24,26 +24,20 @@
 
         protected override void OnRun()
         {
-            _visualPipeline.OnFinished += OnAnimationFinished;
+            //_visualPipeline.OnFinished += OnAnimationFinished;
 
             _eventBus.RaiseEvent(new SwithStateEvent(_gameState));
 
             if (_gameEngine.HasValidTarget())
             {
                 _visualPipeline.AddTask(new AttackVisualTask(_gameEngine));
+
+                _turnPipeline.AddTaskOfType<PostAttackTask>();
             }
             else 
             {
                 _turnPipeline.AddTaskOfType<СhoiceOpponentHeroTask>();
             }
-            
-        }
-
-        private void OnAnimationFinished()
-        {
-            _visualPipeline.OnFinished -= OnAnimationFinished;
-
-            _turnPipeline.AddTaskOfType<PostAttackTask>();
 
             Finish();
         }

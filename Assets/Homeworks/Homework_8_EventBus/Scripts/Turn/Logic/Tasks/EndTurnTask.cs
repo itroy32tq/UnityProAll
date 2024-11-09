@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Lessons.Game.Turn.Visual.Tasks;
+using UnityEngine;
 
 namespace Assets.Homeworks.Homework_8_EventBus
 {
@@ -22,11 +23,18 @@ namespace Assets.Homeworks.Homework_8_EventBus
         {
             _eventBus.RaiseEvent(new SwithStateEvent(_gameState));
 
+            foreach (var hero in _gameEngine.HeroesPresenters)
+            {
+                if (hero.IsDead())
+                {
+                    _visualPipeline.AddTask(new DestroyVisualTask(hero));
+                }
+            }
+
             _gameEngine.SwitchPlayer();
 
             Finish();
 
-            //_visualPipeline.OnFinished += OnAnimationFinished;
         }
 
         protected override void OnFinish()
@@ -38,19 +46,6 @@ namespace Assets.Homeworks.Homework_8_EventBus
             _turnPipeline.AddTaskOfType<StartTurnTask>();
             _turnPipeline.AddTaskOfType<СhoiceOpponentHeroTask>();
             _turnPipeline.AddTaskOfType<PreAttackTask>();
-        }
-
-        private void OnAnimationFinished()
-        {
-            
-
-            
-
-            //_turnPipeline.AddTaskOfType<StartTurnTask>();
-
-            //_turnPipeline.Run();
-
-
         }
     }
 }

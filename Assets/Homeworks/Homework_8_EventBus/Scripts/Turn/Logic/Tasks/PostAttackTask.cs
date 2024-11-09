@@ -24,17 +24,9 @@
             var attackHeroPresenter = _engine.PlayerPresenter.GetCurrentHeroPresenter();
             var targetHeroPresenter = _engine.OpponentPresenter.GetCurrentTargetPresenter();
 
-            _visualPipeline.OnFinished += OnAnimationFinished;
-
             _visualPipeline.AddTask(new DealDamageVisualTask(attackHeroPresenter, targetHeroPresenter.Attack.Value));
 
             _visualPipeline.AddTask(new DealDamageVisualTask(targetHeroPresenter, attackHeroPresenter.Attack.Value));
-
-        }
-
-        private void OnAnimationFinished()
-        {
-            _visualPipeline.OnFinished -= OnAnimationFinished;
 
             _turnPipeline.AddTaskOfType<EndTurnTask>();
 
