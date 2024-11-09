@@ -1,6 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using UI;
+using UnityEngine;
 using Zenject;
 
 
@@ -50,6 +51,7 @@ namespace Assets.Homeworks.Homework_8_EventBus
             var redView = _uiService.GetRedPlayer();
 
             _currentPlayer = new PlayerData(PlayerName.redPlayer, redHeroes);
+
             _playerPresenter = new PlayerPresenter(_currentPlayer, redView);
 
             var blueHeroes = _heroesPool.BluHeroes;
@@ -62,6 +64,8 @@ namespace Assets.Homeworks.Homework_8_EventBus
 
         public void SwitchPlayer()
         {
+           
+            _playerPresenter.ResetBlur();
 
             (_currentOpponent, _currentPlayer) = (_currentPlayer, _currentOpponent);
 

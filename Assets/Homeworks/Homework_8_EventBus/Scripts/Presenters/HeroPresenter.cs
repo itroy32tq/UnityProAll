@@ -27,8 +27,7 @@ namespace Assets.Homeworks.Homework_8_EventBus
 
             _heroView = heroView;
 
-            _health.Skip(1).
-                Subscribe(OnHealtChanged).
+            _health.Subscribe(OnHealtChanged).
                 AddTo(_disposable);
         }
 
@@ -39,14 +38,15 @@ namespace Assets.Homeworks.Homework_8_EventBus
             _hero.TakeDamage(attack);
         }
 
-        private void OnHealtChanged(int dmg)
+        private void OnHealtChanged(int healt)
         {
-            string stats = $"{_attack.Value}/{_health.Value - dmg}";
+
+            string stats = $"{_attack.Value}/{_health.Value}";
 
             _heroView.SetStats(stats);
         }
 
-        public UniTask DealDamageAnimationTask(Action callback)
+        public UniTask DealDamageAnimationTask()
         {
             if (_heroView == null)
             {
@@ -57,14 +57,13 @@ namespace Assets.Homeworks.Homework_8_EventBus
 
             UniTaskCompletionSource tcs = new();
 
-            var annim = DOTween
-                .Sequence()
-                .Append(_heroView.transform.DOScale(Vector3.one * 1.1f, _duration)
+            var anim = DOTween.Sequence()
+                .Append(_heroView.transform
+                .DOScale(Vector3.one * 1.1f, _duration)
                 .SetLoops(2, LoopType.Yoyo))
                 .OnComplete(() =>
                 {
                     tcs.TrySetResult();
-                    callback.Invoke();
                 });
 
 

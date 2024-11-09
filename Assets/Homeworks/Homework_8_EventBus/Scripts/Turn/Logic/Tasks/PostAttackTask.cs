@@ -27,6 +27,7 @@
             _visualPipeline.OnFinished += OnAnimationFinished;
 
             _visualPipeline.AddTask(new DealDamageVisualTask(attackHeroPresenter, targetHeroPresenter.Attack.Value));
+
             _visualPipeline.AddTask(new DealDamageVisualTask(targetHeroPresenter, attackHeroPresenter.Attack.Value));
 
         }

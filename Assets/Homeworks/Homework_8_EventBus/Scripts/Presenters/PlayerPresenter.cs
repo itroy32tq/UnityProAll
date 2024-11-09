@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using UI;
 using UniRx;
-using UnityEngine;
 
 namespace Assets.Homeworks.Homework_8_EventBus
 {
@@ -20,7 +19,7 @@ namespace Assets.Homeworks.Homework_8_EventBus
         private readonly ReactiveProperty<int> _currentTargetIndex;
 
         private readonly HeroListView _heroListView;
-
+        public string Name => _playerData.PlayerName.ToString();
         public IReadOnlyReactiveProperty<int> CurrentHeroIndex => _currentHeroIndex;
         public IReadOnlyReactiveProperty<int> PreviusHeroIndex => _previusHeroIndex;
         public IReadOnlyReactiveProperty<int> CurrentTargetIndex => _currentTargetIndex;
@@ -89,8 +88,6 @@ namespace Assets.Homeworks.Homework_8_EventBus
 
         private void OnHeroClickedHandler(HeroView view)
         {
-            
-            Debug.Log($" Кликнули по херу {view} ");
 
             var views = _heroListView.GetViews();
             
@@ -125,7 +122,6 @@ namespace Assets.Homeworks.Homework_8_EventBus
                 _currentHeroIndex.Value ++;
             }
 
-            Debug.Log($" Установили индекс активного героя  - {_currentHeroIndex.Value} ");
         }
 
         private void OnPreviusHeroChanged(int index)
@@ -135,32 +131,30 @@ namespace Assets.Homeworks.Homework_8_EventBus
             {
                 return;
             }
-
-            Debug.Log($" Обновляем ui для предыдущего героя индекс - {index} ");
           
             _heroListView.GetView(index).SetActive(false);
         }
 
         private void OnCurrentHeroChanged(int index)
         {
-            
-            Debug.Log($" Обновляем ui для активного героя - {index} ");
 
             _heroListView.GetView(index).SetActive(true);
         }
 
         internal UniTask AnnimateAttack(HeroView target)
         {
-            Debug.Log($"непосредственно атака из {_currentHeroIndex.Value}");
 
             return _heroListView.GetView(_currentHeroIndex.Value).AnimateAttack(target);
         }
 
         internal HeroView GetTargetHeroView()
         {
-            Debug.Log($" запрос текущей цели {_currentTargetIndex.Value} ");
-
             return _heroListView.GetView(_currentTargetIndex.Value);
+        }
+
+        internal void ResetBlur()
+        {
+            _heroListView.GetView(_currentHeroIndex.Value).SetActive(false);
         }
     }
 }

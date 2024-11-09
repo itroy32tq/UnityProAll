@@ -1,19 +1,26 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
 
 namespace Assets.Homeworks.Homework_8_EventBus
 {
     internal sealed class PlayerData
     {
         public PlayerName PlayerName { get; private set; }
-        public Hero[] Heroes { get; private set; }
+        public List<Hero> Heroes { get; private set; } = new();
         public int CurrentHeroIndex { get; private set; } = -1;
         public int PreviusHeroIndex { get; private set; } = -1;
         public int CurrentTargetIndex { get; private set; } = -1;
 
-        public PlayerData(PlayerName playerName, Hero[] heroes)
+        public PlayerData(PlayerName playerName, HeroInfo[] heroes)
         {
             PlayerName = playerName;
-            Heroes = heroes;
+
+            foreach (var info in heroes)
+            { 
+                
+                Hero hero = new(info);
+
+                Heroes.Add(hero);
+            }
         }
 
         public Hero GetCurrentHero()
@@ -28,7 +35,6 @@ namespace Assets.Homeworks.Homework_8_EventBus
 
         public void SetCurrentIndex(int index)
         {
-            Debug.Log($" SetCurrentIndex - {index} ");
 
             CurrentHeroIndex = index;
         }
@@ -45,8 +51,6 @@ namespace Assets.Homeworks.Homework_8_EventBus
 
         internal void SwitchToNextHero()
         {
-            Debug.Log($" SwitchToNextHero - {PreviusHeroIndex} ");
-
             PreviusHeroIndex = CurrentHeroIndex;
             CurrentHeroIndex++;
         }

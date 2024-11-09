@@ -1,26 +1,38 @@
-﻿namespace Assets.Homeworks.Homework_8_EventBus
+﻿using Cysharp.Threading.Tasks;
+
+namespace Assets.Homeworks.Homework_8_EventBus
 {
     internal sealed class DealDamageVisualTask : Task
     {
-        public HeroPresenter AttackHeroPresenter { get; }
+        public HeroPresenter HeroPresenter { get; }
         public int Value { get; }
 
-        public DealDamageVisualTask(HeroPresenter attackHeroPresenter, int value)
+        public DealDamageVisualTask(HeroPresenter presenter, int value)
         {
-            AttackHeroPresenter = attackHeroPresenter;
+            HeroPresenter = presenter;
+
             Value = value;
         }
 
 
         protected override void OnRun()
         {
-            AttackHeroPresenter.DealDamageAnimationTask(Finish);
+           
+            RunAnimation().Forget();
 
+        }
+
+        private async UniTask RunAnimation()
+        {
+            await HeroPresenter.DealDamageAnimationTask();
+
+            Finish();
         }
 
         protected override void OnFinish()
         {
-            AttackHeroPresenter.TakeDamage(Value);
+            
+            HeroPresenter.TakeDamage(Value);
 
             base.OnFinish();
         }

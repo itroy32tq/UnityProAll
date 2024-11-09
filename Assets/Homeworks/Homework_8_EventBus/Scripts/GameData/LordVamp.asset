@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af6f00fc5278a95428f1528bc37b73bc, type: 3}
+  m_Script: {fileID: 0}
   m_Name: LordVamp
-  m_EditorClassIdentifier: 
-  <Name>k__BackingField: Lord Vamp
+  m_EditorClassIdentifier: EventBus:Assets.Homeworks.Homework_8_EventBus:HeroInfo
+  <Name>k__BackingField: LordVamp
   <Health>k__BackingField: 22
   <Attack>k__BackingField: 6
