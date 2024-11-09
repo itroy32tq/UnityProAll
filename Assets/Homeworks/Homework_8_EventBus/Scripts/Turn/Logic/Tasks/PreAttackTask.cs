@@ -1,4 +1,8 @@
-﻿namespace Assets.Homeworks.Homework_8_EventBus
+﻿
+
+using UnityEngine;
+
+namespace Assets.Homeworks.Homework_8_EventBus
 {
     internal sealed class PreAttackTask : Task
     {
@@ -25,8 +29,12 @@
 
         private void OnAnimationFinished()
         {
+            Debug.Log("развилка на анимацию атаки");
+
             if (_gameEngine.HasValidTarget())
             {
+                Debug.Log("идем за атакой ");
+
                 _turnPipeline.AddTaskOfType<AttackTask>();
             }
             else 

@@ -14,13 +14,11 @@ namespace Assets.Homeworks.Homework_8_EventBus
         protected override void HandleEvent(AttackEvent evt)
         {
 
-            int damage = evt.AttackHero.Attack;
+            int damage = evt.AttackHero.Attack.Value;
             evt.TaregtHero.TakeDamage(damage);
 
-            damage = evt.TaregtHero.Attack;
+            damage = evt.TaregtHero.Attack.Value;
             evt.AttackHero.TakeDamage(damage);
-
-            //_eventBus.RaiseEvent(new DealDamageEvent(evt.AttackHero, damage));
         }
     }
 }

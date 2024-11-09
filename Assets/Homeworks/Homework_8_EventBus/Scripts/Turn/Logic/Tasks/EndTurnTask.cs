@@ -6,13 +6,14 @@ namespace Assets.Homeworks.Homework_8_EventBus
     {
         private readonly VisualPipeline _visualPipeline;
         private readonly TurnPipeline _turnPipeline;
+        private readonly GameEngine _gameEngine;
         private readonly GameState _gameState = GameState.endTurnState;
 
-        public EndTurnTask(VisualPipeline visualPipeline, TurnPipeline turnPipeline, GameState gameState)
+        public EndTurnTask(VisualPipeline visualPipeline, TurnPipeline turnPipeline, GameEngine gameEngine)
         {
             _visualPipeline = visualPipeline;
             _turnPipeline = turnPipeline;
-            _gameState = gameState;
+            _gameEngine = gameEngine;
         }
 
         protected override void OnRun()
@@ -33,11 +34,12 @@ namespace Assets.Homeworks.Homework_8_EventBus
 
             Finish();
 
-            _turnPipeline.AddTaskOfType<StartTurnTask>();
+            //_turnPipeline.AddTaskOfType<StartTurnTask>();
 
-            _turnPipeline.Run();
+            //_turnPipeline.Run();
 
-            
+            //_gameEngine.SwitchPlayer();
+
         }
     }
 }

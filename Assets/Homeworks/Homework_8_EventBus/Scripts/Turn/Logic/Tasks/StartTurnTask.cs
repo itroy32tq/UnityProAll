@@ -20,8 +20,6 @@ namespace Assets.Homeworks.Homework_8_EventBus
 
             _eventBus.RaiseEvent(new SwithStateEvent(_gameState));
 
-            _gameEngine.SwitchPlayer();
-
             _gameEngine.SetStatusForHero();
 
             Finish();

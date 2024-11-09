@@ -11,7 +11,7 @@
 
         protected override void HandleEvent(DealDamageEvent evt)
         {
-            _visualPipeline.AddTask(new DealDamageVisualTask(evt.HeroView, evt.Damage));
+            //_visualPipeline.AddTask(new DealDamageVisualTask(evt.HeroView, evt.Damage));
         }
     }
 }

@@ -3,30 +3,9 @@ using Zenject;
 
 namespace Assets.Homeworks.Homework_8_EventBus
 {
-    internal sealed class TurnPipelineInstaller : MonoInstaller, IInitializable, IDisposable
+    internal sealed class TurnPipelineInstaller : MonoInstaller  
     {
-        private TurnPipeline _turnPipeline;
-        private IServiceFactory _serviceFactory;
-
-        [Inject]
-        public void Construct(TurnPipeline turnPipeline, IServiceFactory serviceFactory)
-        {
-            _turnPipeline = turnPipeline;
-            _serviceFactory = serviceFactory;
-        }
-
-        void IInitializable.Initialize()
-        {
-            _turnPipeline.AddTask(_serviceFactory.Create<StartTurnTask>());
-            _turnPipeline.AddTask(_serviceFactory.Create<СhoiceOpponentHeroTask>());
-            _turnPipeline.AddTask(_serviceFactory.Create<PreAttackTask>());
-        }
-
-        void IDisposable.Dispose()
-        {
-            _turnPipeline.ClearTasks();
-        }
-
+        
         public override void InstallBindings()
         {
             Container.

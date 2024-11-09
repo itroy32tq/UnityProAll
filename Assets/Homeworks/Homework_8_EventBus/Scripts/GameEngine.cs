@@ -1,10 +1,12 @@
 ﻿using Cysharp.Threading.Tasks;
+using System.Collections.Generic;
 using UI;
+using Zenject;
 
 
 namespace Assets.Homeworks.Homework_8_EventBus
 {
-    internal sealed class GameEngine
+    internal sealed class GameEngine : IInitializable
     {
 
         private PlayerData _currentOpponent;
@@ -17,11 +19,15 @@ namespace Assets.Homeworks.Homework_8_EventBus
 
         private readonly UIService _uiService;
         private readonly EventBus _eventBus;
+        private readonly HeroesPool _heroesPool;
 
-        public GameEngine(UIService uIService, EventBus eventBus)
+        private readonly List<HeroPresenter> _heroPresenters = new();
+
+        public GameEngine(UIService uIService, EventBus eventBus, HeroesPool heroesPool)
         {
             _uiService = uIService;
             _eventBus = eventBus;
+            _heroesPool = heroesPool;
         }
 
         public bool HasValidTarget()
@@ -37,54 +43,55 @@ namespace Assets.Homeworks.Homework_8_EventBus
 
         public PlayerPresenter OpponentPresenter => _opponentPresenter;
 
+        private void InitialGameData()
+        {
+            var redHeroes = _heroesPool.RedHeroes;
+
+            var redView = _uiService.GetRedPlayer();
+
+            _currentPlayer = new PlayerData(PlayerName.redPlayer, redHeroes);
+            _playerPresenter = new PlayerPresenter(_currentPlayer, redView);
+
+            var blueHeroes = _heroesPool.BluHeroes;
+            var blueView = _uiService.GetBluePlayer();
+
+            _currentOpponent = new PlayerData(PlayerName.bluePlayer, blueHeroes);
+            _opponentPresenter = new PlayerPresenter(_currentOpponent, blueView);
+
+        }
+
         public void SwitchPlayer()
         {
-            if (_currentOpponent == null && _currentPlayer == null)
-            {
-                _currentPlayer = new PlayerData() 
-                {
-                    PlayerName = PlayerName.redPlayer,
-
-                };
-
-                _currentOpponent = new PlayerData 
-                {
-                    PlayerName = PlayerName.bluePlayer,
-                };
-                
-                return;
-            }
 
             (_currentOpponent, _currentPlayer) = (_currentPlayer, _currentOpponent);
+
+            (_playerPresenter, _opponentPresenter) = (_opponentPresenter, _playerPresenter);
+
         }
 
         internal void SetStatusForHero()
         {
-            if (_currentPlayer.CurrentHeroIndex == -1)
-            {
-                _currentPlayer.CurrentHeroIndex = 0;
-            }
-            else
-            {
-                _currentPlayer.PreviusHeroIndex = _currentPlayer.CurrentHeroIndex;
-
-                _currentPlayer.CurrentHeroIndex++;
-
-            }
+            PlayerPresenter.SetStatusForHero();
         }
+
         internal Hero GetPlayerHero()
         {
             return _currentPlayer.GetCurrentHero();
         }
 
-        internal Hero GetOpponentHero()
+        internal Hero GetOpponentTarget()
         {
-            return _currentOpponent.GetCurrentHero();
+            return _currentOpponent.GetCurrentTarget();
         }
 
         internal UniTask RunAnimationAttack()
         {
             return _playerPresenter.AnnimateAttack(_opponentPresenter.GetTargetHeroView());
+        }
+
+        void IInitializable.Initialize()
+        {
+            InitialGameData();
         }
     }
 }

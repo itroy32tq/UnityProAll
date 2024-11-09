@@ -2,15 +2,19 @@
 {
     internal readonly struct AttackEvent : IEvent
     {
-        private readonly Hero _attackHero;
-        private readonly Hero _taregtHero;
-        internal Hero AttackHero => _attackHero;
-        internal Hero TaregtHero => _taregtHero;
 
-        public AttackEvent(Hero attackHer, Hero targetHero)
+        private readonly HeroPresenter _attackHeroPresenter;
+        private readonly HeroPresenter _targetHeroPresenter;
+
+        public AttackEvent(HeroPresenter attackHeroPresenter, HeroPresenter targetHeroPresenter)
         {
-            _attackHero = attackHer;
-            _taregtHero = targetHero;
+            _attackHeroPresenter = attackHeroPresenter;
+            _targetHeroPresenter = targetHeroPresenter;
         }
+
+        internal HeroPresenter AttackHero => _attackHeroPresenter;
+        internal HeroPresenter TaregtHero => _targetHeroPresenter;
+
+       
     }
 }

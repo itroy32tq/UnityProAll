@@ -7,6 +7,8 @@ namespace Assets.Homeworks.Homework_8_EventBus
     internal sealed class LevelInstaller : MonoInstaller
     {
         [SerializeField] private UIService _uiService;
+        [SerializeField] private PipelineRunner _pipelineRunner;
+        [SerializeField] private HeroesPool _heroesPool;
 
         public override void InstallBindings()
         {
@@ -16,8 +18,7 @@ namespace Assets.Homeworks.Homework_8_EventBus
                 AsSingle();
 
             Container.
-                Bind<GameEngine>().
-                To<GameEngine>().
+                BindInterfacesAndSelfTo<GameEngine>().
                 AsSingle();
 
             Container.
@@ -28,6 +29,16 @@ namespace Assets.Homeworks.Homework_8_EventBus
                 Bind<EffectsSystem>().
                 To<EffectsSystem>().
                 AsSingle();
+
+            Container.
+                Bind<HeroesPool>().
+                FromInstance(_heroesPool).
+                AsTransient();
+
+            Container.
+                Bind<IInitializable>().
+                FromInstance(_pipelineRunner).
+                AsTransient();
         }
     }
 }

@@ -1,23 +1,28 @@
-﻿using UI;
-
-namespace Assets.Homeworks.Homework_8_EventBus
+﻿namespace Assets.Homeworks.Homework_8_EventBus
 {
     internal sealed class DealDamageVisualTask : Task
     {
-        private readonly HeroView _heroView;
-        private readonly int _damage;
+        public HeroPresenter AttackHeroPresenter { get; }
+        public int Value { get; }
 
-        public DealDamageVisualTask(HeroView heroView, int damage)
+        public DealDamageVisualTask(HeroPresenter attackHeroPresenter, int value)
         {
-
-            _heroView = heroView;
+            AttackHeroPresenter = attackHeroPresenter;
+            Value = value;
         }
+
 
         protected override void OnRun()
         {
-            _heroView.DealDamageAnimationTask(Finish);
+            AttackHeroPresenter.DealDamageAnimationTask(Finish);
 
-           // _heroView.SetStats();
+        }
+
+        protected override void OnFinish()
+        {
+            AttackHeroPresenter.TakeDamage(Value);
+
+            base.OnFinish();
         }
     }
 }

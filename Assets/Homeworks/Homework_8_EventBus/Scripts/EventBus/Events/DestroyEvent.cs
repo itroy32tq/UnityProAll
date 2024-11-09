@@ -1,12 +1,13 @@
 ﻿namespace Assets.Homeworks.Homework_8_EventBus
 {
-    internal readonly struct DestroyEvent : IEvent
+    internal struct DestroyEvent : IEvent
     {
-        public readonly IEntity Entity;
+        private readonly Hero _entity;
+        public readonly Hero Entity => _entity;
 
-        public DestroyEvent(IEntity entity)
+        public DestroyEvent(Hero hero)
         {
-            Entity = entity;
+            _entity = hero;
         }
     }
 }

@@ -5,11 +5,11 @@ namespace Lessons.Game.Turn.Visual.Tasks
     internal sealed class DestroyVisualTask : Task
     {
         private readonly float _duration;
+        private readonly Hero _hero;
 
-        public DestroyVisualTask(IEntity entity, float duration = 0.15f)
+        public DestroyVisualTask(Hero hero)
         {
-
-            _duration = duration;
+            _hero = hero;
         }
         
         protected override void OnRun()

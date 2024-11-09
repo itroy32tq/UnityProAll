@@ -41,16 +41,12 @@
 
         private void OnAnimationFinished()
         {
-            _eventBus.RaiseEvent(new AttackEvent(_gameEngine.GetPlayerHero(), _gameEngine.GetOpponentHero()));
+            _visualPipeline.OnFinished -= OnAnimationFinished;
 
             _turnPipeline.AddTaskOfType<PostAttackTask>();
 
             Finish();
         }
 
-        protected override void OnFinish()
-        {
-            _visualPipeline.OnFinished -= OnAnimationFinished;
-        }
     }
 }

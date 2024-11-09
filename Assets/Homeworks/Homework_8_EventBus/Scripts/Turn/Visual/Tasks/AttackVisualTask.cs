@@ -1,5 +1,4 @@
 ﻿using Cysharp.Threading.Tasks;
-using UI;
 
 namespace Assets.Homeworks.Homework_8_EventBus
 {

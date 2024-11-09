@@ -1,4 +1,6 @@
-﻿namespace Assets.Homeworks.Homework_8_EventBus
+﻿using UnityEngine;
+
+namespace Assets.Homeworks.Homework_8_EventBus
 {
     public class EffectsSystem
     {
@@ -8,8 +10,8 @@
         }
 
         public void ApplayEffects(GameState gameState)
-        { 
-        
+        {
+            Debug.Log("ApplayEffects");
         }
     }
 }

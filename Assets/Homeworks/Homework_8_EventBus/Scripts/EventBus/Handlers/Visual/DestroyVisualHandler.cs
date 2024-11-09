@@ -1,7 +1,6 @@
-﻿using Assets.Homeworks.Homework_8_EventBus;
-using Lessons.Game.Turn.Visual.Tasks;
+﻿using Lessons.Game.Turn.Visual.Tasks;
 
-namespace Lessons.Game.Handlers.Visual
+namespace Assets.Homeworks.Homework_8_EventBus
 {
     internal sealed class DestroyVisualHandler : BaseHandler<DestroyEvent>
     {

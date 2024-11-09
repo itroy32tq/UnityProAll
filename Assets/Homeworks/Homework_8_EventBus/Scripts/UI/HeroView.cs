@@ -12,7 +12,11 @@ namespace UI
     {
         internal event UnityAction OnClicked
         {
-            add { this.button.onClick.AddListener(value); }
+            add 
+            { 
+                this.button.onClick.AddListener(value);
+            }
+
             remove { this.button.onClick.RemoveListener(value); }
         }
 
