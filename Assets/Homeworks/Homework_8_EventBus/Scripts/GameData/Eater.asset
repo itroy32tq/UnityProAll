@@ -15,3 +15,5 @@ MonoBehaviour:
   <Name>k__BackingField: Eater
   <Health>k__BackingField: 50
   <Attack>k__BackingField: 3
+  <Effects>k__BackingField:
+  - DamageEffect

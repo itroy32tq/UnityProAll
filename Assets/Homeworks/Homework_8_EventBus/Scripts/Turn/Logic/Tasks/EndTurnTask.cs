@@ -1,5 +1,4 @@
-﻿using Lessons.Game.Turn.Visual.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Homeworks.Homework_8_EventBus
 {
@@ -7,11 +6,11 @@ namespace Assets.Homeworks.Homework_8_EventBus
     {
         private readonly VisualPipeline _visualPipeline;
         private readonly TurnPipeline _turnPipeline;
-        private readonly GameEngine _gameEngine;
+        private readonly GameContext _gameEngine;
         private readonly EventBus _eventBus;
         private readonly GameState _gameState = GameState.endTurnState;
 
-        public EndTurnTask(VisualPipeline visualPipeline, TurnPipeline turnPipeline, GameEngine gameEngine, EventBus eventBus)
+        public EndTurnTask(VisualPipeline visualPipeline, TurnPipeline turnPipeline, GameContext gameEngine, EventBus eventBus)
         {
             _visualPipeline = visualPipeline;
             _turnPipeline = turnPipeline;
@@ -23,13 +22,7 @@ namespace Assets.Homeworks.Homework_8_EventBus
         {
             _eventBus.RaiseEvent(new SwithStateEvent(_gameState));
 
-            foreach (var hero in _gameEngine.HeroesPresenters)
-            {
-                if (hero.IsDead())
-                {
-                    _visualPipeline.AddTask(new DestroyVisualTask(hero));
-                }
-            }
+            _eventBus.RaiseEvent(new CheckHeroesHelthEvent(_gameEngine));
 
             _gameEngine.SwitchPlayer();
 
@@ -39,6 +32,7 @@ namespace Assets.Homeworks.Homework_8_EventBus
 
         protected override void OnFinish()
         {
+
             Debug.Log(" Pipeline Finished!");
 
             _turnPipeline.ClearTasks();

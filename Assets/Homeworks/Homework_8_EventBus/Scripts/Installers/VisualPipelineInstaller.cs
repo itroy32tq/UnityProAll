@@ -1,11 +1,9 @@
-﻿using Lessons.Game.Turn.Visual.Tasks;
-using Zenject;
+﻿using Zenject;
 
 namespace Assets.Homeworks.Homework_8_EventBus
 {
     internal sealed class VisualPipelineInstaller : MonoInstaller
     {
-       
         public override void InstallBindings()
         {
 
@@ -17,11 +15,6 @@ namespace Assets.Homeworks.Homework_8_EventBus
             Container.
                 Bind<AttackVisualTask>().
                 To<AttackVisualTask>().
-                AsTransient();
-
-            Container.
-                Bind<StartVisualPipelineTask>().
-                To<StartVisualPipelineTask>().
                 AsTransient();
 
             Container.

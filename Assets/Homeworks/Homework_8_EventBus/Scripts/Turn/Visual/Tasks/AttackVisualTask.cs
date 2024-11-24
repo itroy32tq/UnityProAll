@@ -4,9 +4,9 @@ namespace Assets.Homeworks.Homework_8_EventBus
 {
     internal sealed class AttackVisualTask : Task
     {
-        private readonly GameEngine _engine;
+        private readonly GameContext _engine;
 
-        public AttackVisualTask(GameEngine gameEngine)
+        public AttackVisualTask(GameContext gameEngine)
         {
             _engine = gameEngine;
         }

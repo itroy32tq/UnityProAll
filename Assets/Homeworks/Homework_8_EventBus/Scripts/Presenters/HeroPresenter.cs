@@ -12,11 +12,13 @@ namespace Assets.Homeworks.Homework_8_EventBus
     {
         private readonly ReactiveProperty<int> _health;
         private readonly ReactiveProperty<int> _attack;
+        private readonly ReactiveCollection<string> _effects;
         private readonly HeroView _heroView;
         private readonly CompositeDisposable _disposable = new();
         private readonly Hero _hero;
         public IReadOnlyReactiveProperty<int> Health => _health;
         public IReadOnlyReactiveProperty<int> Attack => _attack;
+        public IReadOnlyReactiveCollection<string> Effects => _effects;
 
         public HeroPresenter(Hero hero, HeroView heroView)
         {
@@ -24,6 +26,7 @@ namespace Assets.Homeworks.Homework_8_EventBus
 
             _attack = new ReactiveProperty<int>(hero.Attack);
             _health = new ReactiveProperty<int>(hero.Health);
+            _effects = new ReactiveCollection<string>(hero.Effects);
 
             _heroView = heroView;
 
@@ -33,6 +36,13 @@ namespace Assets.Homeworks.Homework_8_EventBus
 
         public void TakeDamage(int attack)
         {
+            if (_hero.IsDamageImmune)
+            {
+                _hero.SetDammgeImmune(false);
+
+                return;
+            }
+
             _health.Value -= attack;
 
             _hero.TakeDamage(attack);
@@ -66,8 +76,6 @@ namespace Assets.Homeworks.Homework_8_EventBus
                     tcs.TrySetResult();
                 });
 
-
-
             return tcs.Task;
         }
 
@@ -76,7 +84,7 @@ namespace Assets.Homeworks.Homework_8_EventBus
             return _hero.Health <= 0;
         }
 
-        internal UniTask DestroyVisualTask(Action finish)
+        internal UniTask DestroyVisualTask(Action finish = null)
         {
             if (_heroView == null)
             {
@@ -99,5 +107,6 @@ namespace Assets.Homeworks.Homework_8_EventBus
 
             return tcs.Task;
         }
+
     }
 }

@@ -5,7 +5,6 @@ namespace Assets.Homeworks.Homework_8_EventBus
 {
     internal sealed class TurnPipelineInstaller : MonoInstaller  
     {
-        
         public override void InstallBindings()
         {
             Container.
@@ -43,6 +42,5 @@ namespace Assets.Homeworks.Homework_8_EventBus
                 To<СhoiceOpponentHeroTask>().
                 AsTransient();
         }
-
     }
 }

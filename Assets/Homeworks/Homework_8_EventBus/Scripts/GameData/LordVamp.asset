@@ -15,3 +15,5 @@ MonoBehaviour:
   <Name>k__BackingField: LordVamp
   <Health>k__BackingField: 22
   <Attack>k__BackingField: 6
+  <Effects>k__BackingField:
+  - DryLifeEffect

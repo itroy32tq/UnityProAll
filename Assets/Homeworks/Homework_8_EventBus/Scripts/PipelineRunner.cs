@@ -19,7 +19,6 @@ namespace Assets.Homeworks.Homework_8_EventBus
             _visualPipeline = visualPipeline;
 
             _serviceFactory = serviceFactory;
-
         }
 
         [Button]
@@ -40,8 +39,6 @@ namespace Assets.Homeworks.Homework_8_EventBus
             _turnPipeline.AddTask(_serviceFactory.Create<StartTurnTask>());
             _turnPipeline.AddTask(_serviceFactory.Create<СhoiceOpponentHeroTask>());
             _turnPipeline.AddTask(_serviceFactory.Create<PreAttackTask>());
-
-            //_visualPipeline.OnFinished += OnVisualPipelineFinished;
 
         }
 

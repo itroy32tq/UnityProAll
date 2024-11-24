@@ -5,11 +5,11 @@ namespace Assets.Homeworks.Homework_8_EventBus
     internal sealed class СhoiceOpponentHeroTask : Task
     {
         private readonly EventBus _eventBus;
-        private readonly GameEngine _gameEngine;
+        private readonly GameContext _gameEngine;
 
         private readonly GameState _gameState = GameState.choiceOpponentState;
 
-        public СhoiceOpponentHeroTask(GameEngine gameEngine, EventBus eventBus)
+        public СhoiceOpponentHeroTask(GameContext gameEngine, EventBus eventBus)
         {
             _gameEngine = gameEngine;
             _eventBus = eventBus;
@@ -20,6 +20,8 @@ namespace Assets.Homeworks.Homework_8_EventBus
             Debug.Log("СhoiceOpponentHeroTask started!");
 
             _eventBus.RaiseEvent(new SwithStateEvent(_gameState));
+
+            _eventBus.RaiseEvent(new CheckHeroesHelthEvent(_gameEngine));
 
             _gameEngine.OpponentPresenter.OnHeroClicked += OnHeroPerformed;
 

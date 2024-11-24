@@ -15,3 +15,5 @@ MonoBehaviour:
   <Name>k__BackingField: Stupid Orc
   <Health>k__BackingField: 32
   <Attack>k__BackingField: 8
+  <Effects>k__BackingField:
+  - RandomAttack

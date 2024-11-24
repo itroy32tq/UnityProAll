@@ -3,13 +3,13 @@
     internal sealed class AttackTask : Task
     {
         private readonly EventBus _eventBus;
-        private readonly GameEngine _gameEngine;
+        private readonly GameContext _gameEngine;
         private readonly TurnPipeline _turnPipeline;
         private readonly VisualPipeline _visualPipeline;
 
         private readonly GameState _gameState = GameState.attackState;
 
-        public AttackTask(GameEngine gameEngine,
+        public AttackTask(GameContext gameEngine,
                           VisualPipeline visualPipeline,
                           EventBus eventBus,
                           TurnPipeline turnPipeline)
@@ -24,9 +24,9 @@
 
         protected override void OnRun()
         {
-            //_visualPipeline.OnFinished += OnAnimationFinished;
 
             _eventBus.RaiseEvent(new SwithStateEvent(_gameState));
+
 
             if (_gameEngine.HasValidTarget())
             {
@@ -38,6 +38,8 @@
             {
                 _turnPipeline.AddTaskOfType<СhoiceOpponentHeroTask>();
             }
+
+            _eventBus.RaiseEvent(new CheckHeroesHelthEvent(_gameEngine));
 
             Finish();
         }

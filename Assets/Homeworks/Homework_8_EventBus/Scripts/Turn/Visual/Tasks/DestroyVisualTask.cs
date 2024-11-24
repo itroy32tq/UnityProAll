@@ -1,19 +1,31 @@
-﻿using Assets.Homeworks.Homework_8_EventBus;
+﻿using System;
 
-namespace Lessons.Game.Turn.Visual.Tasks
+namespace Assets.Homeworks.Homework_8_EventBus
 {
     internal sealed class DestroyVisualTask : Task
     {
-        public DestroyVisualTask(HeroPresenter hero)
+        private readonly EventBus _eventBus;
+        private readonly GameContext _engine;
+
+        public DestroyVisualTask(HeroPresenter hero, EventBus eventBus, GameContext gameEngine)
         {
             Hero = hero;
+            _eventBus = eventBus;
+            _engine = gameEngine;
         }
 
         public HeroPresenter Hero { get; }
 
         protected override void OnRun()
         {
-            Hero.DestroyVisualTask(Finish);
+            Hero.DestroyVisualTask(RemoveHeroesAction);
+        }
+
+        private void RemoveHeroesAction()
+        {
+            _engine.CheckPlayerData();
+
+            Finish();
         }
     }
 }

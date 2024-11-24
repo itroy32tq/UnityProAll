@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Assets.Homeworks.Homework_8_EventBus
 {
@@ -53,6 +54,11 @@ namespace Assets.Homeworks.Homework_8_EventBus
         {
             PreviusHeroIndex = CurrentHeroIndex;
             CurrentHeroIndex++;
+        }
+
+        internal void RemoveHero(int index)
+        {
+            Heroes.RemoveAt(index);
         }
     }
 }

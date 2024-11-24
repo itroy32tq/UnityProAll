@@ -18,17 +18,12 @@ namespace Assets.Homeworks.Homework_8_EventBus
                 AsSingle();
 
             Container.
-                BindInterfacesAndSelfTo<GameEngine>().
+                BindInterfacesAndSelfTo<GameContext>().
                 AsSingle();
 
             Container.
                 Bind<UIService>().
                 FromInstance(_uiService);
-
-            Container.
-                Bind<EffectsSystem>().
-                To<EffectsSystem>().
-                AsSingle();
 
             Container.
                 Bind<HeroesPool>().

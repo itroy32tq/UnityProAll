@@ -9,11 +9,8 @@ namespace Assets.Homeworks.Homework_8_EventBus
     internal sealed class PlayerPresenter
     {
         private readonly ReactiveCollection<Hero> _heroes;
-
         private readonly PlayerData _playerData;
-
         private readonly CompositeDisposable _disposable = new();
-
         private readonly ReactiveProperty<int> _currentHeroIndex;
         private readonly ReactiveProperty<int> _previusHeroIndex;
         private readonly ReactiveProperty<int> _currentTargetIndex;
@@ -27,6 +24,7 @@ namespace Assets.Homeworks.Homework_8_EventBus
         public IReadOnlyReactiveCollection<Hero> Heroes => _heroes;
 
         public Action OnHeroClicked = delegate { };
+
         public List<HeroPresenter> HeroPresenters { get; private set; } = new();
 
         public PlayerPresenter(PlayerData player, HeroListView heroListView)
@@ -37,6 +35,16 @@ namespace Assets.Homeworks.Homework_8_EventBus
             _heroes = new ReactiveCollection<Hero>(player.Heroes);
 
             InitialHeroPresenters();
+
+            _heroes.ObserveRemove()
+                .Subscribe(ev => 
+                { 
+                    ClearData(ev);
+
+                    UpdateIndices(ev);
+
+                })
+                .AddTo(_disposable);
 
             _currentTargetIndex = new ReactiveProperty<int>(player.CurrentTargetIndex);
 
@@ -55,6 +63,15 @@ namespace Assets.Homeworks.Homework_8_EventBus
                 AddTo(_disposable);
 
             heroListView.OnHeroClicked += OnHeroClickedHandler;
+
+        }
+
+        private void ClearData(CollectionRemoveEvent<Hero> @event)
+        {
+            var index = @event.Index;
+
+            HeroPresenters.RemoveAt(index);
+            _heroListView.RemoveView(index);
 
         }
 
@@ -106,39 +123,53 @@ namespace Assets.Homeworks.Homework_8_EventBus
             }
         }
 
+        public void ChangeTargetIndex(int index)
+        {
+            _currentTargetIndex.Value = index;
+
+            _playerData.SetTargetIndex(index);
+        }
+
         public void SetStatusForHero()
         {
-            //отправили в модель
-            if (_currentHeroIndex.Value < 0)
+            
+            if (_currentHeroIndex.Value < 0 || _currentHeroIndex.Value == HeroPresenters.Count - 1 )
             {
                 _currentHeroIndex.Value = 0;
+
                 _playerData.SetCurrentIndex(_currentHeroIndex.Value);
-                
+
+                _heroListView.GetView(_currentHeroIndex.Value).SetActive(true);
+
             }
             else
             {
-                _playerData.SwitchToNextHero();
-                _previusHeroIndex.Value = _currentHeroIndex.Value;
-                _currentHeroIndex.Value ++;
-            }
 
+                _previusHeroIndex.Value = _currentHeroIndex.Value;
+
+                _currentHeroIndex.Value++;
+
+                _playerData.SetCurrentIndex(_currentHeroIndex.Value);
+
+                _heroListView.GetView(_currentHeroIndex.Value).SetActive(true);
+
+            }
         }
 
         private void OnPreviusHeroChanged(int index)
         {
-
             if (index < 0)
             {
                 return;
             }
-          
-            _heroListView.GetView(index).SetActive(false);
         }
 
         private void OnCurrentHeroChanged(int index)
         {
-
-            _heroListView.GetView(index).SetActive(true);
+            if (index < 0)
+            {
+                return;
+            }
         }
 
         internal UniTask AnnimateAttack(HeroView target)
@@ -154,7 +185,40 @@ namespace Assets.Homeworks.Homework_8_EventBus
 
         internal void ResetBlur()
         {
+            if (_currentHeroIndex.Value < 0)
+            {
+                return;
+            }
+
             _heroListView.GetView(_currentHeroIndex.Value).SetActive(false);
+        }
+
+        internal void RemoveDeadHeroes()
+        {
+            for (int i = _heroes.Count - 1; i >= 0; i--)
+            {
+                if (_heroes[i].Health <= 0)
+                {
+                    RemoveHero(_heroes[i]);
+                }
+            }
+        }
+        public void RemoveHero(Hero heroToRemove)
+        {
+            var index = _heroes.IndexOf(heroToRemove);
+
+            if (index == -1) return;
+
+            _heroes.RemoveAt(index);
+            _playerData.RemoveHero(index);
+
+        }
+
+        private void UpdateIndices(CollectionRemoveEvent<Hero> @event)
+        {
+            _currentHeroIndex.Value--;
+            _playerData.SetCurrentIndex(_currentHeroIndex.Value);
+
         }
     }
 }

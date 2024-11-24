@@ -2,13 +2,13 @@
 {
     internal sealed class PreAttackTask : Task
     {
-        private readonly GameEngine _gameEngine;
+        private readonly GameContext _gameEngine;
         private readonly VisualPipeline _visualPipeline;
         private readonly TurnPipeline _turnPipeline;
         private readonly EventBus _eventBus;
         private readonly GameState _gameState = GameState.preAttackState;
 
-        public PreAttackTask(GameEngine gameEngine, VisualPipeline visualPipeline, TurnPipeline turnPipeline, EventBus eventBus)
+        public PreAttackTask(GameContext gameEngine, VisualPipeline visualPipeline, TurnPipeline turnPipeline, EventBus eventBus)
         {
             _gameEngine = gameEngine;
             _visualPipeline = visualPipeline;
@@ -30,9 +30,10 @@
                 _turnPipeline.AddTaskOfType<СhoiceOpponentHeroTask>();
             }
 
+            _eventBus.RaiseEvent(new CheckHeroesHelthEvent(_gameEngine));
+
             Finish();
 
         }
-
     }
 }

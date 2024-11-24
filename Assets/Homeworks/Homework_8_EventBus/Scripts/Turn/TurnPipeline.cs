@@ -1,7 +1,4 @@
-﻿
-using UnityEngine;
-
-namespace Assets.Homeworks.Homework_8_EventBus
+﻿namespace Assets.Homeworks.Homework_8_EventBus
 {
     internal sealed class TurnPipeline : Pipeline
     {

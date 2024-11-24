@@ -1,6 +1,6 @@
 ﻿using Zenject;
 
-namespace Assets.Homeworks.Homework_8_EventBus.Scripts
+namespace Assets.Homeworks.Homework_8_EventBus
 {
     internal sealed class EventBusInstaller : MonoInstaller
     {
@@ -20,16 +20,12 @@ namespace Assets.Homeworks.Homework_8_EventBus.Scripts
                 AsSingle();
 
             Container.
-                BindInterfacesAndSelfTo<DealDamageVisualHandler>().
+                BindInterfacesAndSelfTo<CheckHeroesHelthHandler>().
                 AsSingle();
 
             Container.
-                BindInterfacesAndSelfTo<AttackVisualHandler>().
-                AsSingle();
-
-            Container.
-                BindInterfacesAndSelfTo<DestroyVisualHandler>().
-                AsSingle();
+               BindInterfacesAndSelfTo<RemoveHeroHandler>().
+               AsSingle();
         }
     }
 }
