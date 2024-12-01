@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace Assets.Homeworks.Homework_9_UpgradeManager
