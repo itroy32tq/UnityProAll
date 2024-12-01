@@ -1,22 +1,15 @@
-using Atomic.Elements;
+﻿using Atomic.Elements;
 using Declarative;
 using UnityEngine;
 
-public class ConveyorModel : DeclarativeModel
+namespace Assets.Homeworks.Homework_9_UpgradeManager
 {
-    public AtomicVariable<int> LoadStorageCapacity;
-    public AtomicVariable<int> UnloadStorageCapacity;
-    public AtomicVariable<float> ProduceTime;
+    public class ConveyorModel : DeclarativeModel
+    {
+        public AtomicVariable<int> LoadStorageCapacity;
+        public AtomicVariable<int> UnloadStorageCapacity;
+        public AtomicVariable<float> ProduceTime;
 
-    [SerializeReference] private IExample[] _examples;
+        [SerializeReference] private IExample[] _examples;
+    }
 }
-
-public interface IExample
-{
-    
-}
-
-class Example : IExample
-{
-}
-    

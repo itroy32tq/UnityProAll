@@ -1,4 +1,4 @@
-namespace Game.GamePlay.Conveyor.Components
+namespace Assets.Homeworks.Homework_9_UpgradeManager
 {
     public interface IConveyor_SetLoadStorageComponent
     {

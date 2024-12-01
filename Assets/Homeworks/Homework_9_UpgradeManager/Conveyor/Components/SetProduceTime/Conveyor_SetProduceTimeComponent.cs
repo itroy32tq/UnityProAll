@@ -1,6 +1,6 @@
 using Atomic.Elements;
 
-namespace Game.GamePlay.Conveyor.Components
+namespace Assets.Homeworks.Homework_9_UpgradeManager
 {
     public class Conveyor_SetProduceTimeComponent : IConveyor_SetProduceTimeComponent 
     {

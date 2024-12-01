@@ -1,8 +1,7 @@
 using Entities;
-using Game.GamePlay.Conveyor.Components;
 using UnityEngine;
 
-namespace Game.GamePlay.Conveyor
+namespace Assets.Homeworks.Homework_9_UpgradeManager
 {
     public class ConveyorEntity : MonoEntityBase
     {
@@ -14,5 +13,14 @@ namespace Game.GamePlay.Conveyor
             Add(new Conveyor_SetUnloadStorageComponent(_model.UnloadStorageCapacity));            
             Add(new Conveyor_SetProduceTimeComponent(_model.ProduceTime));            
         }
+    }
+
+    public interface IExample
+    {
+
+    }
+
+    class Example : IExample
+    {
     }
 }
