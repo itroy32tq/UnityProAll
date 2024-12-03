@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5f256970386bb444b9b4401d432affd, type: 3}
   m_Name: LoadStorageUpgradeConfig
   m_EditorClassIdentifier: 
-  <Id>k__BackingField: LoadStorageUprgade
+  <Id>k__BackingField: LoadStorageUpgrade
   <MaxLevel>k__BackingField: 10
   <PriceTable>k__BackingField:
     _basePrice: 1

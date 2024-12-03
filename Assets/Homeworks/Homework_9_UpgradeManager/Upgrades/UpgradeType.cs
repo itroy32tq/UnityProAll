@@ -3,8 +3,8 @@
     internal enum UpgradeType
     { 
         none = 0,
-        LoadStorageUprgade,
-        ProduceTimeUprgade,
+        LoadStorageUpgrade,
+        ProduceTimeUpgrade,
         UnloadStorageUprgade,
     }
 }

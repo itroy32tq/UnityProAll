@@ -7,9 +7,7 @@ namespace Assets.Homeworks.Homework_9_UpgradeManager
     {
         [SerializeField] private ConveyorEntity _conveyor;
 
-        [SerializeField] private LoadStorageUpgradeConfig _loadStorageUpgradeConfig;
-        [SerializeField] private ProduceTimeUpgradeConfig _produceTimeUpgradeConfig;
-        [SerializeField] private UnloadStorageUprgadeConfig _unloadStorageUprgadeConfig;
+        [SerializeField] private UpgradeConfig[] _configs;
 
         public override void InstallBindings()
         {
@@ -17,40 +15,15 @@ namespace Assets.Homeworks.Homework_9_UpgradeManager
                Bind<ConveyorEntity>().
                FromInstance(_conveyor);
 
-            Container.
-               Bind<ProduceTimeUpgradeConfig>().
-               FromInstance(_produceTimeUpgradeConfig);
+            foreach (var config in _configs)
+            {
+                Container.
+                    Bind<UpgradeConfig>().
+                    FromInstance(config).
+                    AsTransient();
+            }
 
-            Container.
-               Bind<UnloadStorageUprgadeConfig>().
-               FromInstance(_unloadStorageUprgadeConfig);
-
-            Container.
-               Bind<LoadStorageUpgradeConfig>().
-               FromInstance(_loadStorageUpgradeConfig);
-
-            Container.
-                Bind<Upgrade>().
-                To<LoadStorageUpgrade>().
-                AsSingle().
-                NonLazy();
-
-            Container.
-                Bind<Upgrade>().
-                To<ProduceTimeUpgrade>().
-                AsSingle().
-                NonLazy();
-
-            Container.
-                Bind<Upgrade>().
-                To<UnloadStorageUprgade>().
-                AsSingle().
-                NonLazy();
-
-            Container.
-                Bind<UpgradeService>().
-                To<UpgradeService>().
-                AsTransient();
+            Container.Bind<UpgradeFactory>().AsSingle();
 
         }
     }
