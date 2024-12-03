@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2994befe9466452c88ba4dea6c105cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _upgradeConfig: {fileID: 11400000, guid: 33e3b213daf38a54286326a44872a7e9, type: 2}
   _upgradeType: 0
 --- !u!224 &346866245
 RectTransform:
@@ -620,9 +621,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _conveyor: {fileID: 767349480}
-  _loadStorageUpgradeConfig: {fileID: 11400000, guid: 33e3b213daf38a54286326a44872a7e9, type: 2}
-  _produceTimeUpgradeConfig: {fileID: 11400000, guid: 21538a3c4629d0c4296f83a40941d4a2, type: 2}
-  _unloadStorageUprgadeConfig: {fileID: 11400000, guid: 905fba9128ce4b048adc4faa1837b380, type: 2}
+  _configs:
+  - {fileID: 11400000, guid: 21538a3c4629d0c4296f83a40941d4a2, type: 2}
+  - {fileID: 11400000, guid: 33e3b213daf38a54286326a44872a7e9, type: 2}
+  - {fileID: 11400000, guid: 905fba9128ce4b048adc4faa1837b380, type: 2}
 --- !u!114 &1904859142
 MonoBehaviour:
   m_ObjectHideFlags: 0
