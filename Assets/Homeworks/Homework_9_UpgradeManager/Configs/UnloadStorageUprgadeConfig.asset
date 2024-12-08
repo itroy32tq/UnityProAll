@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 642b253a70b44c94c8646edac002e795, type: 3}
+  m_Name: UnloadStorageUprgadeConfig
+  m_EditorClassIdentifier: 
+  <Id>k__BackingField: UnloadStorageUprgade
+  <MaxLevel>k__BackingField: 11
+  <PriceTable>k__BackingField:
+    _basePrice: 1
+    _levels: 0000000002000000030000000400000005000000060000000700000008000000090000000a0000000b000000
+  <ValuesTable>k__BackingField:
+    _startValue: 6
+    _endValue: 16
+    _valueStep: 0
+    _table:
+    - 6
+    - 7
+    - 8
+    - 9
+    - 10
+    - 11
+    - 12
+    - 13
+    - 14
+    - 15
+    - 16

@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbeb6ef4638e05543bcd0ec1caf4c715, type: 3}
+  m_Name: ProduceTimeUpgradeConfig
+  m_EditorClassIdentifier: 
+  <Id>k__BackingField: ProduceTimeUpgrade
+  <MaxLevel>k__BackingField: 15
+  <PriceTable>k__BackingField:
+    _basePrice: 2
+    _levels: 000000000400000006000000080000000a0000000c0000000e00000010000000120000001400000016000000180000001a0000001c0000001e000000
+  <ValuesTable>k__BackingField:
+    _startValue: 1.5
+    _endValue: 2.5
+    _valueStep: 0
+    _table:
+    - 1.5
+    - 1.57
+    - 1.64
+    - 1.71
+    - 1.79
+    - 1.86
+    - 1.93
+    - 2
+    - 2.07
+    - 2.14
+    - 2.21
+    - 2.29
+    - 2.36
+    - 2.43
+    - 2.5
