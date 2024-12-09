@@ -4,7 +4,7 @@ namespace Assets.Homeworks.Homework_10_Inventory
 {
     [CreateAssetMenu(
         fileName = "ItemConfig",
-        menuName = "Sample/New InventoryItemConfig"
+        menuName = "Inventory/New InventoryItemConfig"
     )]
     internal sealed class ItemConfig : ScriptableObject
     {

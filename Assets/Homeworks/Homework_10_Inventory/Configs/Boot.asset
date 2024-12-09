@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a22487d842414666b12f9ae5a7f89099, type: 3}
+  m_Name: Boot
+  m_EditorClassIdentifier: 
+  <Item>k__BackingField:
+    <Name>k__BackingField: Boot
+    <Description>k__BackingField: the best shitstops in the world
+    <Icon>k__BackingField: {fileID: 21300000, guid: 6291e5194ddb4e14eb1b7eed3b1d0ea1, type: 3}
+    <Flags>k__BackingField: 4
+    _components:
+    - rid: 7411263847220641793
+    - rid: 7411263847220641796
+  references:
+    version: 2
+    RefIds:
+    - rid: 7411263847220641793
+      type: {class: EquipmentComponent, ns: Assets.Homeworks.Homework_10_Inventory, asm: Inventory}
+      data:
+        <EquipType>k__BackingField: 0
+    - rid: 7411263847220641796
+      type: {class: SpeedComponent, ns: Assets.Homeworks.Homework_10_Inventory, asm: Inventory}
+      data:
+        <Speed>k__BackingField: 7

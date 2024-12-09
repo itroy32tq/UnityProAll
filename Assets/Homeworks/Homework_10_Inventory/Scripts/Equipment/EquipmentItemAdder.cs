@@ -1,35 +1,56 @@
-﻿using System.Collections.Generic;
+﻿
+using UnityEngine;
 
 namespace Assets.Homeworks.Homework_10_Inventory
 {
     internal sealed class EquipmentItemAdder
     {
         private readonly Equipment _equipment;
+        private readonly EquipmentItemRemover _equipmentItemRemover;
 
-        public EquipmentItemAdder(Equipment equipment)
+        public EquipmentItemAdder(Equipment equipment, EquipmentItemRemover equipmentItemRemover)
         {
             _equipment = equipment;
+            _equipmentItemRemover = equipmentItemRemover;
         }
 
-        public void Setup(KeyValuePair<EquipmentType, Item> itemPair)
+        public bool TryEquipItem(Item item)
         {
-            if (_equipment.HasItem(itemPair.Key))
+            if ((item.Flags & ItemFlags.EQUPPABLE) != ItemFlags.EQUPPABLE)
             {
-                ChangeItem(itemPair);
+                return false;
             }
 
-            AddItem(itemPair.Key, itemPair.Value);
+            if (!item.TryGetComponent<EquipmentComponent>(out var component))
+            {
+                //кажись если стоит флаг то и компонент должен быть
 
+                throw new System.Exception();
+            }
+
+            var equipType = component.EquipType;
+
+            if (_equipment.HasItem(equipType))
+            {
+                if (_equipment.EquipmentItems[equipType] == item)
+                {
+                    Debug.Log("this item has already been worn");
+
+                    return false;
+                }
+
+                _equipmentItemRemover.RemoveItem(equipType);
+
+            }
+
+            AddItem(equipType, item);
+
+            return true;
         }
 
-        private void ChangeItem(KeyValuePair<EquipmentType, Item> itemPair)
+        private void AddItem(EquipmentType type, Item item)
         {
-            _equipment.EquipmentItems[itemPair.Key] = itemPair.Value;
-            _equipment.OnItemChanged.Invoke(itemPair.Value);
-        }
-
-        public void AddItem(EquipmentType type, Item item)
-        {
+            
             _equipment.EquipmentItems.Add(type, item);
 
             _equipment.OnItemAdded.Invoke(item);

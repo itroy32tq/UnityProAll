@@ -9,14 +9,27 @@
             _equipment = equipment;
         }
 
-        public void RemoveItem(EquipmentType type)
+        public bool TryRemoveItem(EquipmentType type)
         {
             if (_equipment.TryGetItem(type, out var item))
             {
                 _equipment.OnItemRemoved.Invoke(item);
 
                 _equipment.EquipmentItems.Remove(type);
+
+                return true;
             }
+
+            return false;
+        }
+
+        public void RemoveItem(EquipmentType type)
+        {
+            var item = _equipment.EquipmentItems[type];
+
+            _equipment.OnItemRemoved.Invoke(item);
+
+            _equipment.EquipmentItems.Remove(type);
         }
     }
 }

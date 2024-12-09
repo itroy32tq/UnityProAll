@@ -4,14 +4,13 @@ using System.Linq;
 
 namespace Assets.Homeworks.Homework_10_Inventory
 {
-
     internal sealed class Equipment
     {
         public Action<Item> OnItemAdded = delegate { };
         public Action<Item> OnItemRemoved = delegate { };
         public Action<Item> OnItemChanged = delegate { }; 
 
-        private readonly Dictionary<EquipmentType,Item> _equipmentItems = new();
+        private readonly Dictionary<EquipmentType, Item> _equipmentItems = new();
 
         public Dictionary<EquipmentType, Item> EquipmentItems => _equipmentItems;
 

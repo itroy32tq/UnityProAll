@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace Assets.Homeworks.Homework_10_Inventory
 {
+    [Serializable]
     internal sealed class Character
     {
         public event Action OnStateChanged;
@@ -12,8 +14,9 @@ namespace Assets.Homeworks.Homework_10_Inventory
         [ShowInInspector, ReadOnly]
         private readonly Dictionary<string, int> stats;
 
-        public int Damage { get; internal set; }
-        public int Health { get; internal set; }
+        [field: SerializeField] public int Damage { get; internal set; }
+        [field: SerializeField] public int Speed { get; internal set; }
+        [field: SerializeField] public int Armor { get; internal set; }
 
         public Character()
         {
