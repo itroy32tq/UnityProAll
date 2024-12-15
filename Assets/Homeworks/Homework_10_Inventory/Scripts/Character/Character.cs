@@ -14,9 +14,11 @@ namespace Assets.Homeworks.Homework_10_Inventory
         [ShowInInspector, ReadOnly]
         private readonly Dictionary<string, int> stats;
 
-        [field: SerializeField] public int Damage { get; internal set; }
-        [field: SerializeField] public int Speed { get; internal set; }
-        [field: SerializeField] public int Armor { get; internal set; }
+        public Action<bool> OnApplyEffect;
+
+        [field: SerializeField] public int Damage { get; set; }
+        [field: SerializeField] public int Speed { get; set; }
+        [field: SerializeField] public int Armor { get; set; }
 
         public Character()
         {

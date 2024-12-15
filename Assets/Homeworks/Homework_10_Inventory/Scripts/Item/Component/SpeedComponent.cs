@@ -17,12 +17,16 @@ namespace Assets.Homeworks.Homework_10_Inventory
         {
             player.Speed += Speed;
 
+            player.OnApplyEffect.Invoke(true);
+
             Debug.Log($" Added {nameof(Speed)}: {Speed} ");
         }
 
         public void ResetEffect(Character player)
         {
             player.Speed -= Speed;
+
+            player.OnApplyEffect.Invoke(false);
 
             Debug.Log($" Removed {nameof(Speed)}: {Speed} ");
         }

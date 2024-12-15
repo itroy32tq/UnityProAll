@@ -17,6 +17,7 @@ namespace Assets.Homeworks.Homework_10_Inventory
         public void ApplayEffect(Character player)
         {
             player.Damage += Power;
+            player.OnApplyEffect.Invoke(true);
 
             Debug.Log($" Added {nameof(Power)}: {Power} ");
         }
@@ -24,6 +25,7 @@ namespace Assets.Homeworks.Homework_10_Inventory
         public void ResetEffect(Character player)
         {
             player.Damage -= Power;
+            player.OnApplyEffect.Invoke(false);
 
             Debug.Log($" Removed {nameof(Power)}: {Power} ");
         }

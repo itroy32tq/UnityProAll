@@ -5,11 +5,11 @@ using Sirenix.OdinInspector;
 
 namespace Assets.Homeworks.Homework_10_Inventory
 {
-    internal sealed class Inventory
+    internal sealed class Inventory : IInventory
     {
-        public Action<Item> OnItemAdded = delegate { };
-        public Action<Item> OnItemRemoved = delegate { };
-        public Action<Item> OnItemConsumed = delegate { };
+        public event Action<Item> OnItemAdded = delegate { };
+        public event Action<Item> OnItemRemoved = delegate { };
+        public event Action<Item> OnItemConsumed = delegate { };
 
         [ShowInInspector, ReadOnly]
         private List<Item> _items;
@@ -25,6 +25,14 @@ namespace Assets.Homeworks.Homework_10_Inventory
             _items = new(items);
         }
 
+        public void RemoveItem(string name)
+        {
+            if (FindItem(name, out var item))
+            {
+                RemoveItem(item);
+            }
+        }
+
         public bool FindItem(string name, out Item result)
         {
             foreach (var inventoryItem in _items)
@@ -36,14 +44,47 @@ namespace Assets.Homeworks.Homework_10_Inventory
                     return true;
                 }
             }
-            
+
             result = null;
+            return false;
+        }
+
+        public void ConsumeItem(Item item)
+        {
+            RemoveItem(item);
+
+            OnItemConsumed?.Invoke(item);
+        }
+
+        public bool RemoveItem(Item item)
+        {
+            if (_items.Remove(item))
+            {
+                OnItemRemoved.Invoke(item);
+
+                return true;
+            }
+
             return false;
         }
 
         public int GetCount(string item)
         {
             return _items.Count(it => it.Name == item);
+        }
+
+        public bool TryAddItem(Item item)
+        {
+            if (!_items.Contains(item))
+            {
+                _items.Add(item);
+
+                OnItemAdded.Invoke(item);
+
+                return true;
+            }
+
+            return false;
         }
     }
 }

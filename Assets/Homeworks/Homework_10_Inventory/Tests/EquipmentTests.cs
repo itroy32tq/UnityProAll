@@ -1,65 +1,172 @@
+using GameEngine;
 using NUnit.Framework;
-// ReSharper disable UnusedVariable
+using UnityEditor;
+using UnityEngine;
+
 
 namespace Assets.Homeworks.Homework_10_Inventory
 {
     [TestFixture]
-    public sealed class CraftingTests
+    internal sealed class EquipmentTests
     {
         
 
         [Test]
-        public void AxeCrafting()
+        public void TestEquipAllDifferentItems()
         {
-            //Arrange:
-           
+            string configsFolderPath = "Assets/Homeworks/Homework_10_Inventory/Configs";
 
+            string[] assetPaths = AssetDatabase.FindAssets("t:ScriptableObject", new[] { configsFolderPath });
+
+            Assert.IsNotEmpty(assetPaths, "Не найдено ни одного ScriptableObject в папке " + configsFolderPath);
+
+
+            Equipment equipment = new();
+
+            foreach (var guid in assetPaths)
+            {
+                string assetPath = AssetDatabase.GUIDToAssetPath(guid);
+
+                var config = AssetDatabase.LoadAssetAtPath<ScriptableObject>(assetPath);
+
+                Assert.IsNotNull(config, $"Объект по пути {assetPath} не является ScriptableObject");
+
+                if (config is ItemConfig itemConfig)
+                {
+                    var item = itemConfig.InstantiateItem();
+
+                    bool success = equipment.TryEquipItem(item);
+
+                    //Assert:
+                    Assert.IsTrue(success);
+                }
+            }
         }
 
         [Test]
-        public void SwordCrafting() //1, 1, 1
+        public void TestEquipAllItemsAndApplyEffects()
         {
-            //Arrange:
-           
+            string configsFolderPath = "Assets/Homeworks/Homework_10_Inventory/Configs";
 
-           
+            string[] assetPaths = AssetDatabase.FindAssets("t:ScriptableObject", new[] { configsFolderPath });
+
+            Assert.IsNotEmpty(assetPaths, "Не найдено ни одного ScriptableObject в папке " + configsFolderPath);
+
+
+            Equipment equipment = new();
+
+            Character character = new();
+
+            bool applayResult = false;
+
+            character.OnApplyEffect += (bool result) => applayResult = result;
+
+            var armorObserver = new EquipmentItemObserver<ArmorComponent>(character, equipment);
+
+            armorObserver.Initialize();
+
+            var powerObserver = new EquipmentItemObserver<PowerComponent>(character, equipment);
+
+            powerObserver.Initialize();
+
+            var speedObserver = new EquipmentItemObserver<SpeedComponent>(character, equipment);
+
+            speedObserver.Initialize();
+
+            foreach (var guid in assetPaths)
+            {
+                string assetPath = AssetDatabase.GUIDToAssetPath(guid);
+
+                var config = AssetDatabase.LoadAssetAtPath<ScriptableObject>(assetPath);
+
+                Assert.IsNotNull(config, $"Объект по пути {assetPath} не является ScriptableObject");
+
+                if (config is ItemConfig itemConfig)
+                {
+                    var item = itemConfig.InstantiateItem();
+
+                    equipment.TryEquipItem(item);
+
+                    //Assert:
+                    Assert.IsTrue(applayResult);
+
+                    equipment.TryRemoveItem(item);
+
+                    Assert.IsFalse(applayResult);
+
+
+                }
+            }
         }
 
         [Test]
-        public void WhenInventoryIsNullThenThrowsExeption()
+        public void TestEquipWithChangeItems()
         {
-            //Act:
-          
+            string configsFolderPath = "Assets/Homeworks/Homework_10_Inventory/Configs";
+
+            string[] assetPaths = AssetDatabase.FindAssets("t:ScriptableObject", new[] { configsFolderPath });
+
+            Assert.IsNotEmpty(assetPaths, "Не найдено ни одного ScriptableObject в папке " + configsFolderPath);
+
+
+            Equipment equipment = new();
+
+            foreach (var guid in assetPaths)
+            {
+                string assetPath = AssetDatabase.GUIDToAssetPath(guid);
+
+                var config = AssetDatabase.LoadAssetAtPath<ScriptableObject>(assetPath);
+
+                Assert.IsNotNull(config, $"Объект по пути {assetPath} не является ScriptableObject");
+
+                if (config is ItemConfig itemConfig)
+                {
+                    var item1 = itemConfig.InstantiateItem();
+
+                    var item2 = itemConfig.InstantiateItem();
+
+                    equipment.TryEquipItem(item1);
+
+                    bool success = equipment.TryEquipItem(item2);
+
+                    //Assert:
+                    Assert.IsTrue(success);
+                }
+            }
         }
 
         [Test]
-        public void WhenResourcesNotEnoughThenFailed()
+        public void TestEquipDublicateItems()
         {
-            //Arrange:
-            
+            string configsFolderPath = "Assets/Homeworks/Homework_10_Inventory/Configs";
 
-        }
+            string[] assetPaths = AssetDatabase.FindAssets("t:ScriptableObject", new[] { configsFolderPath });
 
-        [Test]
-        public void WhenResourcesSameThatRequiredThenSuccess()
-        {
-            //Arrange:
-          
-            
-           
-        }
+            Assert.IsNotEmpty(assetPaths, "Не найдено ни одного ScriptableObject в папке " + configsFolderPath);
 
-        [Test]
-        public void WhenResourcesIsAbsentThenCraftingFailed()
-        {
-            //Arrange:
-            
-        }
 
-        [Test]
-        public void WhenAxeInInvetoryExistsThenCraftingSuccess()
-        {
-            
+            Equipment equipment = new();
+
+            foreach (var guid in assetPaths)
+            {
+                string assetPath = AssetDatabase.GUIDToAssetPath(guid);
+
+                var config = AssetDatabase.LoadAssetAtPath<ScriptableObject>(assetPath);
+
+                Assert.IsNotNull(config, $"Объект по пути {assetPath} не является ScriptableObject");
+
+                if (config is ItemConfig itemConfig)
+                {
+                    var item = itemConfig.InstantiateItem();
+
+                    equipment.TryEquipItem(item);
+
+                    bool success  = equipment.TryEquipItem(item);
+
+                    //Assert:
+                    Assert.IsFalse(success);
+                }
+            }
         }
     }
 }

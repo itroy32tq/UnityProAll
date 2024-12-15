@@ -5,13 +5,18 @@ namespace Assets.Homeworks.Homework_10_Inventory
     internal static class EquipmentExtansions
     {
         
-        public static bool TryRemoveItem(this IEquipment equipment, EquipmentType type)
+        public static bool TryRemoveItem(this IEquipment equipment, Item item)
         {
-            if (equipment.TryGetItem(type, out var item))
-            {
-                equipment.RemoveItem(type);
+            var items = equipment.GetItems();
 
-                return true;
+            foreach (var pair in items)
+            {
+                if (pair.Value == item)
+                { 
+                    equipment.RemoveItem(pair.Key);
+
+                    return true;
+                }
             }
 
             return false;
