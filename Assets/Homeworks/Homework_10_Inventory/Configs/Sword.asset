@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a22487d842414666b12f9ae5a7f89099, type: 3}
+  m_Name: Sword
+  m_EditorClassIdentifier: 
+  <Item>k__BackingField:
+    <Name>k__BackingField: Sword
+    <Description>k__BackingField: the best shit sword in the world
+    <Icon>k__BackingField: {fileID: 21300000, guid: 08c0fef812b0fd04ea861399e21baea7, type: 3}
+    <Flags>k__BackingField: 4
+    _components:
+    - rid: 7411263847220641795
+    - rid: 7411263847220641797
+  references:
+    version: 2
+    RefIds:
+    - rid: 7411263847220641795
+      type: {class: EquipmentComponent, ns: Assets.Homeworks.Homework_10_Inventory, asm: Inventory}
+      data:
+        <EquipType>k__BackingField: 4
+    - rid: 7411263847220641797
+      type: {class: PowerComponent, ns: Assets.Homeworks.Homework_10_Inventory, asm: Inventory}
+      data:
+        <Power>k__BackingField: 5
