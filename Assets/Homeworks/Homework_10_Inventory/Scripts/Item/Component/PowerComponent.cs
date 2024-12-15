@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Assets.Homeworks.Homework_10_Inventory
 {
     [Serializable]
-    internal sealed class PowerComponent : IItemComponent
+    internal sealed class PowerComponent : IEquipmentComponent
     {
         [field: SerializeField] public int Power { get; private set; } = 5;
 

@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace Assets.Homeworks.Homework_10_Inventory
 {
-    internal sealed class Equipment
+    internal sealed class Equipment : IEquipment
     {
-        public Action<Item> OnItemAdded = delegate { };
-        public Action<Item> OnItemRemoved = delegate { };
-        public Action<Item> OnItemChanged = delegate { }; 
+        public event Action<Item> OnItemAdded = delegate { };
+        public event Action<Item> OnItemRemoved = delegate { };
+        public event Action<Item> OnItemChanged = delegate { };
 
         private readonly Dictionary<EquipmentType, Item> _equipmentItems = new();
 
@@ -17,11 +17,27 @@ namespace Assets.Homeworks.Homework_10_Inventory
         public Item GetItem(EquipmentType type)
         {
             if (_equipmentItems.TryGetValue(type, out var item))
-            { 
+            {
                 return item;
             }
 
             throw new Exception();
+        }
+
+        public void AddItem(EquipmentType type, Item item)
+        {
+            EquipmentItems.Add(type, item);
+
+            OnItemAdded.Invoke(item);
+        }
+
+        public void RemoveItem(EquipmentType type)
+        {
+            var item = EquipmentItems[type];
+
+            OnItemRemoved.Invoke(item);
+
+            EquipmentItems.Remove(type);
         }
 
         public bool TryGetItem(EquipmentType type, out Item result)
