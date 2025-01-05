@@ -6,20 +6,8 @@ namespace Assets.Homeworks.Homework_10_Inventory
     {
         public override void InstallBindings()
         {
-            Container.Bind<Inventory>().
+            Container.Bind<IInventory>().
                 FromInstance(new Inventory()).
-                AsSingle().
-                NonLazy();
-
-            Container.Bind<InventoryItemAdder>().
-                AsSingle().
-                NonLazy();
-
-            Container.Bind<InventoryItemRemover>().
-                AsSingle().
-                NonLazy();
-
-            Container.Bind<InventoryItemConsumer>().
                 AsSingle().
                 NonLazy();
         }

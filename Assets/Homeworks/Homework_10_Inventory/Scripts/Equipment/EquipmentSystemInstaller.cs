@@ -1,5 +1,4 @@
 ﻿using GameEngine;
-using System;
 using Zenject;
 
 namespace Assets.Homeworks.Homework_10_Inventory
@@ -8,16 +7,8 @@ namespace Assets.Homeworks.Homework_10_Inventory
     {
         public override void InstallBindings()
         {
-            Container.Bind<Equipment>().
+            Container.Bind<IEquipment>().
                 FromInstance(new Equipment()).
-                AsSingle().
-                NonLazy();
-
-            Container.Bind<EquipmentItemAdder>().
-                AsSingle().
-                NonLazy();
-
-            Container.Bind<EquipmentItemRemover>().
                 AsSingle().
                 NonLazy();
 
@@ -32,7 +23,6 @@ namespace Assets.Homeworks.Homework_10_Inventory
             Container.BindInterfacesAndSelfTo<EquipmentItemObserver<SpeedComponent>>().
                 AsSingle().
                 NonLazy();
-
         }
     }
 }

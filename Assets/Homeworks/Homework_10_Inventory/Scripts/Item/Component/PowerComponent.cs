@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Assets.Homeworks.Homework_10_Inventory
 {
     [Serializable]
-    internal sealed class PowerComponent : IItemComponent
+    internal sealed class PowerComponent : IEquipmentComponent
     {
         [field: SerializeField] public int Power { get; private set; } = 5;
 
@@ -17,6 +17,7 @@ namespace Assets.Homeworks.Homework_10_Inventory
         public void ApplayEffect(Character player)
         {
             player.Damage += Power;
+            player.OnApplyEffect.Invoke(true);
 
             Debug.Log($" Added {nameof(Power)}: {Power} ");
         }
@@ -24,6 +25,7 @@ namespace Assets.Homeworks.Homework_10_Inventory
         public void ResetEffect(Character player)
         {
             player.Damage -= Power;
+            player.OnApplyEffect.Invoke(false);
 
             Debug.Log($" Removed {nameof(Power)}: {Power} ");
         }

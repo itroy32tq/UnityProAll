@@ -3,8 +3,5 @@
     internal interface IItemComponent
     {
         IItemComponent Clone();
-        void ApplayEffect(Character character);
-        void ResetEffect(Character character);
-
     }
 }

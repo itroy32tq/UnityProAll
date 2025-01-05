@@ -1,0 +1,22 @@
+{
+    "name": "Inventory.Tests",
+    "rootNamespace": "",
+    "references": [
+        "GUID:9390f3b813f7f1349a4fb19854e8788f"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

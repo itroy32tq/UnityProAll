@@ -6,16 +6,15 @@ namespace Assets.Homeworks.Homework_10_Inventory
 {
     internal sealed class EquipmentDebug : MonoBehaviour
     {
-        private InventoryItemAdder _inventoryItemAdder;
-        private EquipmentItemAdder _equipmentItemAdder;
-        private Inventory _inventory;
+        private IInventory _inventory;
+        private IEquipment _equipment;
 
 
         [Inject]
-        public void Construct(InventoryItemAdder inventoryItemAdder, EquipmentItemAdder equipmentItemAdder, Inventory inventory)
+        public void Construct(IEquipment equipment, IInventory inventory)
         { 
-            _inventoryItemAdder = inventoryItemAdder;
-            _equipmentItemAdder = equipmentItemAdder;
+
+            _equipment = equipment;
             _inventory = inventory;
         }
 
@@ -24,7 +23,7 @@ namespace Assets.Homeworks.Homework_10_Inventory
         {
             Item item = config.InstantiateItem();
 
-            _inventoryItemAdder.AddItem(item);
+            _inventory.TryAddItem(item);
 
             Debug.Log($" Item added ");
         }
@@ -34,7 +33,7 @@ namespace Assets.Homeworks.Homework_10_Inventory
         {
             if (_inventory.FindItem(name, out var item))
             {
-                if (_equipmentItemAdder.TryEquipItem(item))
+                if (_equipment.TryEquipItem(item))
                 {
                     Debug.Log($" Item equiped ");
                 }
