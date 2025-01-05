@@ -19,7 +19,7 @@ namespace PlotEditor
 
             List<PlotNodeView> nodeViews = new();
             
-            foreach (PlotEditorConfig.Node node in config.nodes)
+            foreach (PlotEditorConfig.Node node in config.Nodes)
             {
                 PlotNodeView nodeView = graphView.CreateNode(node.Id, node.EditorPosition);
 
@@ -33,7 +33,7 @@ namespace PlotEditor
                 nodeViews.Add(nodeView);
             }
 
-            foreach (PlotEditorConfig.Edge edge in config.edges)
+            foreach (PlotEditorConfig.Edge edge in config.Edges)
             {
                 string outputId = edge.outputNodeId;
                 PlotNodeView outputNode = nodeViews.First(it => it.GetId() == outputId);

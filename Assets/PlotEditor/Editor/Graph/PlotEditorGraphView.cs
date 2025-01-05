@@ -100,8 +100,8 @@ namespace PlotEditor
 
         private void ApplyStyles()
         {
-            styleSheets.Add(AssetHelper.LoadNodeStyleSheet());
-            styleSheets.Add(AssetHelper.LoadGridStyleSheet());
+            styleSheets.Add(AssetsHelper.LoadNodeStyleSheet());
+            styleSheets.Add(AssetsHelper.LoadGridStyleSheet());
         }
 
         private void OnContextMenuClicked(ContextualMenuPopulateEvent menuEvent)

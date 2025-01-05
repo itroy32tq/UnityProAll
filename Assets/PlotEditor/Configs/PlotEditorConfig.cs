@@ -11,8 +11,8 @@ namespace PlotEditor
     {
         public string rootId;
         
-        public Node[] nodes;
-        public Edge[] edges;
+        public Node[] Nodes;
+        public Edge[] Edges;
         
         [Serializable]
         public struct Node
@@ -38,9 +38,9 @@ namespace PlotEditor
 
         private bool FindNode(string id, out Node result)
         {
-            for (int i = 0, count = nodes.Length; i < count; i++)
+            for (int i = 0, count = Nodes.Length; i < count; i++)
             {
-                Node node = nodes[i];
+                Node node = Nodes[i];
 
                 if (node.Id == id)
                 {
@@ -55,9 +55,9 @@ namespace PlotEditor
 
         public bool FindNextNode(string currentNodeId, int choiceIndex, out Node nextNode)
         {
-            for (int i = 0, count = edges.Length; i < count; i++)
+            for (int i = 0, count = Edges.Length; i < count; i++)
             {
-                Edge edge = edges[i];
+                Edge edge = Edges[i];
                 
                 if (edge.outputNodeId == currentNodeId && edge.outputIndex == choiceIndex)
                 {

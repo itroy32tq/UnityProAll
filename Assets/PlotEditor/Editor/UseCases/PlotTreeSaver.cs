@@ -17,8 +17,8 @@ namespace PlotEditor
         
         public static void SavePlotTree(PlotEditorGraphView graphView, PlotEditorConfig config)
         {
-            config.nodes = ConvertNodes(graphView);
-            config.edges = ConvertEdges(graphView);
+            config.Nodes = ConvertNodes(graphView);
+            config.Edges = ConvertEdges(graphView);
             
             if (graphView.TryGetRootNode(out PlotNodeView rootNode))
             {

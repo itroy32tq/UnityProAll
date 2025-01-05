@@ -3,7 +3,7 @@ using UnityEngine.UIElements;
 
 namespace PlotEditor
 {
-    public static class AssetHelper
+    public static class AssetsHelper
     {
         public static StyleSheet LoadNodeStyleSheet()
         {
